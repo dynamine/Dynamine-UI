@@ -1,22 +1,55 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
-  "main": "main.js",
+  "name": "KongDash",
+  "version": "0.3.0",
+  "description": "An elegant desktop client for Kong Admin API",
+  "main": "src/main.js",
   "scripts": {
-    "start": "electron ."
+    "test": "npm run lint",
+    "lint": "eslint ./src/main.js ./src/scripts ./src/controllers",
+    "start": "gulp start",
+    "pack:linux32": "gulp pack-linux32",
+    "pack:linux64": "gulp pack-linux64",
+    "pack:windows32": "gulp pack-windows32",
+    "pack:windows64": "gulp pack-windows64",
+    "pack:osx": "gulp pack-osx"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajaysreedhar/kongdash.git"
+  },
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "kongdash",
+    "kong dashboard",
+    "kong admin api",
+    "cross platform"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "Ajay Sreedhar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ajaysreedhar/kongdash/issues"
+  },
+  "homepage": "https://ajaysreedhar.github.io/kongdash/",
+  "dependencies": {
+    "jsonfile": "^3.0.0",
+    "ng-sidebar": "^7.1.0",
+    "ospath": "^1.2.2",
+    "react": "^16.3.2",
+    "react-sidenav": "^2.1.2",
+    "request": "^2.81.0",
+    "semantic-ui": "^2.3.1",
+    "semver": "^5.3.0",
+    "underscore": "^1.8.3"
+  },
   "devDependencies": {
-    "electron": "^1.8.4"
+    "electron": "^1.6.11",
+    "electron-packager": "^8.7.2",
+    "eslint": "^4.1.1",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.6.1",
+    "eslint-plugin-node": "^5.1.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "gulp": "^3.9.1",
+    "gulp-task-list": "0.0.2"
   }
 }

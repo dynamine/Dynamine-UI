@@ -1,0 +1,63 @@
+<div class="container">
+
+<div class="row">
+<div class="col md-8">
+    <div class="panel panel-border info">
+        <div class="panel__heading">Node Status
+            <span class="right refresh" data-ng-click="refreshStatus('true')"><i class="material-icons md-17">autorenew</i></span>
+        </div>
+        <div class="panel__body"><canvas id="clusterStatChart" height="100"></canvas></div>
+    </div><!-- .panel.panel-border.info -->
+</div>
+
+<div class="col md-4">
+    <div class="panel panel-border info">
+        <div class="panel__heading">Timers
+            <span class="right refresh" data-ng-click="refreshTimer()"><i class="material-icons md-17">autorenew</i></span>
+        </div>
+        <div class="panel__body">
+            <div class="vpadding-10"><canvas id="timersChart" height="194"></canvas></div>
+        </div>
+    </div><!-- .panel.panel-border.info -->
+</div>
+</div><!-- .row -->
+
+<div class="row">
+<div class="col md-5">
+    <div class="panel panel-border info">
+    <div class="panel__heading">Gateway</div>
+    <div class="panel__body">
+        <dl class="horizontal"><dt>Host Name</dt><dd>: {{DynamineStat.hostname}}</dd></dl>
+        <dl class="horizontal"><dt>Tag Line</dt><dd>: {{DynamineStat.tagline}}</dd></dl>
+        <dl class="horizontal"><dt>Database</dt><dd>: {{DynamineStat.configuration.database}}</dd></dl>
+        <dl class="horizontal"><dt>DNS Resolver</dt><dd>: {{DynamineStat.configuration.dns_resolver.address || 'NA'}}</dd></dl>
+        <dl class="horizontal"><dt>Gateway Version</dt><dd>: {{DynamineStat.version}}</dd></dl>
+        <dl class="horizontal"><dt>Lua Version </dt><dd>: {{DynamineStat.lua_version}}</dd></dl>
+    </div>
+    </div>
+</div>
+
+<div class="col md-3">
+    <div class="panel panel-border info">
+    <div class="panel__heading">Cluster</div>
+    <div class="panel__body">
+        <dl class="horizontal"><dt>Listen</dt><dd>: {{DynamineStat.configuration.cluster_listen}}</dd></dl>
+        <dl class="horizontal"><dt>Profile</dt><dd>: {{DynamineStat.configuration.cluster_profile}}</dd></dl>
+        <dl class="horizontal"><dt>TTL</dt><dd>: {{DynamineStat.configuration.cluster_ttl_on_failure}}</dd></dl>
+    </div>
+    </div>
+</div>
+
+<div class="col md-4">
+    <div class="panel panel-border info">
+    <div class="panel__heading">Ports</div>
+    <div class="panel__body">
+        <dl class="horizontal"><dt>Proxy Default</dt><dd>: {{DynamineStat.configuration.proxy_port || 'NA'}}</dd></dl>
+        <dl class="horizontal"><dt>Proxy SSL</dt><dd>: {{DynamineStat.configuration.proxy_ssl_port || 'NA'}}</dd></dl>
+        <dl class="horizontal"><dt>Admin Default</dt><dd>: {{DynamineStat.configuration.admin_port || 'NA'}}</dd></dl>
+        <dl class="horizontal"><dt>Admin SSL</dt><dd>: {{DynamineStat.configuration.admin_ssl_port || 'NA'}}</dd></dl>
+    </div>
+    </div>
+</div>
+</div><!-- .row -->
+</div><!-- .container -->
