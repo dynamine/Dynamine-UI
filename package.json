@@ -1,6 +1,6 @@
 {
   "name": "Dynamine",
-  "version": "0.3.0",
+  "version": "0.1.0",
   "description": "An elegant desktop client for Dynamine Admin API",
   "main": "src/main.js",
   "scripts": {
@@ -23,7 +23,7 @@
     "dynamine admin api",
     "cross platform"
   ],
-  "author": "Ajay Sreedhar",
+  "author": "Dynamine Inc.",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/dynamine/dynamine-ui/issues"
