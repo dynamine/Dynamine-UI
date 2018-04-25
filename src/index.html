@@ -1,0 +1,90 @@
+<html data-ng-app="Dynamine" lang="en">
+        <head><meta charset="UTF-8" />
+        <meta name=viewport content="width=device-width, initial-scale=1"/>
+        <title>Dynamine</title>
+        
+        <link rel="stylesheet" type="text/css" href="css/roboto.css" />
+        <link rel="stylesheet" type="text/css" href="css/material-icons.css" />
+        <link rel="stylesheet" type="text/css" href="css/animations.css" />
+        <link rel="stylesheet" type="text/css" href="css/layout.css" />
+        <link rel="stylesheet" type="text/css" href="css/default-dark-theme.css" />
+        </head>
+        <body class="body">
+        
+        <div class="app-layout hidden">
+        <aside class="drawer">
+            <div class="icon"><div>Dynamine</div></div>
+            <nav class="navigation">
+                <a class="navigation__link active" data-ng-href="#!/"><p><i class="material-icons">view_quilt</i></p><p>Dashboard</p></a>
+                <a class="navigation__link" data-ng-href="#!/api"><p><i class="material-icons">settings_input_component</i></p> <p>APIs</p></a>
+                <a class="navigation__link" data-ng-href="#!/plugins"><p><i class="material-icons">extension</i></p> <p>Plugins</p></a>
+                <a class="navigation__link" data-ng-href="#!/certificates"><p><i class="material-icons">pages</i></p><p>Certificates</p></a>
+                <a class="navigation__link" data-ng-href="#!/upstreams"><p><i class="material-icons">backup</i></p><p>Upstreams</p></a>
+                <a class="navigation__link" data-ng-href="#!/cluster"><p><i class="material-icons">device_hub</i></p><p>Cluster</p></a>
+                <a class="navigation__link" data-ng-href="#!/consumers"><p><i class="material-icons">person_pin</i></p> <p>Consumers</p></a>
+        
+            </nav><!-- .navigation -->
+        </aside>
+        
+        <main class="content">
+            <header class="content__header" data-ng-controller="HeaderController">
+                <span class="navigate" data-ng-if="viewFactory.prevUrl">
+                    <a href="{{viewFactory.prevUrl}}" title="Previous"><i class="material-icons">keyboard_arrow_left</i></a>
+                </span>
+                <span class="title">{{viewFactory.title}}</span>
+                <div class="actions">
+                    <button data-ng-if="viewFactory.deleteAction" data-target="{{viewFactory.deleteAction.target}}" data-url="{{viewFactory.deleteAction.url}}" data-redirect="{{viewFactory.deleteAction.redirect || viewFactory.prevUrl}}" type="button" class="btn danger delete">Delete</button>
+                </div>
+            </header>
+            <section class="content__wrapper {{$root.ngViewAnimation}}" data-ng-view="">Temp</section>
+            <footer class="footer" data-ng-controller="FooterController">
+                <div id="staticMessage" class="pull-left hpadding-20"></div>
+                <div class="pull-right hpadding-20">{{viewFactory.host | stripProtocol}}</div>
+            </footer>
+        </main>
+        </div>
+        
+        <script type="text/javascript">
+        if (typeof module === 'object') {
+            window.module = module;
+            module = undefined;
+        }
+        const {ipcRenderer} = require('electron');
+        var DynamineConfig    = ipcRenderer.sendSync('get-config', 'Dynamine');
+        var appConfig     = ipcRenderer.sendSync('get-config', 'app');
+        var ngDependency  = ['ngRoute'];
+        </script>
+        
+        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/angular.min.js"></script>
+        <script type="text/javascript" src="js/angular-route.min.js"></script>
+        <script type="text/javascript" src="js/angular-animate.min.js"></script>
+        <script type="text/javascript" src="js/angular-base64.min.js"></script>
+        <script type="text/javascript" src="scripts/kongdash-app.js"></script>
+        <script type="text/javascript" src="js/Chart.bundle.min.js"></script>
+        
+        <script type="text/javascript" src="scripts/app-index.js"></script>
+        
+        <script type="text/javascript" src="controllers/header.js"></script>
+        <script type="text/javascript" src="controllers/footer.js"></script>
+        <script type="text/javascript" src="controllers/dashboard.js"></script>
+        <script type="text/javascript" src="controllers/api-list.js"></script>
+        <script type="text/javascript" src="controllers/api-edit.js"></script>
+        <script type="text/javascript" src="controllers/plugin-edit.js"></script>
+        <script type="text/javascript" src="controllers/consumer-list.js"></script>
+        <script type="text/javascript" src="controllers/consumer-edit.js"></script>
+        <script type="text/javascript" src="controllers/plugin-list.js"></script>
+        <script type="text/javascript" src="controllers/cluster-list.js"></script>
+        <script type="text/javascript" src="controllers/certificate-list.js"></script>
+        <script type="text/javascript" src="controllers/certificate-edit.js"></script>
+        <script type="text/javascript" src="controllers/upstream-list.js"></script>
+        <script type="text/javascript" src="controllers/upstream-edit.js"></script>
+        <script type="text/javascript" src="controllers/settings.js"></script>
+        
+        <script type="text/javascript">
+        (function (angular) {
+            angular.element('.app-layout').fadeIn({ duration: 1000 });
+        })(window.angular);
+        </script>
+        </body>
+        </html>

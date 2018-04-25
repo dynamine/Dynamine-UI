@@ -1,0 +1,19 @@
+img {
+    height: auto;
+    width: auto;
+    padding-bottom: 10px;
+    max-height: 50px;
+    max-width: 50px;
+    margin-left: auto;
+    margin-left: auto;
+    display: block;
+}
+
+.sidebar {
+    width: auto;
+    height: auto;
+}
+
+body {
+    background-color: black;
+}
