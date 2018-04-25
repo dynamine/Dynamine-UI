@@ -378,7 +378,7 @@ i.flag.guyana:before {
   background-position: -36px -442px;
 }
 i.flag.hk:before,
-i.flag.hong.kong:before {
+i.flag.hong.dynamine:before {
   background-position: -36px -468px;
 }
 i.flag.hm:before,

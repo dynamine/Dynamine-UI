@@ -10,7 +10,7 @@ const jsonfile  = require('jsonfile');
 
 let absPath = path.dirname(__dirname), configFile = ospath.data() + '/' + APP_NAME + '/config.json';
 let {app, ipcMain, BrowserWindow, Menu} = electron;
-let mainWindow, appConfig = {Dynamine: {}, app: {enableAnimation: true}};
+let mainWindow, appConfig = {dynamine: {}, app: {enableAnimation: true}};
 
 let startMainWindow = function () {
     mainWindow = new BrowserWindow({
@@ -21,13 +21,12 @@ let startMainWindow = function () {
         title: app.getName(),
         minHeight: 500,
         minWidth: 900,
-        icon: absPath + '/src/DynamineIcon.png'
+        icon: absPath + '/dynamine-256x256.png'
     });
     mainWindow.loadURL('file://' + absPath + '/src/initialize.html');
 
-    /* Debugging */
+    // Debugging
     mainWindow.webContents.openDevTools();
-    
 
     mainWindow.on('closed', () => {
         mainWindow = null;
@@ -71,19 +70,19 @@ app.on('browser-window-created', (e, window) => {
         submenu: [{
             label: 'GitHub Repository',
             click: () => {
-                electron.shell.openExternal('https://github.com/dynamine/Dynamine-UI');
+                electron.shell.openExternal('https://github.com/dynamine/dynamine-ui');
             }
         }, {
             label: 'Report Issues',
             click: () => {
-                electron.shell.openExternal('https://github.com/dynamine/Dynamine-UI/issues');
+                electron.shell.openExternal('https://github.com/dynamine/dynamine-ui/issues');
             }
         }, {
             type: 'separator'
         }, {
             label: 'About Dynamine',
             click: () => {
-                electron.shell.openExternal('https://github.com/dynamine/Dynamine-UI/blob/master/README.md');
+                electron.shell.openExternal('https://dynamine.io/');
             }
         }]
     }];

@@ -1,7 +1,7 @@
 'use strict';
 
-/* global app:true DynamineConfig:true appConfig:true */
-(function (angular, app, DynamineConfig, appConfig) {
+/* global app:true dynamineConfig:true appConfig:true */
+(function (angular, app, dynamineConfig, appConfig) {
 
     if (typeof app === 'undefined') throw 'app-index.js: app is undefined';
 
@@ -10,23 +10,22 @@
      * URL of the previous page.
      */
     app.factory('viewFactory', function () {
-        return { title: '', prevUrl: '', user: DynamineConfig.user, password: DynamineConfig.password }; //TODO: Replace host with user and password
+        return { title: '', prevUrl: '', host: dynamineConfig.host };
     });
 
     /**
      * Configures route provider and ajax provider.
      */
-
-    app.config(['$routeProvider', function ($routeProvider) { //TODO: take out ajaxProvider as paramter and function paramter
-        //ajaxProvider.setHost(DynamineConfig.host);
-        // ajaxProvider.contentType('application/json; charset=utf-8');
-        // ajaxProvider.accept('application/json');
+    app.config(['$routeProvider', 'ajaxProvider' , function ($routeProvider, ajaxProvider) {
+        ajaxProvider.setHost(dynamineConfig.host);
+        ajaxProvider.contentType('application/json; charset=utf-8');
+        ajaxProvider.accept('application/json');
 
         /* Add a basic authorization header
          if username and password are provided in the settings. */
-        // if (typeof DynamineConfig.username === 'string' && DynamineConfig.username) {
-        //     ajaxProvider.basicAuth(DynamineConfig.username, DynamineConfig.password || '');
-        // }
+        if (typeof dynamineConfig.username === 'string' && dynamineConfig.username) {
+            ajaxProvider.basicAuth(dynamineConfig.username, dynamineConfig.password || '');
+        }
 
         /* Configure routes. */
         $routeProvider
@@ -117,7 +116,7 @@
         });
     }]);
 
-})(window.angular, app, DynamineConfig, appConfig);
+})(window.angular, app, dynamineConfig, appConfig);
 
 /* global angular:true ipcRenderer:true */
 (function (window, angular, content, ipcRenderer) {

@@ -18,12 +18,12 @@
 
         $scope.refreshTimer = function(master) {
             ajax.get({ resource: '/' }).then(function (response) {
-                $scope.kongStat = response.data;
+                $scope.dynamineStat = response.data;
 
                 createChart('#timersChart', {
                     type: 'horizontalBar',
                     data: { labels: ['Running', 'Pending'], datasets: [{
-                        data: [$scope.kongStat.timers.running, $scope.kongStat.timers.pending],
+                        data: [$scope.dynamineStat.timers.running, $scope.dynamineStat.timers.pending],
                         label: 'Timers', backgroundColor:['#10C469', '#FFCE56']
                     }] }
                 });
