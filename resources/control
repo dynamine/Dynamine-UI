@@ -1,4 +1,4 @@
-Package: kongdash
+Package: dynamine
 Version: 0.3.0
 License: MIT
 Vendor: Ajay Sreedhar
@@ -6,11 +6,11 @@ Section: web
 Priority: extra
 Architecture: amd64 [or i386]
 Maintainer: Ajay Sreedhar <ajaysreedhar468@gmail.com>
-Homepage: https://ajaysreedhar.github.io/kongdash/
-Description: KongDash
- An elegant desktop client for Kong Admin API.
- - https://github.com/ajaysreedhar/kongdash
- - Support for Kong Admin API v0.10.x
+Homepage: https://dynamine.io/
+Description: Dynamine
+ An elegant desktop client for Dynamine Admin API.
+ - https://github.com/dynamine/dynamine-ui
+ - Support for Dynamine Admin API v0.10.x
  - Options to manage certificates and upstreams
  - Settings option moved to File menu
  - Bug fixes and performance improvements

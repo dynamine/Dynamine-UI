@@ -1,28 +1,28 @@
-<!-- <div class="container">
+<div class="container">
 <div class="row">
     <div class="col md-6">
     <div class="panel panel-border info">
-    <div class="panel__heading">Kong Settings</div>
+    <div class="panel__heading">Dynamine Settings</div>
     <div class="panel__body">
-        <form method="post" action="#!/" id="formKongConfig" class="form">
+        <form method="post" action="#!/" id="formDynamineConfig" class="form">
             <div class="form__field">
             <label class="field-label">Host</label>
             <div class="field-input">
-                <input data-ng-model="kongConfig.host" required="" type="text" placeholder="Eg: http://localhost:8001" />
+                <input data-ng-model="dynamineConfig.host" required="" type="text" placeholder="Eg: http://localhost:8001" />
             </div>
             </div>
 
             <div class="form__field">
             <label class="field-label">Username</label>
             <div class="field-input">
-                <input data-ng-model="kongConfig.username" type="text" placeholder="Optional" />
+                <input data-ng-model="dynamineConfig.username" type="text" placeholder="Optional" />
             </div>
             </div>
 
             <div class="form__field">
             <label class="field-label">Password</label>
             <div class="field-input">
-                <input data-ng-model="kongConfig.password" type="password" placeholder="Optional" />
+                <input data-ng-model="dynamineConfig.password" type="password" placeholder="Optional" />
             </div>
             </div>
 
@@ -46,34 +46,4 @@
     </div>
 </div>
 </div>
-</div> -->
-<!-- Settings Modal for CPU AND GPU Allocation-->
-<div class="ui modal">
-        <div class="header">Dynamine Settings</div>
-        <div>Allocate Resources</div>
-        <div class="content">
-                <div>GPU's</div>
-                <div class="ui toggle checkbox">
-                        <input type="checkbox" name="public">
-                        <label>GPU 1</label>
-                </div>
-                <div class="ui toggle checkbox">
-                        <input type="checkbox" name="public">
-                        <label>GPU 2</label>
-                </div>
-                <div class="ui divider"></div>
-                <div>CPU Cores</div>
-                <div class="ui progress">
-                        <div class="bar">
-                          <div class="progress"></div>
-                        </div>
-                        <div class="label">CPU Cores</div>
-                </div>
-
-        </div>
-        <div class="actions">
-          <div class="ui approve button">Approve</div>
-          <div class="ui button">Neutral</div>
-          <div class="ui cancel button">Cancel</div>
-        </div>
 </div>

@@ -1,7 +1,7 @@
 {
-  "name": "KongDash",
+  "name": "Dynamine",
   "version": "0.3.0",
-  "description": "An elegant desktop client for Kong Admin API",
+  "description": "An elegant desktop client for Dynamine Admin API",
   "main": "src/main.js",
   "scripts": {
     "test": "npm run lint",
@@ -15,20 +15,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ajaysreedhar/kongdash.git"
+    "url": "git+https://github.com/dynamine/dynamine-ui.git"
   },
   "keywords": [
-    "kongdash",
-    "kong dashboard",
-    "kong admin api",
+    "dynamine",
+    "dynamine dashboard",
+    "dynamine admin api",
     "cross platform"
   ],
   "author": "Ajay Sreedhar",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ajaysreedhar/kongdash/issues"
+    "url": "https://github.com/dynamine/dynamine-ui/issues"
   },
-  "homepage": "https://ajaysreedhar.github.io/kongdash/",
+  "homepage": "https://dynamine.io/",
   "dependencies": {
     "jsonfile": "^3.0.0",
     "ng-sidebar": "^7.1.0",

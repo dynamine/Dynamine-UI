@@ -12,7 +12,7 @@
 
         $http({
             method: 'GET',
-            url : 'https://api.github.com/repos/ajaysreedhar/kongdash/releases/latest'
+            url : 'https://api.github.com/repos/ajaysreedhar/dynamine/releases/latest'
 
         }).then(function (response) {
             let release = response.data;

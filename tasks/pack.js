@@ -53,7 +53,7 @@ module.exports = function (gulp, packageJson) { 'use strict';
         electronPackager(_.extend(RELEASE_SETTINGS, {
             platform: 'win32',
             arch: 'ia32',
-            icon: 'resources/icons/kongdash-256x256.ico'
+            icon: 'resources/icons/dynamine-256x256.ico'
         }), next);
     });
 
@@ -61,16 +61,16 @@ module.exports = function (gulp, packageJson) { 'use strict';
         electronPackager(_.extend(RELEASE_SETTINGS, {
             platform: 'win32',
             arch: 'x64',
-            icon: 'resources/icons/kongdash-256x256.ico'
+            icon: 'resources/icons/dynamine-256x256.ico'
         }), next);
     });
 
     gulp.task('pack-osx', (next) => {
         electronPackager(_.extend(RELEASE_SETTINGS, {
-            appBundleId: 'io.kongdash',
+            appBundleId: 'io.dynamine',
             platform: 'darwin',
             arch: 'all',
-            icon: 'resources/icons/kongdash-256x256.icns'
+            icon: 'resources/icons/dynamine-256x256.icns'
         }), next);
     });
 };

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Dynamine
+Comment=An elegant desktop client for Dynamine admin API.
+GenericName=Dynamine Dashboard
+Exec=/opt/dynamine-x64/Dynamine %U
+Icon=/opt/dynamine-x64/resources/dynamine.png [or dynamine.png]
+Terminal=false
+Type=Application
+StartupNotify=true
+StartupWMClass=dynamine
+Keywords=Dynamine;Dashboard;Admin API;
+Categories=Network;

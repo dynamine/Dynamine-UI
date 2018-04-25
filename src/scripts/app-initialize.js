@@ -1,18 +1,15 @@
-/* global app:true DynamineConfig:true */
-(function (app, DynamineConfig) { 'use strict';
+/* global app:true dynamineConfig:true */
+(function (app, dynamineConfig) { 'use strict';
 
     if (typeof app === 'undefined') throw 'app-initialize.js: app is undefined';
 
-    // app.config(['ajaxProvider', function (ajaxProvider) {
-    //     ajaxProvider.accept('application/json');
-    //     ajaxProvider.contentType('application/json');
+    app.config(['ajaxProvider', function (ajaxProvider) {
+        ajaxProvider.accept('application/json');
+        ajaxProvider.contentType('application/json');
 
-    //     if (typeof DynamineConfig.username === 'string') {
-    //         ajaxProvider.basicAuth(DynamineConfig.username, DynamineConfig.password || '');
-    //     }
-    // }]);
+        if (typeof dynamineConfig.username === 'string') {
+            ajaxProvider.basicAuth(dynamineConfig.username, dynamineConfig.password || '');
+        }
+    }]);
 
-    //TODO:
-    //Might need to config username and password
-
-})(app, DynamineConfig);
+})(app, dynamineConfig);
