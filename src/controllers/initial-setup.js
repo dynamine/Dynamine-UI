@@ -75,6 +75,8 @@
             // }
 
             let config = {user: $scope.DynamineConfig.username, password: $scope.DynamineConfig.password}; //added for cofiguring password and username
+            $element.fadeOut({ duration: 300, complete: function () { window.location.href = 'index.html'; } });
+
             return false;
         });
 
