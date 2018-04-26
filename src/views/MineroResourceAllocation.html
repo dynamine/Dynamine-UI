@@ -1,0 +1,38 @@
+<div class="container">
+  
+<div data-ng-controller=""> <!-- TODO: Make a controller for coin resource allocation that can be put with controller-->
+    <div class="panel panel-border info">
+            <div class="panel__heading">Resource Allocation
+            </div>
+    </div>
+    <form method="POST" action="#" id="configForm">
+    <div class="panel panel-border info">
+        <div class="panel__heading">GPU's
+            <span class="right refresh" data-ng-click="refreshStatus('true')"><i class="material-icons md-17">autorenew</i></span>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <div>GPU 1</div> <!-- TODO: Need to make this html dynaminc because we dont know how many cores-->
+                <div>GPU 2</div>
+                <div>GPU 3</div>
+            </ul>
+        </div>
+    </div>
+
+    <div class="panel panel-border info">
+            <div class="panel__heading">CPU's
+                <span class="right refresh" data-ng-click="refreshStatus('true')"><i class="material-icons md-17">autorenew</i></span>
+            </div>
+            <div class="panel-body">
+                    <input type="range" min="1" max="10" value="5" class="slider" id="myRange">
+                    <div>Selected Number of Cores: 5</div>
+            </div>
+        </div>
+
+
+    <div class="form__field align-center"><button type="submit" class="btn success">Confirm</button></div>
+    </form>
+
+</div>
+
+</div>
