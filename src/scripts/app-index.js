@@ -90,7 +90,7 @@
                 controller: 'SettingsController'
             })
             .when('/Minero', {
-                templateUrl: 'views/Minero.html',
+                templateUrl: 'views/MineroResourceAllocation.html',
                 controller: 'MineroController'
             })
             .otherwise({

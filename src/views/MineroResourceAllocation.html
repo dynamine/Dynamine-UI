@@ -1,0 +1,23 @@
+
+<div data-ng-controller=""> <!-- Make a controller for coin resource allocation that can be put with controller-->
+    <div class="panel__heading">Resource Allocation</div>
+    <form method="POST" action="#" id="configForm">
+    <div class="form__field">
+        <label class="field-label">GPU's</label>
+        <div class="field-input"><input data-ng-model="dynamineConfig.host" type="text" placeholder="Eg: http://localhost:8001" required="required" name="host" /></div>
+    </div>
+
+    <div class="form__field">
+        <label class="field-label">CPU Cores</label>
+        <div class="field-input"><input data-ng-model="dynamineConfig.username" type="text" placeholder="Optional" name="username" /></div>
+    </div>
+
+    <div class="form__field align-center"><button type="submit" class="btn success">Confirm</button></div>
+    </form>
+
+    <footer class="footer">
+        <span class="hpadding-20 pull-right" id="status"></span>
+    </footer>
+</div>
+
+
