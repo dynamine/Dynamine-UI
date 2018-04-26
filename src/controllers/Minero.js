@@ -1,0 +1,68 @@
+/* global app:true Chart:true */
+(function (angular, app, Chart) { 'use strict';
+    const controller = 'MineroController';
+    if (typeof app === 'undefined') throw (controller + ': app is undefined');
+
+    Chart.defaults.global.defaultFontColor = '#9db4be';
+    Chart.defaults.global.defaultFontStyle = 'bold';
+
+    let createChart = function (container, data) {
+        if (typeof data.options === 'undefined') data.options = {responsive: true, scales: {xAxes: [{ticks: {beginAtZero: true}}]}};
+
+        return new Chart (angular.element(container)[0].getContext('2d'), data);
+    };
+
+    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', function ($scope, ajax, toast, viewFactory) {
+        viewFactory.title = 'Minero';
+        viewFactory.prevUrl = null;
+
+        $scope.refreshTimer = function(master) {
+            ajax.get({ resource: '/' }).then(function (response) {
+                $scope.dynamineStat = response.data;
+
+                createChart('#MineroWalletChart', {
+                    type: 'horizontalBar',
+                    data: { labels: ['Running', 'Pending'], datasets: [{
+                        data: [ 90, 78],
+                        label: 'Timers', backgroundColor:['#10C469', '#FFCE56']
+                    }] }
+                });
+
+                if(!master || master !== true)
+                    toast.success('Timers data has been updated');
+
+            }, function () {
+                toast.error('Could not populate data');
+            });
+
+        };
+
+        $scope.refreshStatus = function(master) {
+            ajax.get({ resource: '/status' }).then(function (response) {
+                let server = response.data.server;
+
+                createChart('#MineroHashChart', {
+                    type: 'bar',
+                    data: { labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], datasets: [{
+                        data: [ 30, 40, 15, 80, 45, 90], //TODO: Chnage to host data
+                        backgroundColor: ['rgba(24, 138, 226, 0.5)', 'rgba(16, 196, 105, 0.5)', 'rgba(128, 197, 218, 0.5)',
+                            'rgba(248, 142, 15, 0.5)', 'rgba(207, 32, 241, 0.5)', 'rgba(91, 105, 188, 0.5)', 'rgba(24, 138, 226, 0.5)'],
+                        borderColor: ['#188AE2', '#10C469', '#80C5DA', '#F88E0F', '#CF20F1', '#5B69BC', '#188AE2'],
+                        borderWidth: 1, label: 'Connections'
+                    }] }
+                });
+
+                if(!master || master !== true)
+                    toast.success('Node Status data has been updated');
+
+            }, function () {
+                toast.error('Could not populate chart data');
+            });
+
+        };
+
+        $scope.refreshStatus(true);
+        $scope.refreshTimer(true);
+
+    }]);
+})(window.angular, app, Chart);
