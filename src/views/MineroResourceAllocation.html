@@ -11,11 +11,10 @@
             <span class="right refresh" data-ng-click="refreshStatus('true')"><i class="material-icons md-17">autorenew</i></span>
         </div>
         <div class="panel-body">
-            <ul>
-                <div>GPU 1</div> <!-- TODO: Need to make this html dynaminc because we dont know how many cores-->
-                <div>GPU 2</div>
-                <div>GPU 3</div>
-            </ul>
+            <dl class="horizontal" style="text-align:center;"><dt>GPU 1:</dt><label class="switch">
+                    <input type="checkbox">
+                    <span class="choice round"></span>
+            </label></dl>
         </div>
     </div>
 
@@ -23,9 +22,9 @@
             <div class="panel__heading">CPU's
                 <span class="right refresh" data-ng-click="refreshStatus('true')"><i class="material-icons md-17">autorenew</i></span>
             </div>
-            <div class="panel-body">
-                    <input type="range" min="1" max="10" value="5" class="slider" id="myRange">
-                    <div>Selected Number of Cores: 5</div>
+            <div class="panel-body" style="text-align:center;">
+                    <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+                    <p>Selected Number of Cores: 5<span id="demo"></span></p>
             </div>
         </div>
 
