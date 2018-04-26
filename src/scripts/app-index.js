@@ -90,6 +90,10 @@
                 controller: 'SettingsController'
             })
             .when('/Minero', {
+                templateUrl: 'views/MineroResourceAllocation.html',
+                controller: 'MineroController'
+            })
+            .when('/Bitcoin', {
                 templateUrl: 'views/MineroCoinStats.html',
                 controller: 'MineroController'
             })
