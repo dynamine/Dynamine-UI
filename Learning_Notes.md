@@ -17,3 +17,8 @@ HTML to pass validation by validators and browsers who might not support non-def
 - if there is a reference to toast available, use toast to display messages
 - Kongdash uses a grid system similar to bootstrap with contianer > row > col
 - To specify a col size add a size class, e.g. md-4
+
+# Fail
+
+- Attempted to use Angular Material UI Components for the tabs but they did not work.
+- I will look into implementing them custom with Angular 
