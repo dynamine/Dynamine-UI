@@ -8,6 +8,8 @@
 <link rel="stylesheet" type="text/css" href="css/animations.css" />
 <link rel="stylesheet" type="text/css" href="css/layout.css" />
 <link rel="stylesheet" type="text/css" href="css/default-dark-theme.css" />
+<link rel="stylesheet" type="text/css" href="css/MineroCoin.css" />
+
 </head>
 <body class="body">
 
@@ -15,12 +17,12 @@
 <aside class="drawer">
     <div class="icon"><div>Dynamine</div></div>
     <nav class="navigation">
-        <a class="navigation__link active" data-ng-href="#!/"><p><i class="material-icons">view_quilt</i></p><p>Dashboard</p></a>
+        <a class="navigation__link active" data-ng-href="#!/"><p><i class="material-icons">add_circle</i></p><p>Add Coin</p></a>
         <a class="navigation__link" data-ng-href="#!/Minero"><p><img src="images/Minero-icon.png" ></img></p> <p>Minero</p></a>
-        <a class="navigation__link" data-ng-href="#!/plugins"><p><img src="images/Bitcoin-icon.png" ></img></p> <p>Plugins</p></a>
-        <a class="navigation__link" data-ng-href="#!/certificates"><p><img src="images/Zcash-icon.png" ></img></p><p>Certificates</p></a>
-        <a class="navigation__link" data-ng-href="#!/upstreams"><p><img src="images/Ethereum-icon.png" ></img></p><p>Upstreams</p></a>
-        <a class="navigation__link" data-ng-href="#!/cluster"><p><img src="images/Litecoin-icon.png" ></img></p><p>Cluster</p></a>
+        <a class="navigation__link" data-ng-href="#!/Bitcoin"><p><img src="images/Bitcoin-icon.png" ></img></p> <p>Bitcoin</p></a>
+        <a class="navigation__link" data-ng-href="#!/Plugins"><p><img src="images/Zcash-icon.png" ></img></p><p>Zcash</p></a>
+        <a class="navigation__link" data-ng-href="#!/upstreams"><p><img src="images/Ethereum-icon.png" ></img></p><p>Ethereum</p></a>
+        <a class="navigation__link" data-ng-href="#!/api"><p><img src="images/Litecoin-icon.png" ></img></p><p>Litecoin</p></a>
 
     </nav><!-- .navigation -->
 </aside>
@@ -81,6 +83,8 @@ var ngDependency  = ['ngRoute'];
 <script type="text/javascript" src="controllers/upstream-list.js"></script>
 <script type="text/javascript" src="controllers/upstream-edit.js"></script>
 <script type="text/javascript" src="controllers/settings.js"></script>
+<scipt type="text/javascript" src="js/CoinSlider.js"></scipt>
+<script type="text/javascript" src="controllers/Minero.js"></script>
 
 <script type="text/javascript">
 (function (angular) {

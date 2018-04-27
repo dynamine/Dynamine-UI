@@ -1,5 +1,12 @@
 'use strict';
 
+
+/**
+  This file contains all of the code related to initializing the electron app.
+  It creates the window the Angular app will live in and creates all of the hooks for the Electron life cycle.
+
+  startMainWindow() is the main entry point for the angular code. It loads the inialize.html page which handles login
+*/
 const APP_NAME = 'Dynamine';
 const VERSION = '0.1.0';
 
@@ -23,7 +30,14 @@ let startMainWindow = function () {
         minWidth: 900,
         icon: absPath + '/dynamine-256x256.png'
     });
+
+    /**
+
+    NOTE: I am disabling the login page for development purposes
+
     mainWindow.loadURL('file://' + absPath + '/src/initialize.html');
+    */
+    mainWindow.loadURL('file://' + absPath + '/src/index.html');
 
     // Debugging
     mainWindow.webContents.openDevTools();

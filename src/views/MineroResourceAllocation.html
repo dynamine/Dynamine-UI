@@ -1,0 +1,34 @@
+<div class="container">
+  
+<div data-ng-controller=""> <!-- TODO: Make a controller for coin resource allocation that can be put with controller-->
+    <div class="panel panel-border info">
+            <div class="panel__heading">Resource Allocation
+            </div>
+    </div>
+    <form method="POST" action="#" id="configForm">
+    <div class="panel panel-border info">
+        <div class="panel__heading">GPU's
+            <span class="right refresh" data-ng-click="refreshStatus('true')"><i class="material-icons md-17">autorenew</i></span>
+        </div>
+        <div class="panel-body">
+            <dl class="horizontal" style="text-align:center;"><dt>GPU 1:</dt><label class="switch"><input type="checkbox"><span class="choice round"></span></label></dl>
+        </div>
+    </div>
+
+    <div class="panel panel-border info">
+            <div class="panel__heading">CPU's
+                <span class="right refresh" data-ng-click="refreshStatus('true')"><i class="material-icons md-17">autorenew</i></span>
+            </div>
+            <div class="panel-body" style="text-align:center;">
+                    <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+                    <p>Selected Number of Cores: 5<span id="demo"></span></p>
+            </div>
+        </div>
+
+
+    <div class="form__field align-center"><button type="submit" class="btn success">Confirm</button></div>
+    </form>
+
+</div>
+
+</div>
