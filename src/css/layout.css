@@ -10,7 +10,7 @@
 
 ::-webkit-input-placeholder { font-weight: normal; }
 
-:not(input):not(textarea), :not(input):not(textarea)::after, :not(input):not(textarea)::before { 
+:not(input):not(textarea), :not(input):not(textarea)::after, :not(input):not(textarea)::before {
     -webkit-user-select: none; user-select: none; cursor: default; }
 
 html { width: 100%; height: 100%; font-size: 14px; }
@@ -253,8 +253,10 @@ dl.horizontal > dd { width: 60%; font-size: 0.96rem; }
 .pad-top-10 { padding-top: 10px; }
 .pad-top-20 { padding-top: 20px; }
 
+
+.pad-left-10 { padding-left: 10px; }
+
 .stretch { display: inline-block; width: 100%; }
 
 .pull-right { float: right; position: relative; }
 .pull-left { float: left; position: relative; }
-

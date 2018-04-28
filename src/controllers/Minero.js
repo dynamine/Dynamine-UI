@@ -18,11 +18,12 @@
 
         $scope.refreshWalletTokens = function(master) {
           createChart('#MineroWalletChart', {
-              type: 'horizontalBar',
-              data: { labels: ['Running', 'Pending'], datasets: [{
-                  data: [ 90, 78],
-                  label: 'Tokens In Progress', backgroundColor:['#10C469', '#FFCE56']
-              }] }
+              type: 'line',
+              data: { labels: [], datasets: [{
+                  data: [ 90, 66, 97, 78],
+                  label: 'tokens',
+                  backgroundColor:['#10C469', '#FFCE56']
+              }]}
           });
 
           if(!master || master !== true)
@@ -32,13 +33,13 @@
         $scope.refreshHashRate = function(master) {
           //Populating chart with static data for the sake of wireframes
           createChart('#MineroHashChart', {
-              type: 'bar',
-              data: { labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], datasets: [{
+              type: 'line',
+              data: { labels: [], datasets: [{
                   data: [ 30, 40, 15, 80, 45, 90], //TODO: Chnage to host data
                   backgroundColor: ['rgba(24, 138, 226, 0.5)', 'rgba(16, 196, 105, 0.5)', 'rgba(128, 197, 218, 0.5)',
                       'rgba(248, 142, 15, 0.5)', 'rgba(207, 32, 241, 0.5)', 'rgba(91, 105, 188, 0.5)', 'rgba(24, 138, 226, 0.5)'],
                   borderColor: ['#188AE2', '#10C469', '#80C5DA', '#F88E0F', '#CF20F1', '#5B69BC', '#188AE2'],
-                  borderWidth: 1, label: 'Daily Rates'
+                  borderWidth: 1, label: 'net hash rate'
               }] }
           });
 
