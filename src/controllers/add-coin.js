@@ -9,7 +9,7 @@
         viewFactory.prevUrl = null;
 
         $scope.addCoin = function() {
-          toast.success('Coin Successfully Added');
+          toast.success('Coin Added');
         }
     }]);
 })(window.angular, app);
