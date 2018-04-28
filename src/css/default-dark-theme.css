@@ -158,3 +158,5 @@ ul.list li { background-color: #394C57 }
 
 .left { float:left !important; }
 .right { float:right !important; }
+
+.square { border-radius:0px; }

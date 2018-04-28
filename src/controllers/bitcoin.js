@@ -22,7 +22,9 @@
               data: { labels: [], datasets: [{
                   data: [ 90, 66, 97, 78],
                   label: 'tokens',
-                  backgroundColor:['#10C469', '#FFCE56']
+                  backgroundColor: ['rgba(24, 138, 226, 0.5)', 'rgba(16, 196, 105, 0.5)', 'rgba(128, 197, 218, 0.5)',
+                      'rgba(248, 142, 15, 0.5)', 'rgba(207, 32, 241, 0.5)', 'rgba(91, 105, 188, 0.5)', 'rgba(24, 138, 226, 0.5)']
+                  //backgroundColor:['#10C469', '#FFCE56']
               }]}
           });
 
@@ -45,6 +47,10 @@
 
           if(!master || master !== true)
               toast.success('Node Status data has been updated');
+        };
+
+        $scope.removeCoin = function(){
+          toast.success('Removed Coin');
         };
 
         $scope.refreshHashRate(true);

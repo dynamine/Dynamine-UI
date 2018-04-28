@@ -36,11 +36,11 @@ let startMainWindow = function () {
     NOTE: Disable the login page here for development purposes
 
     */
-    mainWindow.loadURL('file://' + absPath + '/src/initialize.html');
-    //mainWindow.loadURL('file://' + absPath + '/src/index.html');
+    //mainWindow.loadURL('file://' + absPath + '/src/initialize.html');
+    mainWindow.loadURL('file://' + absPath + '/src/index.html');
 
     // Debugging
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
 
     mainWindow.on('closed', () => {
         mainWindow = null;
