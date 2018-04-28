@@ -17,7 +17,7 @@
                 <div class="panel__heading">Wallet Tokens
                     <span class="right refresh" data-ng-click="refreshWalletTokens()"><i class="material-icons md-17">autorenew</i></span>
                 </div>
-                <div class="panel__body"><canvas id="MineroWalletChart" height="100"></canvas></div>
+                <div class="panel__body"><canvas id="MoneroWalletChart" height="100"></canvas></div>
             </div><!-- .panel.panel-border.info -->
         </div>
 
@@ -27,7 +27,7 @@
                     <span class="right refresh" data-ng-click="refreshHashRate()"><i class="material-icons md-17">autorenew</i></span>
                 </div>
                 <div class="panel__body">
-                    <div class="vpadding-10"><canvas id="MineroHashChart" height="194"></canvas></div>
+                    <div class="vpadding-10"><canvas id="MoneroHashChart" height="194"></canvas></div>
                 </div>
             </div><!-- .panel.panel-border.info -->
         </div>
@@ -75,7 +75,6 @@
             <div class="panel__heading">Allocate CPU Cores</div>
             <div class="panel__body">
               <md-slider id="core-slider" max="10" md-discrete />
-              <h4>Allocated Cores: {{document.getElementById("core-slider")}}</h4>
             </div>
           </div>
         </div>

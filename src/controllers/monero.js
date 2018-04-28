@@ -1,6 +1,6 @@
 /* global app:true Chart:true */
 (function (angular, app, Chart) { 'use strict';
-    const controller = 'MineroController';
+    const controller = 'MoneroController';
     if (typeof app === 'undefined') throw (controller + ': app is undefined');
 
     Chart.defaults.global.defaultFontColor = '#9db4be';
@@ -17,7 +17,7 @@
         viewFactory.prevUrl = null;
 
         $scope.refreshWalletTokens = function(master) {
-          createChart('#MineroWalletChart', {
+          createChart('#MoneroWalletChart', {
               type: 'line',
               data: { labels: [], datasets: [{
                   data: [ 90, 66, 97, 78],
@@ -32,7 +32,7 @@
 
         $scope.refreshHashRate = function(master) {
           //Populating chart with static data for the sake of wireframes
-          createChart('#MineroHashChart', {
+          createChart('#MoneroHashChart', {
               type: 'line',
               data: { labels: [], datasets: [{
                   data: [ 30, 40, 15, 80, 45, 90], //TODO: Chnage to host data

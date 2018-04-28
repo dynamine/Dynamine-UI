@@ -21,4 +21,4 @@ HTML to pass validation by validators and browsers who might not support non-def
 # Fail
 
 - Attempted to use Angular Material UI Components for the tabs but they did not work.
-- I will look into implementing them custom with Angular 
+- I will look into implementing them custom with Angular

@@ -22,8 +22,8 @@ let mainWindow, appConfig = {dynamine: {}, app: {enableAnimation: true}};
 let startMainWindow = function () {
     mainWindow = new BrowserWindow({
         backgroundColor: '#1A242D',
-        width: 1100,
-        height: 580,
+        width: 1200,
+        height: 680,
         center: true,
         title: app.getName(),
         minHeight: 500,
@@ -33,11 +33,11 @@ let startMainWindow = function () {
 
     /**
 
-    NOTE: I am disabling the login page for development purposes
+    NOTE: Disable the login page here for development purposes
 
-    mainWindow.loadURL('file://' + absPath + '/src/initialize.html');
     */
-    mainWindow.loadURL('file://' + absPath + '/src/index.html');
+    mainWindow.loadURL('file://' + absPath + '/src/initialize.html');
+    //mainWindow.loadURL('file://' + absPath + '/src/index.html');
 
     // Debugging
     mainWindow.webContents.openDevTools();

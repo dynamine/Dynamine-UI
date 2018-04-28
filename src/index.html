@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="css/animations.css" />
 <link rel="stylesheet" type="text/css" href="css/layout.css" />
 <link rel="stylesheet" type="text/css" href="css/default-dark-theme.css" />
-<link rel="stylesheet" type="text/css" href="css/MineroCoin.css" />
+<link rel="stylesheet" type="text/css" href="css/MoneroCoin.css" />
 
 <!--Material Components-->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
@@ -21,12 +21,11 @@
     <div class="icon"><div>Dynamine</div></div>
     <nav class="navigation">
         <a class="navigation__link active" data-ng-href="#!/"><p><i class="material-icons">add_circle</i></p><p>Add Coin</p></a>
-        <a class="navigation__link" data-ng-href="#!/Minero"><p><img src="images/Minero-icon.png" ></img></p> <p>Minero</p></a>
-        <a class="navigation__link" data-ng-href="#!/Bitcoin"><p><img src="images/Bitcoin-icon.png" ></img></p> <p>Bitcoin</p></a>
-        <a class="navigation__link" data-ng-href="#!/Plugins"><p><img src="images/Zcash-icon.png" ></img></p><p>Zcash</p></a>
-        <a class="navigation__link" data-ng-href="#!/upstreams"><p><img src="images/Ethereum-icon.png" ></img></p><p>Ethereum</p></a>
-        <a class="navigation__link" data-ng-href="#!/api"><p><img src="images/Litecoin-icon.png" ></img></p><p>Litecoin</p></a>
-
+        <a class="navigation__link" data-ng-href="#!/bitcoin"><p><img src="images/Bitcoin-icon.png" ></img></p> <p>Bitcoin</p></a>
+        <a class="navigation__link" data-ng-href="#!/ethereum"><p><img src="images/Ethereum-icon.png" ></img></p><p>Ethereum</p></a>
+        <a class="navigation__link" data-ng-href="#!/litecoin"><p><img src="images/Litecoin-icon.png" ></img></p><p>Litecoin</p></a>
+        <a class="navigation__link" data-ng-href="#!/monero"><p><img src="images/Monero-icon.png" ></img></p> <p>Monero</p></a>
+        <a class="navigation__link" data-ng-href="#!/zcash"><p><img src="images/Zcash-icon.png" ></img></p><p>Zcash</p></a>
     </nav><!-- .navigation -->
 </aside>
 
@@ -73,27 +72,18 @@ var ngDependency  = ['ngRoute', 'ngMaterial'];
 
 <script type="text/javascript" src="scripts/dynamine-app.js"></script>
 <script type="text/javascript" src="js/Chart.bundle.min.js"></script>
-
 <script type="text/javascript" src="scripts/app-index.js"></script>
 
+<!--Loading our controllers-->
 <script type="text/javascript" src="controllers/header.js"></script>
 <script type="text/javascript" src="controllers/footer.js"></script>
-<script type="text/javascript" src="controllers/dashboard.js"></script>
-<script type="text/javascript" src="controllers/api-list.js"></script>
-<script type="text/javascript" src="controllers/api-edit.js"></script>
-<script type="text/javascript" src="controllers/plugin-edit.js"></script>
-<script type="text/javascript" src="controllers/consumer-list.js"></script>
-<script type="text/javascript" src="controllers/consumer-edit.js"></script>
-<script type="text/javascript" src="controllers/plugin-list.js"></script>
-<script type="text/javascript" src="controllers/cluster-list.js"></script>
-<script type="text/javascript" src="controllers/certificate-list.js"></script>
-<script type="text/javascript" src="controllers/certificate-edit.js"></script>
-<script type="text/javascript" src="controllers/upstream-list.js"></script>
-<script type="text/javascript" src="controllers/upstream-edit.js"></script>
-<script type="text/javascript" src="controllers/settings.js"></script>
+<script type="text/javascript" src="controllers/add-coin.js"></script>
 <script type="text/javascript" src="controllers/tab-controller.js"></script>
-<scipt type="text/javascript" src="js/CoinSlider.js"></scipt>
-<script type="text/javascript" src="controllers/Minero.js"></script>
+<script type="text/javascript" src="controllers/bitcoin.js"></script>
+<script type="text/javascript" src="controllers/ethereum.js"></script>
+<script type="text/javascript" src="controllers/litecoin.js"></script>
+<script type="text/javascript" src="controllers/monero.js"></script>
+<script type="text/javascript" src="controllers/zcash.js"></script>
 
 <script type="text/javascript">
 (function (angular) {
