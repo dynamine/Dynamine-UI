@@ -20,8 +20,8 @@
           createChart('#MoneroWalletChart', {
               type: 'line',
               data: { labels: [], datasets: [{
-                  data: [ 90, 66, 97, 78],
-                  label: 'tokens',
+                  data: [ 0.01, 0.025, 0.011, 0.02],
+                  label: 'coins',
                   backgroundColor: ['rgba(24, 138, 226, 0.5)', 'rgba(16, 196, 105, 0.5)', 'rgba(128, 197, 218, 0.5)',
                       'rgba(248, 142, 15, 0.5)', 'rgba(207, 32, 241, 0.5)', 'rgba(91, 105, 188, 0.5)', 'rgba(24, 138, 226, 0.5)']
                   //backgroundColor:['#10C469', '#FFCE56']

@@ -14,7 +14,7 @@
         <div class="row">
         <div class="col md-6">
             <div class="panel panel-border info">
-                <div class="panel__heading">Wallet Tokens
+                <div class="panel__heading">Wallet Coins
                     <span class="right refresh" data-ng-click="refreshWalletTokens()"><i class="material-icons md-17">autorenew</i></span>
                 </div>
                 <div class="panel__body"><canvas id="MoneroWalletChart" height="140"></canvas></div>
@@ -34,13 +34,13 @@
         </div><!-- .row -->
 
         <div class="row">
-        <div class="col md-3">
+        <div class="col md-2">
             <div class="panel panel-border info">
             <div class="panel__heading">Wallet Income</div>
             <div class="panel__body">
-                <dl class="horizontal"><dd>+ 0.4 Monero</dd></dl>
-                <dl class="horizontal"><dd>+ 1.2 Monero</dd></dl>
-                <dl class="horizontal"><dd>+ 2.0 Monero</dd></dl>
+                <dl class="horizontal"><dd>+ 0.4 XMR</dd></dl>
+                <dl class="horizontal"><dd>+ 1.2 XMR</dd></dl>
+                <dl class="horizontal"><dd>+ 2.0 XMR</dd></dl>
             </div>
             </div>
         </div>
@@ -54,11 +54,14 @@
             </div>
         </div>
 
-        <div class="col md-3">
+        <div class="col md-5">
             <div class="panel panel-border info">
-            <div class="panel__body">
-                <dl class="horizontal"><dt>Current Hash Rate: </dt><dd>3.14 GH/s</dd></dl> <!-- TODO: change Dyanmine config to include the following items-->
-            </div>
+              <div class="panel__heading">Current Hash Rates:</div>
+              <div class="panel__body">
+                  <dl class="horizontal"><dt>localhost.gpu0:</dt><dd>5.34mh/s</dd></dl>
+                  <dl class="horizontal"><dt>localhost.gpu1:</dt><dd>10.1Gh/s</dd></dl>
+                  <dl class="horizontal"><dt>Total:</dt><dd>10.1534 Gh/s</dd></dl>
+              </div>
             </div>
         </div>
       </div><!-- .row -->
