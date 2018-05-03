@@ -54,6 +54,10 @@
                 templateUrl: 'views/zcash.html',
                 controller: 'ZcashController'
             })
+            .when('/settings', {
+                templateUrl: 'views/settings.html',
+                controller: 'SettingsController'
+            })
             .otherwise({
                 templateUrl: 'views/add-coin.html',
                 controller: 'AddCoinController'

@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="row">
+      <div class="col md-12">
+        <div class="panel panel-border info">
+          <div class="panel__body">
+            <form class="form padding-10">
+              <div class="form__field">
+                <h1>Cluster Management:</h1>
+                </div>
+                <div class="form__field">
+                    <label class="field-label">Cluster ID:</label>
+                    <div class="field-input"><input type="text"/></div>
+                </div>
+                <div class="form__field">
+                    <label class="field-label">Cluster Password:</label>
+                    <div class="field-input"><input type="text"/></div>
+                </div>
+                <div class="form__field">
+                    <button class="btn info" type="submit" data-ng-click="UserLoggingIn()">Connect Cluster</button>
+                </div>
+            </form>
+            <form class="form padding-10">
+                <div class="form__field">
+                  <h1>Daemon Connection:</h1>
+                  </div>
+                  <div class="form__field">
+                      <label class="field-label">Daemon Host:</label>
+                      <div class="field-input"><input type="text"/></div>
+                  </div>
+                  <div class="form__field">
+                      <label class="field-label">Daemon Password:</label>
+                      <div class="field-input"><input type="text"/></div>
+                  </div>
+                  <div class="form__field">
+                      <button class="btn info" type="submit" data-ng-click="DaemonConnect()">Connect Daemon</button>
+                  </div>
+              </form>    
+              <form class="form padding-10">
+                <div class="form__field">
+                  <h1>Daemon Management:</h1>
+                  </div>
+                  <div class="padding-10"><label class="checkbox success"><input type="checkbox"><span class="pad-left-10">Turn Daemon On/Off</span></label></div>
+                  <button class="btn info" data-ng-click="DaemonToggle()">Daemon On/Off</button>
+              </form>    
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
