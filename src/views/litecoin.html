@@ -1,0 +1,99 @@
+
+
+<div class="container" data-ng-controller="TabController as tabs">
+      <div class="row">
+          <button class="btn col md-6 square" data-ng-class="{success:tabs.isSelected(1), default:!tabs.isSelected(1) }" data-ng-click="tabs.selectTab(1)">
+            Stats
+          </button>
+          <button class="btn col md-6 square default" data-ng-class="{success:tabs.isSelected(2), default:!tabs.isSelected(2) }" data-ng-click="tabs.selectTab(2)">
+            Resources
+          </button>
+      </div>
+
+      <div data-ng-show="tabs.isSelected(1)">
+        <div class="row">
+        <div class="col md-6">
+            <div class="panel panel-border info">
+                <div class="panel__heading">Wallet Coins
+                    <span class="right refresh" data-ng-click="refreshWalletTokens()"><i class="material-icons md-17">autorenew</i></span>
+                </div>
+                <div class="panel__body"><canvas id="LitecoinWalletChart" height="140"></canvas></div>
+            </div><!-- .panel.panel-border.info -->
+        </div>
+
+        <div class="col md-6">
+            <div class="panel panel-border info">
+                <div class="panel__heading">Hash Rate
+                    <span class="right refresh" data-ng-click="refreshHashRate()"><i class="material-icons md-17">autorenew</i></span>
+                </div>
+                <div class="panel__body">
+                    <div class="vpadding-10"><canvas id="LitecoinHashChart" height="140"></canvas></div>
+                </div>
+            </div><!-- .panel.panel-border.info -->
+        </div>
+        </div><!-- .row -->
+
+        <div class="row">
+        <div class="col md-2">
+            <div class="panel panel-border info">
+            <div class="panel__heading">Wallet Income</div>
+            <div class="panel__body">
+                <dl class="horizontal"><dd>+ 0.4 LTC</dd></dl>
+                <dl class="horizontal"><dd>+ 1.2 LTC</dd></dl>
+                <dl class="horizontal"><dd>+ 2.0 LTC</dd></dl>
+            </div>
+            </div>
+        </div>
+
+        <div class="col md-5">
+            <div class="panel panel-border info">
+            <div class="panel__body">
+                <dl class="horizontal"><dt>Pool Domain: </dt><dd>us-east.stratum.slushpool.com</dd></dl> <!-- TODO: change Dyanmine config to include the following items-->
+                <dl class="horizontal"><dt>Wallet Address:</dt><dd>3J98t1WpEZ73CNmQviec</dd></dl>
+            </div>
+            </div>
+        </div>
+
+        <div class="col md-5">
+            <div class="panel panel-border info">
+              <div class="panel__heading">Current Hash Rates:</div>
+              <div class="panel__body">
+                  <dl class="horizontal"><dt>localhost.gpu0:</dt><dd>5.34mh/s</dd></dl>
+                  <dl class="horizontal"><dt>localhost.gpu1:</dt><dd>10.1Gh/s</dd></dl>
+                  <dl class="horizontal"><dt>Total:</dt><dd>10.1534 Gh/s</dd></dl>
+              </div>
+            </div>
+        </div>
+      </div><!-- .row -->
+    </div>
+
+    <!-- Begin Resource Allocation Page -->
+    <div  data-ng-show="tabs.isSelected(2)">
+      <div class="row">
+        <div class="col md-6">
+          <div class="panel panel-border info">
+            <div class="panel__heading">[localhost] Allocate GPUs</div>
+            <div class="panel__body align-left">
+              <div class="padding-10"><label class="checkbox success"><input type="checkbox"><span class="pad-left-10">GPU 1</span></label></div>
+              <div class="padding-10"><label class="checkbox success"><input type="checkbox"><span class="pad-left-10">GPU 2</span></label></div>
+              <div class="padding-10"><label class="checkbox success"><input type="checkbox"><span class="pad-left-10">GPU 3</span></label></div>
+            </div>
+          </div>
+        </div>
+        <div class="col md-6">
+          <div class="panel panel-border info">
+            <div class="panel__heading">[localhost] Allocate CPU Cores</div>
+            <div class="panel__body">
+              <md-slider id="core-slider" max="10" md-discrete />
+            </div>
+          </div>
+        </div>
+      </div> <!-- .row-->
+
+      <div class="row">
+        <div class="col md-2">
+          <button class="btn danger" data-ng-click="removeCoin()">Remove Coin</button>
+        </div>
+      </div>
+    </div>
+</div><!-- .container -->
