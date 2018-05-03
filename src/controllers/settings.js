@@ -18,7 +18,7 @@
             toast.success('Daemon Connecting');
         }
         //Call login page if not running locally
-        if($scope.dynamineConfig.host == "localhost") {
+        if($scope.dynamineConfig.host == "localhost:4001") {
             $element.fadeOut({ duration: 300, complete: function () { window.location.href = 'settings.html'; } });
         }
         else {
