@@ -1,13 +1,17 @@
 /* global app:true Chart:true */
-(function (angular, app) {
+(function (angular, app, dynamineConfig, ipcrenderer) {
     'use strict';
     const controller = 'SettingsController';
+    
     if (typeof app === 'undefined') throw (controller + ': app is undefined');
+    console.log("host");
+    console.log(dynamineConfig.host);
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', function ($scope, ajax, toast, viewFactory) {
+    //console.log(window);
+    app.controller(controller, ['$scope', '$element', 'ajax', 'toast', 'viewFactory', function ($scope, $element, ajax, toast, viewFactory) {
         viewFactory.title = 'Settings';
         viewFactory.prevUrl = null;
-
+        $scope.dynamineConfig = dynamineConfig;
         $scope.UserLoggingIn = function() {
           toast.success('User Logging in');
         }
@@ -18,11 +22,22 @@
             toast.success('Daemon Connecting');
         }
         //Call login page if not running locally
-        if($scope.dynamineConfig.host == "localhost:4001") {
-            $element.fadeOut({ duration: 300, complete: function () { window.location.href = 'settings.html'; } });
+        const path = require('path');
+ 
+        console.log("Path: ");
+        console.log(path);
+        console.log($element);
+        
+
+
+        
+        console.log("Windows location href");
+        console.log(window.location.href);
+        if($scope.dynamineConfig.host == "localhost") {
+            $element.fadeOut({ duration: 300, complete: function () { window.location.href = 'index.html'; } });
         }
         else {
-            $element.fadeOut({ duration: 300, complete: function () { window.location.href = 'initialize.html'; } });v
+           
         }
 
     }]);
