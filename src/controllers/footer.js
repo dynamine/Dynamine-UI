@@ -12,7 +12,7 @@
 
         $http({
             method: 'GET',
-            url : 'https://api.github.com/repos/ajaysreedhar/dynamine/releases/latest'
+            url : 'https://api.github.com/repos/ajaysreedhar/dynamine/releases/latest' //TODO: Replace with dynamine release once we tag one
 
         }).then(function (response) {
             let release = response.data;

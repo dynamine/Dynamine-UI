@@ -15,7 +15,28 @@
     app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', function ($scope, ajax, toast, viewFactory) {
         viewFactory.title = 'Bitcoin';
         viewFactory.prevUrl = null;
+        var walletAddress;
+        var response;
+        console.log($scope);
+        console.log(viewFactory);
 
+        ajax({
+            url: config.url,
+            type: "GET",
+            success: function(data) {
+                walletAddress = data;
+            }
+        });
+        alert("Wallet: " + walletAddress);
+
+        ajax({
+            url: "http://" + walletAddress + "",
+            type: "GET",
+            datatype: "json",
+            success: function(data) {
+                walletAddress = data;
+            }
+        });
         $scope.refreshWalletTokens = function(master) {
           createChart('#BitcoinWalletChart', {
               type: 'line',
