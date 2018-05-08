@@ -17,15 +17,15 @@
 <body class="body">
 
 <div class="app-layout hidden">
-<aside class="drawer">
+<aside class="drawer" data-ng-controller="EnabledCoins as coins">
     <div class="icon"><div>Dynamine</div></div>
     <nav class="navigation">
         <a class="navigation__link active" data-ng-href="#!/"><p><i class="material-icons">add_circle</i></p><p>Add Coin</p></a>
-        <a class="navigation__link" data-ng-href="#!/bitcoin"><p><img src="images/Bitcoin-icon.png" ></img></p> <p>Bitcoin</p></a>
-        <a class="navigation__link" data-ng-href="#!/ethereum"><p><img src="images/Ethereum-icon.png" ></img></p><p>Ethereum</p></a>
-        <a class="navigation__link" data-ng-href="#!/litecoin"><p><img src="images/Litecoin-icon.png" ></img></p><p>Litecoin</p></a>
-        <a class="navigation__link" data-ng-href="#!/monero"><p><img src="images/Monero-icon.png" ></img></p> <p>Monero</p></a>
-        <a class="navigation__link" data-ng-href="#!/zcash"><p><img src="images/Zcash-icon.png" ></img></p><p>Zcash</p></a>
+        <a class="navigation__link" data-ng-show="coins.isEnabled('bitcoin')" data-ng-href="#!/bitcoin"><p><img src="images/Bitcoin-icon.png" ></img></p> <p>Bitcoin</p></a>
+        <a class="navigation__link" data-ng-show="coins.isEnabled('ethereum')" data-ng-href="#!/ethereum"><p><img src="images/Ethereum-icon.png" ></img></p><p>Ethereum</p></a>
+        <a class="navigation__link" data-ng-show="coins.isEnabled('litecoin')" data-ng-href="#!/litecoin"><p><img src="images/Litecoin-icon.png" ></img></p><p>Litecoin</p></a>
+        <a class="navigation__link" data-ng-show="coins.isEnabled('monero')" data-ng-href="#!/monero"><p><img src="images/Monero-icon.png" ></img></p> <p>Monero</p></a>
+        <a class="navigation__link" data-ng-show="coins.isEnabled('zcash')" data-ng-href="#!/zcash"><p><img src="images/Zcash-icon.png" ></img></p><p>Zcash</p></a>
     </nav><!-- .navigation -->
 </aside>
 
@@ -79,6 +79,7 @@ var ngDependency  = ['ngRoute', 'ngMaterial'];
 <script type="text/javascript" src="controllers/footer.js"></script>
 <script type="text/javascript" src="controllers/add-coin.js"></script>
 <script type="text/javascript" src="controllers/tab-controller.js"></script>
+<script type="text/javascript" src="controllers/enabled-coins.js"></script>
 <script type="text/javascript" src="controllers/bitcoin.js"></script>
 <script type="text/javascript" src="controllers/ethereum.js"></script>
 <script type="text/javascript" src="controllers/litecoin.js"></script>

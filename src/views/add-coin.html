@@ -7,7 +7,8 @@
             <div class="form__field">
               <label class="field-label">Select Coin:</label>
               <div class="field-input">
-                <select class="stretch">
+                <select class="stretch" data-ng-model="coin.name">
+                  <option value="" disabled selected>Choose a Coin</option>
                   <option value="bitcoin">Bitcoin</option>
                   <option value="ethereum">Ethereum</option>
                   <option value="litecoin">Litecoin</option>
@@ -18,26 +19,26 @@
             </div>
             <div class="form__field">
                 <label class="field-label">Wallet Address:</label>
-                <div class="field-input"><input type="text"/></div>
+                <div class="field-input"><input type="text" data-ng-model="coin.walletAddress"/></div>
             </div>
 
             <h2>Pooling Info:</h2>
 
             <div class="form__field">
                 <label class="field-label">Server:</label>
-                <div class="field-input"><input type="text"/></div>
+                <div class="field-input"><input type="text" data-ng-model="coin.poolServer"/></div>
             </div>
             <div class="form__field">
                 <label class="field-label">Username:</label>
-                <div class="field-input"><input type="text"/></div>
+                <div class="field-input"><input type="text" data-ng-model="coin.poolUsername"/></div>
             </div>
             <div class="form__field">
                 <label class="field-label">Password:</label>
-                <div class="field-input"><input type="text"/></div>
+                <div class="field-input"><input type="password" data-ng-model="coin.poolPassword"/></div>
             </div>
 
             <div class="form__field">
-                <button class="btn info" type="submit" data-ng-click="addCoin()">Confirm</button>
+                <button class="btn info" type="submit" data-ng-click="addCoin(coin)">Confirm</button>
             </div>
           </form>
         </div>
