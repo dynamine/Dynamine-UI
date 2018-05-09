@@ -108,45 +108,49 @@
     }
 
     return {
-        disableCoin: function(coin) {
+        disableCoin: function(coinName) {
           // preventing incorrect field creation
-          if (typeof config.coins[coin].enabled !== 'undefined') { config.coins[coin].enabled = false; }
+          if (typeof config.coins[coinName].enabled !== 'undefined') { config.coins[coinName].enabled = false; }
+          saveConfig();
         },
         enableCoin: function(coin) {
           // preventing incorrect field creation
-          if (typeof config.coins[coin].enabled !== 'undefined') { config.coins[coin].enabled = true; }
+          if (typeof config.coins[coinName].enabled !== 'undefined') { config.coins[coinName].enabled = true; }
+          saveConfig();
         },
-        isCoinEnabled: function(coin) {
-          let ret = config.coins[coin].enabled;
+        addCoin: function(coin) {
+          if (typeof config.coins[coin.name] !== 'undefined') {
+            config.coins[coin.name].enabled       = true;
+            config.coins[coin.name].walletAddress = coin.walletAddress;
+            config.coins[coin.name].poolServer    = coin.poolServer;
+            config.coins[coin.name].poolUsername  = coin.poolUsername;
+            config.coins[coin.name].poolPassword  = coin.poolPassword;
+            saveConfig();
+          }
+        },
+        isCoinEnabled: function(coinName) {
+          let ret = config.coins[coinName].enabled;
           return (typeof ret !== 'undefined') ? ret : false; // ensuring a boolean is returned. Even though undefine is a falsey type, a boolean is nicer
         },
-        setCoinWalletAddress: function(coin, address) {
-
-        },
-        setCoinPoolServer: function(coin, server) {
-
-        },
-        setCoinPoolUsername: function(coin, username) {
-
-        },
-        setCoinPoolPassword: function(coin, pasword) {
-
-        },
-        getInfoForCoin: function(coin) {
-          return Object.assign({}, config.coins['coin']);
+        getInfoForCoin: function(coinName) {
+          return Object.assign({}, config.coins[coinName]);
         },
 
-        setClusterId: function() {
-
+        setClusterId: function(clusterId) {
+          config.clusterId = clusterId;
+          saveConfig();
         },
-        setClusterPasword: function() {
-
+        setClusterPasword: function(clusterPassword) {
+          config.clusterPassword = clusterPassword;
+          saveConfig();
         },
         setDaemonHost: function(host) {
-
+          config.daemonHost = host;
+          saveConfig();
         },
         setDaemonPassword: function(pass) {
-
+          config.daemonPassword = pass;
+          saveConfig();
         },
 
         getConfig: function() {

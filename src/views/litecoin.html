@@ -48,8 +48,8 @@
         <div class="col md-5">
             <div class="panel panel-border info">
             <div class="panel__body">
-                <dl class="horizontal"><dt>Pool Domain: </dt><dd>us-east.stratum.slushpool.com</dd></dl> <!-- TODO: change Dyanmine config to include the following items-->
-                <dl class="horizontal"><dt>Wallet Address:</dt><dd>3J98t1WpEZ73CNmQviec</dd></dl>
+                <dl class="horizontal" data-ng-show="getPoolHost()"><dt>Pool Domain: </dt><dd>{{ getPoolHost() }}</dd></dl>
+                <dl class="horizontal"><dt>Wallet Address:</dt><dd>{{ getWalletAddress() }}</dd></dl>
             </div>
             </div>
         </div>
@@ -84,15 +84,15 @@
           <div class="panel panel-border info">
             <div class="panel__heading">[localhost] Allocate CPU Cores</div>
             <div class="panel__body">
-              <md-slider id="core-slider" max="10" md-discrete />
+              <md-slider id="core-slider" max="10" aria-label="Allocated CPU Cores" md-discrete />
             </div>
           </div>
         </div>
       </div> <!-- .row-->
 
-      <div class="row">
+      <div class="row" data-ng-controller="RemoveCoinController">
         <div class="col md-2">
-          <button class="btn danger" data-ng-click="removeCoin()">Remove Coin</button>
+          <button class="btn danger" data-ng-click="removeCoin('litecoin')">Remove Coin</button>
         </div>
       </div>
     </div>

@@ -12,13 +12,19 @@
         return new Chart (angular.element(container)[0].getContext('2d'), data);
     };
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'callbcWallet', function ($scope, ajax, toast, viewFactory, callbcWallet) {
+    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', function ($scope, ajax, toast, viewFactory, dynamineConfig) {
         viewFactory.title = 'Bitcoin';
         viewFactory.prevUrl = null;
         var walletAddress;
         var response;
-        console.log($scope);
-        console.log(viewFactory);
+
+        $scope.getPoolHost = function() {
+          return dynamineConfig.getInfoForCoin('bitcoin').poolServer;
+        }
+
+        $scope.getWalletAddress = function() {
+          return dynamineConfig.getInfoForCoin('bitcoin').walletAddress;
+        }
 
         $scope.refreshWalletTokens = function(master) {
           createChart('#BitcoinWalletChart', {

@@ -8,11 +8,18 @@
         viewFactory.title = 'Add Coin';
         viewFactory.prevUrl = null;
 
+        $scope.isEnabled = function(coin){
+          return dynamineConfig.isCoinEnabled(coin);
+        }
+
         $scope.addCoin = function(coin) {
-          console.log(JSON.stringify(coin))
-          dynamineConfig.enableCoin("bitcoin");
-          dynamineConfig.saveConfig();
-          toast.success('Coin Added');
+          if(!coin.name || !coin.walletAddress) {
+            toast.error("Must specify a coin and wallet address");
+          } else {
+            dynamineConfig.addCoin(coin);
+            toast.success('Coin Added');
+            document.getElementById('add_coin_select').value = ""; //reseting the select to placeholder option
+          }
         }
     }]);
 })(window.angular, app);
