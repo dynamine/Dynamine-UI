@@ -19,7 +19,7 @@
         var response;
         console.log($scope);
         console.log(viewFactory);
-
+        
         callbcWallet.callconfig();
 
         $scope.refreshWalletTokens = function(master) {

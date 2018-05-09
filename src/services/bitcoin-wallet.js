@@ -1,24 +1,25 @@
 (function(angular, app) {
-    app.factory('callbcwallet', function(dynamineconfig){
-
+    app.factory('callbcWallet', ['dynamineConfig', 'ajax', function(dynamineConfig, ajax){
+        console.log("Here is the config: ");
+        console.log(dynamineConfig);
         var walletAddress;
-
-        callconfig: return function(dynamineconfig) {
-                var config = dynamineconfig;
-                ajax({
+        var config = dynamineConfig;
+        return {
+        callconfig: function () {
+                $.ajax({
                         url: config.getInfoForCoin("bitcoin").walletAPIHost,
                         type: "GET",
                         success: function(data) {
                             walletAddress = data;
                         }
                 });
-
+                
                 alert("Wallet: " + walletAddress);
-        }    
+        },    
                 
         
-        callwallet: return function() {
-                ajax({
+        callwallet: function() {
+                $.ajax({
                         url: "http://" + walletAddress + "",
                         type: "GET",
                         datatype: "json",
@@ -29,5 +30,7 @@
 
         }
 
-    });
+
+};
+    }]);
   })(window.angular, app)
