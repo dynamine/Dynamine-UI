@@ -20,23 +20,23 @@
         console.log($scope);
         console.log(viewFactory);
 
-        ajax({
-            url: config.url,
-            type: "GET",
-            success: function(data) {
-                walletAddress = data;
-            }
-        });
-        alert("Wallet: " + walletAddress);
-
-        ajax({
-            url: "http://" + walletAddress + "",
-            type: "GET",
-            datatype: "json",
-            success: function(data) {
-                walletAddress = data;
-            }
-        });
+        // ajax({
+        //     url: config.url,
+        //     type: "GET",
+        //     success: function(data) {
+        //         walletAddress = data;
+        //     }
+        // });
+        // alert("Wallet: " + walletAddress);
+        //
+        // ajax({
+        //     url: "http://" + walletAddress + "",
+        //     type: "GET",
+        //     datatype: "json",
+        //     success: function(data) {
+        //         walletAddress = data;
+        //     }
+        // });
         $scope.refreshWalletTokens = function(master) {
           createChart('#BitcoinWalletChart', {
               type: 'line',

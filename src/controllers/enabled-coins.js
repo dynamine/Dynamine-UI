@@ -1,7 +1,7 @@
 (function (app) {
     'use strict';
 
-    const controller = 'EnabledCoins';
+    const controller = 'EnabledCoinsController';
     if (typeof app === 'undefined') throw (controller + ': app is undefined');
 
     app.controller(controller, ['dynamineConfig', function (config) {
