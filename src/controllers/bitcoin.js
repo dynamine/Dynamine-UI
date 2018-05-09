@@ -12,7 +12,7 @@
         return new Chart (angular.element(container)[0].getContext('2d'), data);
     };
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', function ($scope, ajax, toast, viewFactory) {
+    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'callbcWallet', function ($scope, ajax, toast, viewFactory, callbcWallet) {
         viewFactory.title = 'Bitcoin';
         viewFactory.prevUrl = null;
         var walletAddress;
@@ -20,23 +20,6 @@
         console.log($scope);
         console.log(viewFactory);
 
-        // ajax({
-        //     url: config.url,
-        //     type: "GET",
-        //     success: function(data) {
-        //         walletAddress = data;
-        //     }
-        // });
-        // alert("Wallet: " + walletAddress);
-        //
-        // ajax({
-        //     url: "http://" + walletAddress + "",
-        //     type: "GET",
-        //     datatype: "json",
-        //     success: function(data) {
-        //         walletAddress = data;
-        //     }
-        // });
         $scope.refreshWalletTokens = function(master) {
           createChart('#BitcoinWalletChart', {
               type: 'line',

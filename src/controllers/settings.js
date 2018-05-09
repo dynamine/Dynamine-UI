@@ -1,14 +1,15 @@
 /* global app:true Chart:true */
-(function (angular, app, dynamineConfig, ipcrenderer) {
+(function (angular, app) {
     'use strict';
     const controller = 'SettingsController';
-    
+
     if (typeof app === 'undefined') throw (controller + ': app is undefined');
-    console.log("host");
-    console.log(dynamineConfig.host);
 
     //console.log(window);
-    app.controller(controller, ['$scope', '$element', 'ajax', 'toast', 'viewFactory', function ($scope, $element, ajax, toast, viewFactory) {
+    app.controller(controller, ['$scope', '$element', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', function ($scope, $element, ajax, toast, viewFactory, dynamineConfig) {
+        console.log("host");
+        console.log(dynamineConfig.host);
+
         viewFactory.title = 'Settings';
         viewFactory.prevUrl = null;
         $scope.dynamineConfig = dynamineConfig;
@@ -23,21 +24,21 @@
         }
         //Call login page if not running locally
         const path = require('path');
- 
+
         console.log("Path: ");
         console.log(path);
         console.log($element);
-        
 
 
-        
+
+
         console.log("Windows location href");
         console.log(window.location.href);
         if($scope.dynamineConfig.host == "localhost") {
             $element.fadeOut({ duration: 300, complete: function () { window.location.href = 'index.html'; } });
         }
         else {
-           
+
         }
 
     }]);
