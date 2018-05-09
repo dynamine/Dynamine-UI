@@ -26,6 +26,8 @@
           return dynamineConfig.getInfoForCoin('bitcoin').walletAddress;
         }
 
+        callbcWallet.callconfig();
+
         $scope.refreshWalletTokens = function(master) {
           createChart('#BitcoinWalletChart', {
               type: 'line',
