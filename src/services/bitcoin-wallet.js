@@ -35,7 +35,7 @@
                 return walletdatastats;
         }
 
-
-};
-    }]);
-  })(window.angular, app)
+      
+    };
+  }]);
+})(window.angular, app)

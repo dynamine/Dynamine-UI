@@ -1,5 +1,7 @@
 (function(angular, app, net) {
   app.factory('daemon',[ 'toast', 'dynamineConfig', function(toast, dynamineConfig){
+    let handlers = {} //where we will put code that handles incoming data
+
     let startCoinCmd = {
       "cmd": "startMiner",
       "data": {
@@ -35,7 +37,9 @@
         toast.info("connected to daemon at " + config.daemonHost + ":" + config.daemonPort);
       });
 
-      daemonConn.on('data', (data) => {
+      daemonConn.on('data', (dataRaw) => {
+        let data = JSON.parse(dataRaw);
+
         //TODO: Handle map incoming commands to handlers
       });
 
@@ -69,6 +73,13 @@
       },
       connect: function() {
         connectToDaemon();
+      },
+      /**
+      * Whenever a command is received it will pass the data on to a handler.
+      * These handlers must be registered with this controller to be used.
+      */
+      registerCmdHandler: function(cmdName, callback) {
+        handlers['cmdName'] = callback;
       }
     }
   }]);

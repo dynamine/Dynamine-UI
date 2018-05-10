@@ -15,13 +15,39 @@
     app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', function ($scope, ajax, toast, viewFactory, dynamineConfig) {
         viewFactory.title = 'Zcash';
         viewFactory.prevUrl = null;
+        let coinName = "zcash";
+
+        $scope.resources = dynamineConfig.getResources();
+
+        $scope.allocateResource = function(resource) {
+          if( document.getElementById(resource.name).checked) {
+            if(resource.coin && resource.coin != coinName) {
+              //TODO: Call to remove old miner
+            }
+            dynamineConfig.allocateResource(true, resource.name, coinName);
+            $scope.resources = dynamineConfig.getResources();
+            //TODO: Call to add new miner
+          } else {
+            dynamineConfig.allocateResource(false, resource.name, "");
+            $scope.resources = dynamineConfig.getResources();
+            //TODO: Call to remove old miner
+          }
+        }
+
+        $scope.resourceChecked = function(resource) {
+          return (resource.allocated && resource.coin == coinName);
+        }
 
         $scope.getPoolHost = function() {
-          return dynamineConfig.getInfoForCoin('zcash').poolServer;
+          return dynamineConfig.getInfoForCoin(coinName).poolServer;
         }
 
         $scope.getWalletAddress = function() {
-          return dynamineConfig.getInfoForCoin('zcash').walletAddress;
+          return dynamineConfig.getInfoForCoin(coinName).walletAddress;
+        }
+
+        $scope.getDaemonHost = function() {
+          return dynamineConfig.getConfig().daemonHost;
         }
 
         $scope.refreshWalletTokens = function(master) {

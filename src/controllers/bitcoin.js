@@ -29,16 +29,39 @@
             return walletAddress;
         }
 
+        var response;
+        let coinName = "bitcoin";
+
+        $scope.resources = dynamineConfig.getResources();
+
+        $scope.allocateResource = function(resource) {
+          if( document.getElementById(resource.name).checked) {
+            if(resource.coin && resource.coin != coinName) {
+              //TODO: Call to remove old miner
+            }
+            dynamineConfig.allocateResource(true, resource.name, coinName);
+            $scope.resources = dynamineConfig.getResources();
+            //TODO: Call to add new miner
+          } else {
+            dynamineConfig.allocateResource(false, resource.name, "");
+            $scope.resources = dynamineConfig.getResources();
+            //TODO: Call to remove old miner
+          }
+        }
+
+        $scope.resourceChecked = function(resource) {
+          return (resource.allocated && resource.coin == coinName);
+        }
 
         $scope.getPoolHost = function() {
-          return dynamineConfig.getInfoForCoin('bitcoin').poolServer;
+          return dynamineConfig.getInfoForCoin(coinName).poolServer;
         }
 
         $scope.getWalletAddress = function() {
-          return dynamineConfig.getInfoForCoin('bitcoin').walletAddress;
+          return dynamineConfig.getInfoForCoin(coinName).walletAddress;
         }
 
-        callbcWallet.callconfig();
+        //callbcWallet.callconfig();
 
         $scope.refreshWalletTokens = function(master) {
           createChart('#BitcoinWalletChart', {
@@ -55,6 +78,10 @@
           if(!master || master !== true)
               toast.success('Timers data has been updated');
         };
+
+        $scope.getDaemonHost = function() {
+          return dynamineConfig.getConfig().daemonHost;
+        }
 
         $scope.refreshHashRate = function(master) {
           //Populating chart with static data for the sake of wireframes

@@ -15,6 +15,7 @@
     app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig','callliteWallet',function ($scope, ajax, toast, viewFactory, dynamineConfig, callliteWallet) {
         viewFactory.title = 'Litecoin';
         viewFactory.prevUrl = null;
+<<<<<<< HEAD
         var walletAddress;
         var walletstats;
 
@@ -29,13 +30,42 @@
             return walletAddress;
         }
 
+=======
+        let coinName = "litecoin";
+
+
+        $scope.resources = dynamineConfig.getResources();
+
+        $scope.allocateResource = function(resource) {
+          if( document.getElementById(resource.name).checked) {
+            if(resource.coin && resource.coin != coinName) {
+              //TODO: Call to remove old miner
+            }
+            dynamineConfig.allocateResource(true, resource.name, coinName);
+            $scope.resources = dynamineConfig.getResources();
+            //TODO: Call to add new miner
+          } else {
+            dynamineConfig.allocateResource(false, resource.name, "");
+            $scope.resources = dynamineConfig.getResources();
+            //TODO: Call to remove old miner
+          }
+        }
+
+        $scope.resourceChecked = function(resource) {
+          return (resource.allocated && resource.coin == coinName);
+        }
+>>>>>>> ff27f0037d66d4420091a7be337b348d4cbbdfbc
 
         $scope.getPoolHost = function() {
-          return dynamineConfig.getInfoForCoin('litecoin').poolServer;
+          return dynamineConfig.getInfoForCoin(coinName).poolServer;
         }
 
         $scope.getWalletAddress = function() {
-          return dynamineConfig.getInfoForCoin('litecoin').walletAddress;
+          return dynamineConfig.getInfoForCoin(coinName).walletAddress;
+        }
+
+        $scope.getDaemonHost = function() {
+          return dynamineConfig.getConfig().daemonHost;
         }
 
         $scope.refreshWalletTokens = function(master) {

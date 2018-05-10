@@ -8,7 +8,5 @@
       this.isEnabled = function(coin){
         return config.isCoinEnabled(coin);
       }
-
-      config.loadConfig();
     }]);
 })(app);
