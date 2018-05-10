@@ -21,15 +21,22 @@
         $scope.resources = dynamineConfig.getResources();
 
         $scope.allocateResource = function(resource) {
-          if( document.getElementById(resource.name).checked ) {
+          if( document.getElementById(resource.name).checked) {
+            if(resource.coin && resource.coin != coinName) {
+              //TODO: Call to remove old miner
+            }
             dynamineConfig.allocateResource(true, resource.name, coinName);
             $scope.resources = dynamineConfig.getResources();
-            //TODO: notify daemon;
+            //TODO: Call to add new miner
           } else {
             dynamineConfig.allocateResource(false, resource.name, "");
             $scope.resources = dynamineConfig.getResources();
-            //TODO: notify daemon;
+            //TODO: Call to remove old miner
           }
+        }
+
+        $scope.resourceChecked = function(resource) {
+          return (resource.allocated && resource.coin == coinName);
         }
 
         $scope.getPoolHost = function() {

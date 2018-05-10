@@ -24,14 +24,6 @@
           "poolUsername": "",
           "poolPassword": ""
         },
-        "ethereum": {
-          "enabled": false,
-          "walletAddress": "",
-          "walletAPIHost": "",
-          "poolServer": "",
-          "poolUsername": "",
-          "poolPassword": ""
-        },
         "litecoin": {
           "enabled": false,
           "walletAddress": "",
@@ -78,12 +70,6 @@
         if(typeof dynamineConfig.coins.bitcoin.poolServer !== 'undefined') { config.coins.bitcoin.poolServer = dynamineConfig.coins.bitcoin.poolServer; }
         if(typeof dynamineConfig.coins.bitcoin.poolUsername !== 'undefined') { config.coins.bitcoin.poolUsername= dynamineConfig.coins.bitcoin.poolUsername; }
         if(typeof dynamineConfig.coins.bitcoin.poolPassword !== 'undefined') { config.coins.bitcoin.poolPassword = dynamineConfig.coins.bitcoin.poolPassword; }
-
-        if(typeof dynamineConfig.coins.ethereum.enabled !== 'undefined') { config.coins.ethereum.enabled = dynamineConfig.coins.ethereum.enabled; }
-        if(typeof dynamineConfig.coins.ethereum.walletAddress !== 'undefined') { config.coins.ethereum.walletAddress = dynamineConfig.coins.ethereum.walletAddress; }
-        if(typeof dynamineConfig.coins.ethereum.poolServer !== 'undefined') { config.coins.ethereum.poolServer = dynamineConfig.coins.ethereum.poolServer; }
-        if(typeof dynamineConfig.coins.ethereum.poolUsername !== 'undefined') { config.coins.ethereum.poolUsername= dynamineConfig.coins.ethereum.poolUsername; }
-        if(typeof dynamineConfig.coins.ethereum.poolPassword !== 'undefined') { config.coins.ethereum.poolPassword = dynamineConfig.coins.ethereum.poolPassword; }
 
         if(typeof dynamineConfig.coins.litecoin.enabled !== 'undefined') { config.coins.litecoin.enabled = dynamineConfig.coins.litecoin.enabled; }
         if(typeof dynamineConfig.coins.litecoin.walletAddress !== 'undefined') { config.coins.litecoin.walletAddress = dynamineConfig.coins.litecoin.walletAddress; }

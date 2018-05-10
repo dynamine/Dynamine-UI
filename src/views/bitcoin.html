@@ -74,7 +74,7 @@
           <div class="panel panel-border info">
             <div class="panel__heading">[{{ getDaemonHost() }}] Allocate GPUs</div>
             <div class="panel__body align-left">
-              <div class="padding-10" data-ng-repeat="resource in resources"><label class="checkbox success"><input id="{{ resource.name }}" data-ng-checked="resource.allocated" data-ng-click="allocateResource(resource)" type="checkbox"><span class="pad-left-10">{{ resource.name.split(":")[1] }}</span><span data-ng-show="resource.allocated"> - allocated to {{ resource.coin }}</span></label></div>
+              <div class="padding-10" data-ng-repeat="resource in resources"><label class="checkbox success"><input id="{{ resource.name }}" data-ng-checked="resourceChecked(resource)" data-ng-click="allocateResource(resource)" type="checkbox"><span class="pad-left-10">{{ resource.name.split(":")[1] }}</span><span data-ng-show="resource.allocated"> - allocated to {{ resource.coin }}</span></label></div>
             </div>
           </div>
         </div>
