@@ -5,6 +5,10 @@
         //var name = dynamineConfig.getConfig("litecoin").clusterId;
         var walletdatastats;
         var name = "Gfuen";
+        var balance;
+        var maxtransactions;
+        var transactions = [];
+
 
         return {
         callconfig: function (dynamineConfig) {
@@ -22,13 +26,23 @@
                         type: "GET",
                         datatype: "json",
                         success: function(data) {
-                            walletdatastats = JSON.stringify(data);
+                            balance = data.balance;
+                            maxtransactions = data.n_tx;
+                            var i;
+                            for (i = 0; i < maxtransactions; i++ ) {
+                                transactions.push(data.txs[i]);
+                            }
+                            transactions.push(balance);
+                            transactions.push(maxtransactions);
+                            console.log(data);
                             console.log(walletdatastats);
+                            console.log(balance);
+                            walletdatastats = {bal:balance, max:maxtransactions, trans:transactions};
                         }
                 });
 
-
-                return walletdatastats;
+                console.log(transactions);
+                return transactions;
         }
 
       

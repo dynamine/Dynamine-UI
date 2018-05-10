@@ -16,17 +16,23 @@
         viewFactory.title = 'Bitcoin';
         viewFactory.prevUrl = null;
         var walletAddress;
-        var walletstats;
+        var walbal = "";
+        var walnumtrans = "";
 
         walletAddress = callbcWallet.callconfig(dynamineConfig);
-        walletstats = callbcWallet.callwallet(walletAddress);
-        console.log(walletAddress);
-        $scope.getWalletAPIHost = function() {
-            return walletAddress;
+        walbal = callbcWallet.callwalletbal(walletAddress);
+        walnumtrans = callbcWallet.callwallet(walletAddress);
+
+        console.log("WALBAL: " + walbal);
+        console.log("WALNUMTRANS" + walnumtrans);
+        $scope.getWalletBalance = function(walbal) {
+            console.log(walbal);
+            return walbal;
         }
 
-        $scope.getWalletStats = function() {
-            return walletAddress;
+        $scope.getWalletNumTrans = function(walnumtrans) {
+            console.log(walnumtrans);
+            return walnumtrans;
         }
 
         var response;

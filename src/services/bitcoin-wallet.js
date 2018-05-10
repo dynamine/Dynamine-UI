@@ -5,6 +5,10 @@
         //var name = dynamineConfig.getConfig("bitcoin").clusterId;
         var walletdatastats;
         var name = "Gfuen";
+        var balance;
+        var maxtransactions;
+        var transactions = [];
+
 
         return {
         callconfig: function (dynamineConfig) {
@@ -20,15 +24,51 @@
                 $.ajax({
                         url: "https://api.blockcypher.com/v1/btc/main/addrs/" + walletAddress+ "/full",
                         type: "GET",
+                        async: false,
                         datatype: "json",
                         success: function(data) {
-                            walletdatastats = data;
-                            console.log(walletdatastats);
+                            balance = data["balance"];
+                            maxtransactions = data["n_tx"];
+                            var i;
+                        //     for (i = 0; i < maxtransactions; i++ ) {
+                        //         transactions.push(data.txs[i]);
+                        //     }
+                            transactions.push(balance);
+                            transactions.push(maxtransactions);
+                            console.log(data);
+                            console.log(balance);
+            
                         }
                 });
 
+  
+                return balance;
+        },
 
-                return walletdatastats;
+        callwalletbal: function(walletAddress) {
+                //Get wallet address full endpoint
+                $.ajax({
+                        url: "https://api.blockcypher.com/v1/btc/main/addrs/" + walletAddress+ "/full",
+                        type: "GET",
+                        async: false,
+                        datatype: "json",
+                        success: function(data) {
+                            balance = data["balance"];
+                            maxtransactions = data["n_tx"];
+                            var i;
+                        //     for (i = 0; i < maxtransactions; i++ ) {
+                        //         transactions.push(data.txs[i]);
+                        //     }
+                            transactions.push(balance);
+                            transactions.push(maxtransactions);
+                            console.log(data);
+                            console.log(balance);
+
+                        }
+                });
+
+  
+                return maxtransactions;
         }
 
       
