@@ -38,9 +38,8 @@
             <div class="panel panel-border info">
             <div class="panel__heading">Wallet Income</div>
             <div class="panel__body">
-                <dl class="horizontal"><dd>+ 0.4 LTC</dd></dl>
-                <dl class="horizontal"><dd>+ 1.2 LTC</dd></dl>
-                <dl class="horizontal"><dd>+ 2.0 LTC</dd></dl>
+              <dl class="horizontal" data-ng-show="getWalletNumTrans()"><dt>Wallet Number of Transactions: </dt><dd>{{ getWalletNumTrans() }}</dd></dl>
+              <dl class="horizontal" data-ng-show="getWalletBalance()"><dt>Wallet Balance: </dt><dd>{{ getWalletBalance() }}</dd></dl>
             </div>
             </div>
         </div>
