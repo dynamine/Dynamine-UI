@@ -74,6 +74,10 @@
       connect: function() {
         connectToDaemon();
       },
+      /**
+      * Whenever a command is received it will pass the data on to a handler.
+      * These handlers must be registered with this controller to be used.
+      */
       registerCmdHandler: function(cmdName, callback) {
         handlers['cmdName'] = callback;
       }

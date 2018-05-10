@@ -1,5 +1,5 @@
 (function(angular, app, fs) {
-  app.factory('dynamineConfig', ['toast', 'utils', function(toast, utils) {
+  app.factory('dynamineConfig', ['toast', function(toast) {
     const CONFIG_PATH = 'dynamine_cache.json';
 
     let config = {
@@ -12,7 +12,12 @@
         {
           "name": "localhost:gpu1",
           "allocated": true,
-          "coin": "ethereum"
+          "coin": "bitcoin"
+        },
+        {
+          "name": "localhost:gpu2",
+          "allocated": false,
+          "coin": ""
         }
       ],
       "coins": {
@@ -63,7 +68,7 @@
         if(typeof dynamineConfig.daemonPassword !== 'undefined') { config.daemonPassword = dynamineConfig.daemonPassword; }
         if(typeof dynamineConfig.clusterId !== 'undefined') { config.clusterId = dynamineConfig.clusterId; }
         if(typeof dynamineConfig.clusterPassword !== 'undefined') { config.clusterPassword = dynamineConfig.clusterPassword; }
-        if(utils.isEmpty(dynamineConfig.resources)) { config.resources = dynamineConfig.resources; }
+        if(dynamineConfig.resources.length == 0) { config.resources = dynamineConfig.resources; }
 
         if(typeof dynamineConfig.coins.bitcoin.enabled !== 'undefined') { config.coins.bitcoin.enabled = dynamineConfig.coins.bitcoin.enabled; }
         if(typeof dynamineConfig.coins.bitcoin.walletAddress !== 'undefined') { config.coins.bitcoin.walletAddress = dynamineConfig.coins.bitcoin.walletAddress; }
@@ -144,11 +149,38 @@
           saveConfig();
         },
         syncResources: function(resources) {
-          // TODO: iterate through resources, if already exist leave em.
+          let finalResources = [];
 
-          // If cached exists but computer doesnt, delete cached.
+          // For every element in the args, append it to the config, but do NOT override what is already there
+          for(let i = 0; i < resources.length; i++) {
+            let concat = true;
+            for (let j = 0; j < config.resources.length; j++) {
+              if (config.resources[j].name == resources[i].name) {
+                concat = false;
+              }
+            }
+            if(concat) {
+              config.resources.push(resources[i]);
+            }
+          }
 
-          config.resources = resources;
+          console.log("intermediate: " + JSON.stringify(config.resources));
+
+          // For every element in our config, if it is not in the daemon remove it
+          for(let i = 0; i < config.resources.length; i++) {
+            let rm = true;
+            for (let j = 0; j < resources.length; j++) {
+                if(config.resources[i].name === resources[j].name) {
+                  rm = false;
+                  break;
+                }
+            }
+            if (rm) {
+              config.resources.splice(i, 1);
+            }
+          }
+          console.log("arg resources: " + JSON.stringify(resources));
+          console.log("final: " + JSON.stringify(config.resources));
         },
         allocateResource: function(allocated, resource, coin) {
           for (let i = 0; i < config.resources.length; i++) {
