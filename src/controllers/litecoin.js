@@ -18,19 +18,8 @@
         var walletAddress;
         var walletstats;
 
-        walletAddress = callliteWallet.callconfig();
-        walletstats = callliteWallet.callwallet();
-        console.log(walletAddress);
-        $scope.getWalletAPIHost = function() {
-            return walletAddress;
-        }
-
-        $scope.getWalletStats = function() {
-            return walletAddress;
-        }
-
+        viewFactory.prevUrl = null
         let coinName = "litecoin";
-
 
         $scope.resources = dynamineConfig.getResources();
 
@@ -51,6 +40,18 @@
 
         $scope.resourceChecked = function(resource) {
           return (resource.allocated && resource.coin == coinName);
+        }
+
+        
+        walletAddress = callliteWallet.callconfig();
+        walletstats = callliteWallet.callwallet();
+        console.log(walletAddress);
+        $scope.getWalletAPIHost = function() {
+            return walletAddress;
+        }
+
+        $scope.getWalletStats = function() {
+            return walletAddress;
         }
 
         $scope.getPoolHost = function() {
