@@ -27,7 +27,7 @@
                         type: "GET",
                         datatype: "json",
                         success: function(data) {
-                            walletdatastats = JSON.parse(data);
+                            walletdatastats = JSON.stringify(data);
                         }
                 });
 
