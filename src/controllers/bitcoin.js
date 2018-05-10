@@ -12,7 +12,7 @@
         return new Chart (angular.element(container)[0].getContext('2d'), data);
     };
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', function ($scope, ajax, toast, viewFactory, dynamineConfig) {
+    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'callbcWallet', function ($scope, ajax, toast, viewFactory, dynamineConfig, callbcWallet) {
         viewFactory.title = 'Bitcoin';
         viewFactory.prevUrl = null;
         var walletAddress;

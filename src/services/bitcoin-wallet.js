@@ -3,11 +3,13 @@
         console.log("Here is the config: ");
         console.log(dynamineConfig);
         var walletAddress;
-        var config = dynamineConfig;
+        var config = dynamineConfig.getConfig();
+        console.log("Here is the config with getconfig: ");
+        console.log(config);
         return {
         callconfig: function () {
                 $.ajax({
-                        url: config.getInfoForCoin("bitcoin").walletAddress,
+                        url: config.getInfoForCoin("bitcoin").walletAPIHost,
                         type: "GET",
                         success: function(data) {
                             walletAddress = data;
