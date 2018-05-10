@@ -4,7 +4,7 @@
 
     let config = {
       "daemonHost": "",
-      "daemonPort": "",
+      "daemonPort": "1336",
       "daemonPassword": "",
       "clusterId": "",
       "clusterPassword": "",
@@ -68,7 +68,7 @@
         if(typeof dynamineConfig.daemonPassword !== 'undefined') { config.daemonPassword = dynamineConfig.daemonPassword; }
         if(typeof dynamineConfig.clusterId !== 'undefined') { config.clusterId = dynamineConfig.clusterId; }
         if(typeof dynamineConfig.clusterPassword !== 'undefined') { config.clusterPassword = dynamineConfig.clusterPassword; }
-        if(dynamineConfig.resources.length == 0) { config.resources = dynamineConfig.resources; }
+        if(typeof dynamineConfig.resources !== 'undefined' && dynamineConfig.resources.length == 0) { config.resources = dynamineConfig.resources; }
 
         if(typeof dynamineConfig.coins.bitcoin.enabled !== 'undefined') { config.coins.bitcoin.enabled = dynamineConfig.coins.bitcoin.enabled; }
         if(typeof dynamineConfig.coins.bitcoin.walletAddress !== 'undefined') { config.coins.bitcoin.walletAddress = dynamineConfig.coins.bitcoin.walletAddress; }

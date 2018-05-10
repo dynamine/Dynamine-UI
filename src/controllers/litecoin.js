@@ -14,25 +14,8 @@
 
     app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig','callliteWallet',function ($scope, ajax, toast, viewFactory, dynamineConfig, callliteWallet) {
         viewFactory.title = 'Litecoin';
-        viewFactory.prevUrl = null;
-<<<<<<< HEAD
-        var walletAddress;
-        var walletstats;
-
-        walletAddress = callliteWallet.callconfig();
-        walletstats = callliteWallet.callwallet();
-        console.log(walletAddress);
-        $scope.getWalletAPIHost = function() {
-            return walletAddress;
-        }
-
-        $scope.getWalletStats = function() {
-            return walletAddress;
-        }
-
-=======
+        viewFactory.prevUrl = null
         let coinName = "litecoin";
-
 
         $scope.resources = dynamineConfig.getResources();
 
@@ -54,7 +37,20 @@
         $scope.resourceChecked = function(resource) {
           return (resource.allocated && resource.coin == coinName);
         }
->>>>>>> ff27f0037d66d4420091a7be337b348d4cbbdfbc
+
+        var walletAddress;
+        var walletstats;
+
+        walletAddress = callliteWallet.callconfig();
+        walletstats = callliteWallet.callwallet();
+        console.log(walletAddress);
+        $scope.getWalletAPIHost = function() {
+            return walletAddress;
+        }
+
+        $scope.getWalletStats = function() {
+            return walletAddress;
+        }
 
         $scope.getPoolHost = function() {
           return dynamineConfig.getInfoForCoin(coinName).poolServer;
