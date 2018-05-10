@@ -1,5 +1,9 @@
 'use strict';
+
+// node dependencies
 var fs = require('fs');
+var net = require('net');
+
 /* global angular:true ngDependency:true */
 var app = angular.module('Dynamine', ['ngAnimate', 'base64'].concat(typeof ngDependency === 'undefined' ? [] : ngDependency));
 
