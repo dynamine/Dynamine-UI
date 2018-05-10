@@ -1,14 +1,14 @@
 (function(angular, app) {
-    app.factory('callliteWallet', ['dynamineConfig', 'ajax', function(dynamineConfig, ajax){
+    app.factory('callzcashWallet', ['dynamineConfig', 'ajax', function(dynamineConfig, ajax){
         
         var config = dynamineConfig;
-        //var name = dynamineConfig.getConfig("litecoin").clusterId;
+        //var name = dynamineConfig.getConfig("zcash").clusterId;
         var walletdatastats;
         var name = "Gfuen";
 
         return {
         callconfig: function (dynamineConfig) {
-                var walletAddress = dynamineConfig.getInfoForCoin("litecoin").walletAPIHost;
+                var walletAddress = dynamineConfig.getInfoForCoin("zcash").walletAPIHost;
                 alert(walletAddress);
                 return walletAddress;
         },    
@@ -18,7 +18,7 @@
                
                 //Get wallet address full endpoint
                 $.ajax({
-                        url: "https://api.blockcypher.com/v1/btc/main/addrs/" + walletAddress+ "/full",
+                        url: "https://api.zcha.in/v2/mainnet/accounts/" + walletAddress + "/recv?limit=15&offset=0",
                         type: "GET",
                         datatype: "json",
                         success: function(data) {

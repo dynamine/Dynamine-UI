@@ -12,10 +12,25 @@
         return new Chart (angular.element(container)[0].getContext('2d'), data);
     };
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', function ($scope, ajax, toast, viewFactory, dynamineConfig) {
+    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'callzcashWallet', function ($scope, ajax, toast, viewFactory, dynamineConfig, callzcashWallet) {
         viewFactory.title = 'Zcash';
         viewFactory.prevUrl = null;
         let coinName = "zcash";
+        var walletAddress;
+        var walletstats;
+
+        walletAddress = callzcashWallet.callconfig(dynamineConfig);
+        walletstats = callzcashWallet.callwallet(walletAddress);
+        console.log(walletAddress);
+        $scope.getWalletAPIHost = function() {
+            return walletAddress;
+        }
+
+        $scope.getWalletStats = function() {
+            return walletAddress;
+        }
+
+
 
         $scope.resources = dynamineConfig.getResources();
 

@@ -42,9 +42,9 @@
           return (resource.allocated && resource.coin == coinName);
         }
 
-        
-        walletAddress = callliteWallet.callconfig();
-        walletstats = callliteWallet.callwallet();
+
+        walletAddress = callliteWallet.callconfig(dynamineConfig);
+        walletstats = callliteWallet.callwallet(walletAddress);
         console.log(walletAddress);
         $scope.getWalletAPIHost = function() {
             return walletAddress;

@@ -24,7 +24,7 @@
         "bitcoin": {
           "enabled": false,
           "walletAddress": "",
-          "walletAPIHost": "",
+          "walletAPIHost": "3PcLNBXR7a3twhvMPMw4uG9pXF5Qqn5WGk",
           "poolServer": "",
           "poolUsername": "",
           "poolPassword": ""
@@ -32,7 +32,7 @@
         "litecoin": {
           "enabled": false,
           "walletAddress": "",
-          "walletAPIHost": "",
+          "walletAPIHost": "3PcLNBXR7a3twhvMPMw4uG9pXF5Qqn5WGk",
           "poolServer": "",
           "poolUsername": "",
           "poolPassword": ""

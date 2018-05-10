@@ -18,8 +18,8 @@
         var walletAddress;
         var walletstats;
 
-        walletAddress = callbcWallet.callconfig();
-        walletstats = callbcWallet.callwallet();
+        walletAddress = callbcWallet.callconfig(dynamineConfig);
+        walletstats = callbcWallet.callwallet(walletAddress);
         console.log(walletAddress);
         $scope.getWalletAPIHost = function() {
             return walletAddress;
