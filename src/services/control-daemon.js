@@ -57,13 +57,14 @@
         startCoinCmd.data.miner_args['-o'] = poolServer;
         startCoinCmd.data.miner_args['-u'] = walletAddress;
         startCoinCmd.data.miner_args['-p'] = poolPassword;
-
         daemonConn.write(JSON.stringify(startCoinCmd));
+        console.log("starting: " + resource); //TODO: remove
       },
-      stopCoin: function(deviceID) {
-        stopCoinCmd.data.deviceID = deviceID;
+      stopCoin: function(resource) {
+        stopCoinCmd.data.deviceID = resource;
 
         daemonConn.write(JSON.stringify(stopCoinCmd))
+        console.log("stopping: " + resource);
       },
       getResources: function() {
         daemonConn.write(JSON.stringify(resourcesCmd));

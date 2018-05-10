@@ -39,12 +39,12 @@
               daemon.stopCoin(resource.name);
             }
             dynamineConfig.allocateResource(true, resource.name, coinName);
+            daemon.startCoin(resource.name, "", "", dynamineConfig.getInfoForCoin(coinName).poolServer, dynamineConfig.getInfoForCoin(coinName).poolPassword);
             $scope.resources = dynamineConfig.getResources();
-            daemon.startCoin(resource.name, "", "", config.getInfoForCoin(coinName).poolServer, config.getInfoForCoin(coinName).poolPassword);
           } else {
             dynamineConfig.allocateResource(false, resource.name, "");
-            $scope.resources = dynamineConfig.getResources();
             daemon.stopCoin(resource.name);
+            $scope.resources = dynamineConfig.getResources();
           }
         }
 
