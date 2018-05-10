@@ -4,6 +4,7 @@
 
     let config = {
       daemonHost: '',
+      daemonPort: '',
       daemonPassword: '',
       clusterId: '',
       clusterPassword: '',
@@ -59,6 +60,7 @@
 
         // map cached fields if found
         if(typeof dynamineConfig.daemonHost !== 'undefined') { config.daemonHost = dynamineConfig.daemonHost; }
+        if(typeof dynamineConfig.daemonPort !== 'undefined') { config.daemonPort = dynamineConfig.daemonPort; }
         if(typeof dynamineConfig.daemonPassword !== 'undefined') { config.daemonPassword = dynamineConfig.daemonPassword; }
         if(typeof dynamineConfig.clusterId !== 'undefined') { config.clusterId = dynamineConfig.clusterId; }
         if(typeof dynamineConfig.clusterPassword !== 'undefined') { config.clusterPassword = dynamineConfig.clusterPassword; }
