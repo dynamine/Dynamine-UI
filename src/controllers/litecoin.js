@@ -12,11 +12,12 @@
         return new Chart (angular.element(container)[0].getContext('2d'), data);
     };
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig','callliteWallet',function ($scope, ajax, toast, viewFactory, dynamineConfig, callliteWallet) {
+    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'callliteWallet', 'daemon', function ($scope, ajax, toast, viewFactory, dynamineConfig, callliteWallet, daemon) {
         viewFactory.title = 'Litecoin';
         viewFactory.prevUrl = null;
         var walletAddress;
         var walletstats;
+        let config = dynamineConfig.getConfig();
 
         viewFactory.prevUrl = null
         let coinName = "litecoin";
@@ -26,15 +27,15 @@
         $scope.allocateResource = function(resource) {
           if( document.getElementById(resource.name).checked) {
             if(resource.coin && resource.coin != coinName) {
-              //TODO: Call to remove old miner
+              daemon.stopCoin(resource.name);
             }
             dynamineConfig.allocateResource(true, resource.name, coinName);
             $scope.resources = dynamineConfig.getResources();
-            //TODO: Call to add new miner
+            daemon.startCoin(resource.name, "", "", config.getInfoForCoin(coinName).poolServer, config.getInfoForCoin(coinName).poolPassword);
           } else {
             dynamineConfig.allocateResource(false, resource.name, "");
             $scope.resources = dynamineConfig.getResources();
-            //TODO: Call to remove old miner
+            daemon.stopCoin(resource.name);
           }
         }
 
@@ -43,9 +44,9 @@
         }
 
 
-        walletAddress = callliteWallet.callconfig(dynamineConfig);
-        walletstats = callliteWallet.callwallet(walletAddress);
-        console.log(walletAddress);
+        //walletAddress = callliteWallet.callconfig(dynamineConfig);
+        //walletstats = callliteWallet.callwallet(walletAddress);
+        // console.log(walletAddress);
         $scope.getWalletAPIHost = function() {
             return walletAddress;
         }

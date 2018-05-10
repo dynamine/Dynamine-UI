@@ -12,25 +12,26 @@
         return new Chart (angular.element(container)[0].getContext('2d'), data);
     };
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig',function ($scope, ajax, toast, viewFactory, dynamineConfig) {
+    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'daemon', function ($scope, ajax, toast, viewFactory, dynamineConfig, daemon) {
         viewFactory.title = 'Monero';
         viewFactory.prevUrl = null;
         let coinName = "monero";
+        let config = dynamineConfig.getConfig();
 
         $scope.resources = dynamineConfig.getResources();
 
         $scope.allocateResource = function(resource) {
           if( document.getElementById(resource.name).checked) {
             if(resource.coin && resource.coin != coinName) {
-              //TODO: Call to remove old miner
+              daemon.stopCoin(resource.name);
             }
             dynamineConfig.allocateResource(true, resource.name, coinName);
             $scope.resources = dynamineConfig.getResources();
-            //TODO: Call to add new miner
+            daemon.startCoin(resource.name, "", "", config.getInfoForCoin(coinName).poolServer, config.getInfoForCoin(coinName).poolPassword);
           } else {
             dynamineConfig.allocateResource(false, resource.name, "");
             $scope.resources = dynamineConfig.getResources();
-            //TODO: Call to remove old miner
+            daemon.stopCoin(resource.name);
           }
         }
 

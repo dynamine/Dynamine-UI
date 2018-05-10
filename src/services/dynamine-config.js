@@ -179,8 +179,6 @@
               config.resources.splice(i, 1);
             }
           }
-          console.log("arg resources: " + JSON.stringify(resources));
-          console.log("final: " + JSON.stringify(config.resources));
         },
         allocateResource: function(allocated, resource, coin) {
           for (let i = 0; i < config.resources.length; i++) {

@@ -12,15 +12,15 @@
         return new Chart (angular.element(container)[0].getContext('2d'), data);
     };
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'callbcWallet', function ($scope, ajax, toast, viewFactory, dynamineConfig, callbcWallet) {
+    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'callbcWallet', 'daemon', function ($scope, ajax, toast, viewFactory, dynamineConfig, callbcWallet, daemon) {
         viewFactory.title = 'Bitcoin';
         viewFactory.prevUrl = null;
         var walletAddress;
         var walletstats;
-
-        walletAddress = callbcWallet.callconfig(dynamineConfig);
-        walletstats = callbcWallet.callwallet(walletAddress);
-        console.log(walletAddress);
+        let config = dynamineConfig.getConfig();
+        // walletAddress = callbcWallet.callconfig(dynamineConfig);
+        // walletstats = callbcWallet.callwallet(walletAddress);
+        // console.log(walletAddress);
         $scope.getWalletAPIHost = function() {
             return walletAddress;
         }
@@ -37,15 +37,15 @@
         $scope.allocateResource = function(resource) {
           if( document.getElementById(resource.name).checked) {
             if(resource.coin && resource.coin != coinName) {
-              //TODO: Call to remove old miner
+              daemon.stopCoin(resource.name);
             }
             dynamineConfig.allocateResource(true, resource.name, coinName);
             $scope.resources = dynamineConfig.getResources();
-            //TODO: Call to add new miner
+            daemon.startCoin(resource.name, "", "", config.getInfoForCoin(coinName).poolServer, config.getInfoForCoin(coinName).poolPassword);
           } else {
             dynamineConfig.allocateResource(false, resource.name, "");
             $scope.resources = dynamineConfig.getResources();
-            //TODO: Call to remove old miner
+            daemon.stopCoin(resource.name);
           }
         }
 

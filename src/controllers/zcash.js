@@ -12,16 +12,17 @@
         return new Chart (angular.element(container)[0].getContext('2d'), data);
     };
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'callzcashWallet', function ($scope, ajax, toast, viewFactory, dynamineConfig, callzcashWallet) {
+    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'callzcashWallet', 'daemon', function ($scope, ajax, toast, viewFactory, dynamineConfig, callzcashWallet, daemon) {
         viewFactory.title = 'Zcash';
         viewFactory.prevUrl = null;
         let coinName = "zcash";
         var walletAddress;
         var walletstats;
+        let config = dynamineConfig.getConfig();
 
-        walletAddress = callzcashWallet.callconfig(dynamineConfig);
-        walletstats = callzcashWallet.callwallet(walletAddress);
-        console.log(walletAddress);
+        //walletAddress = callzcashWallet.callconfig(dynamineConfig);
+        //walletstats = callzcashWallet.callwallet(walletAddress);
+        //console.log(walletAddress);
         $scope.getWalletAPIHost = function() {
             return walletAddress;
         }
@@ -30,22 +31,20 @@
             return walletAddress;
         }
 
-
-
         $scope.resources = dynamineConfig.getResources();
 
         $scope.allocateResource = function(resource) {
           if( document.getElementById(resource.name).checked) {
             if(resource.coin && resource.coin != coinName) {
-              //TODO: Call to remove old miner
+              daemon.stopCoin(resource.name);
             }
             dynamineConfig.allocateResource(true, resource.name, coinName);
             $scope.resources = dynamineConfig.getResources();
-            //TODO: Call to add new miner
+            daemon.startCoin(resource.name, "", "", config.getInfoForCoin(coinName).poolServer, config.getInfoForCoin(coinName).poolPassword);
           } else {
             dynamineConfig.allocateResource(false, resource.name, "");
             $scope.resources = dynamineConfig.getResources();
-            //TODO: Call to remove old miner
+            daemon.stopCoin(resource.name);
           }
         }
 
