@@ -12,9 +12,17 @@
         return new Chart (angular.element(container)[0].getContext('2d'), data);
     };
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', function ($scope, ajax, toast, viewFactory) {
+    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', function ($scope, ajax, toast, viewFactory, dynamineConfig) {
         viewFactory.title = 'Ethereum';
         viewFactory.prevUrl = null;
+
+        $scope.getPoolHost = function() {
+          return dynamineConfig.getInfoForCoin('ethereum').poolServer;
+        }
+
+        $scope.getWalletAddress = function() {
+          return dynamineConfig.getInfoForCoin('ethereum').walletAddress;
+        }
 
         $scope.refreshWalletTokens = function(master) {
           createChart('#EthereumWalletChart', {
@@ -47,10 +55,6 @@
 
           if(!master || master !== true)
               toast.success('Node Status data has been updated');
-        };
-
-        $scope.removeCoin = function(){
-          toast.success('Removed Coin');
         };
 
         $scope.refreshHashRate(true);

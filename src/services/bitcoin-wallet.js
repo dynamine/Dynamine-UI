@@ -7,7 +7,7 @@
         return {
         callconfig: function () {
                 $.ajax({
-                        url: config.getInfoForCoin("bitcoin").walletAPIHost,
+                        url: config.getInfoForCoin("bitcoin").walletAddress,
                         type: "GET",
                         success: function(data) {
                             walletAddress = data;
