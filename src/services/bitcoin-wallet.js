@@ -13,7 +13,6 @@
         return {
         callconfig: function (dynamineConfig) {
                 var walletAddress = dynamineConfig.getInfoForCoin("bitcoin").walletAPIHost;
-                alert(walletAddress);
                 return walletAddress;
         },    
                 

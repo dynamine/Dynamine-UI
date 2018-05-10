@@ -17,18 +17,30 @@
         viewFactory.prevUrl = null;
         let coinName = "zcash";
         var walletAddress;
-        var walletstats;
+        var walbal;
+        var walnumtrans;
 
         walletAddress = callzcashWallet.callconfig(dynamineConfig);
-        walletstats = callzcashWallet.callwallet(walletAddress);
-        console.log(walletAddress);
-        $scope.getWalletAPIHost = function() {
-            return walletAddress;
+        walnumtrans = callzcashWallet.calltrans(walletAddress);
+        walbal = callzcashWallet.callwallet(walletAddress);
+
+        console.log(typeof(walbal));
+        console.log(typeof(walnumtrans));
+        $scope.getWalletBalance = function() {
+            console.log("Display: ");
+            console.log(typeof(walbal));
+            walbal = '' + walbal;
+            return walbal;
         }
 
-        $scope.getWalletStats = function() {
-            return walletAddress;
+        $scope.getWalletNumTrans = function() {
+            console.log("Display: ");
+            console.log(typeof(walnumtrans));
+            walnumtrans = '' + walnumtrans;
+            return walnumtrans;
         }
+
+
 
 
 

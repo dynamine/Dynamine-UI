@@ -12,11 +12,32 @@
         return new Chart (angular.element(container)[0].getContext('2d'), data);
     };
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig','callliteWallet',function ($scope, ajax, toast, viewFactory, dynamineConfig, callliteWallet) {
+    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'callliteWallet',function ($scope, ajax, toast, viewFactory, dynamineConfig, callliteWallet) {
         viewFactory.title = 'Litecoin';
         viewFactory.prevUrl = null;
         var walletAddress;
-        var walletstats;
+        var walbal = "";
+        var walnumtrans = "";
+
+        walletAddress = callliteWallet.callconfig(dynamineConfig);
+        walbal = callliteWallet.callwalletbal(walletAddress);
+        walnumtrans = callliteWallet.callwallet(walletAddress);
+
+        console.log(typeof(walbal));
+        console.log(typeof(walnumtrans));
+        $scope.getWalletBalance = function() {
+            console.log("Display: ");
+            console.log(typeof(walbal));
+            walbal = '' + walbal;
+            return walbal;
+        }
+
+        $scope.getWalletNumTrans = function() {
+            console.log("Display: ");
+            console.log(typeof(walnumtrans));
+            walnumtrans = '' + walnumtrans;
+            return walnumtrans;
+        }
 
         viewFactory.prevUrl = null
         let coinName = "litecoin";
@@ -40,18 +61,6 @@
 
         $scope.resourceChecked = function(resource) {
           return (resource.allocated && resource.coin == coinName);
-        }
-
-
-        walletAddress = callliteWallet.callconfig(dynamineConfig);
-        walletstats = callliteWallet.callwallet(walletAddress);
-        console.log(walletAddress);
-        $scope.getWalletAPIHost = function() {
-            return walletAddress;
-        }
-
-        $scope.getWalletStats = function() {
-            return walletAddress;
         }
 
         $scope.getPoolHost = function() {

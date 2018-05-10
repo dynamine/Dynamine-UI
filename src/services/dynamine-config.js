@@ -48,7 +48,7 @@
         zcash: {
           "enabled": false,
           "walletAddress": "",
-          "walletAPIHost": "",
+          "walletAPIHost": "t1dbxzQi5oCeuJWwbCSwNLuyyB5ueRKeG8n",
           "poolServer": "",
           "poolUsername": "",
           "poolPassword": ""

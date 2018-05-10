@@ -14,7 +14,7 @@
         },    
                 
         
-        callwallet: function(walletAddress) {
+        calltrans: function(walletAddress) {
                
                 //Get wallet address full endpoint
                 $.ajax({
@@ -22,6 +22,7 @@
                         type: "GET",
                         datatype: "json",
                         success: function(data) {
+                            console.log(data);
                             walletdatastats = JSON.stringify(data);
                             console.log(walletdatastats);
                         }
@@ -29,7 +30,25 @@
 
 
                 return walletdatastats;
-        }
+        },
+
+        callwallet: function(walletAddress) {
+               
+            //Get wallet address full endpoint
+            $.ajax({
+                    url: "https://api.zcha.in/v2/mainnet/accounts/" + walletAddress,
+                    type: "GET",
+                    datatype: "json",
+                    success: function(data) {
+                        console.log(data);
+                        walletdatastats = JSON.stringify(data);
+                        console.log(walletdatastats);
+                    }
+            });
+
+
+            return walletdatastats;
+    }
 
       
     };
