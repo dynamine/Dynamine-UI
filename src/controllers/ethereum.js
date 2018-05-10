@@ -12,9 +12,23 @@
         return new Chart (angular.element(container)[0].getContext('2d'), data);
     };
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', function ($scope, ajax, toast, viewFactory, dynamineConfig) {
+    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig','callethWallet',function ($scope, ajax, toast, viewFactory, dynamineConfig, callethWallet) {
         viewFactory.title = 'Ethereum';
         viewFactory.prevUrl = null;
+        var walletAddress;
+        var walletstats;
+
+        walletAddress = callethWallet.callconfig();
+        walletstats = callethWallet.callwallet();
+        console.log(walletAddress);
+        $scope.getWalletAPIHost = function() {
+            return walletAddress;
+        }
+
+        $scope.getWalletStats = function() {
+            return walletAddress;
+        }
+
 
         $scope.getPoolHost = function() {
           return dynamineConfig.getInfoForCoin('ethereum').poolServer;

@@ -1,5 +1,5 @@
 /* global app:true Chart:true */
-(function (angular, app, Chart) { 'use strict';
+(function (angular, app, Chart, callbcWallet) { 'use strict';
     const controller = 'BitcoinController';
     if (typeof app === 'undefined') throw (controller + ': app is undefined');
 
@@ -16,7 +16,19 @@
         viewFactory.title = 'Bitcoin';
         viewFactory.prevUrl = null;
         var walletAddress;
-        var response;
+        var walletstats;
+
+        walletAddress = callbcWallet.callconfig();
+        walletstats = callbcWallet.callwallet();
+        console.log(walletAddress);
+        $scope.getWalletAPIHost = function() {
+            return walletAddress;
+        }
+
+        $scope.getWalletStats = function() {
+            return walletAddress;
+        }
+
 
         $scope.getPoolHost = function() {
           return dynamineConfig.getInfoForCoin('bitcoin').poolServer;
