@@ -30,68 +30,33 @@
         /* Configure routes. */
         $routeProvider
             .when('/', {
-                templateUrl: 'views/dashboard.html',
-                controller: 'DashboardController'
+                templateUrl: 'views/add-coin.html',
+                controller: 'AddCoinController'
             })
-            .when('/cluster', {
-                templateUrl: 'views/cluster-list.html',
-                controller: 'ClusterListController'
+            .when('/bitcoin', {
+                templateUrl: 'views/bitcoin.html',
+                controller: 'BitcoinController'
             })
-            .when('/api', {
-                templateUrl: 'views/api-list.html',
-                controller: 'ApiListController'
+            .when('/litecoin', {
+                templateUrl: 'views/litecoin.html',
+                controller: 'LitecoinController'
             })
-            .when('/api/:apiId', {
-                templateUrl: 'views/api-edit.html',
-                controller: 'ApiEditController'
+            .when('/monero', {
+                // templateUrl: 'views/MoneroResourceAllocation.html',
+                templateUrl: 'views/monero.html',
+                controller: 'MoneroController'
             })
-            .when('/api/:apiId/plugins', {
-                templateUrl: 'views/plugin-edit.html',
-                controller: 'PluginEditController'
-            })
-            .when('/plugins', {
-                templateUrl: 'views/plugin-list.html',
-                controller: 'PluginListController'
-            })
-            .when('/plugins/:pluginId', {
-                templateUrl: 'views/plugin-edit.html',
-                controller: 'PluginEditController'
-            })
-            .when('/consumers', {
-                templateUrl: 'views/consumer-list.html',
-                controller: 'ConsumerListController'
-            })
-            .when('/consumers/:consumerId', {
-                templateUrl: 'views/consumer-edit.html',
-                controller: 'ConsumerEditController'
-            })
-            .when('/consumers/:consumerId/plugins', {
-                templateUrl: 'views/plugin-list.html',
-                controller: 'PluginListController'
-            })
-            .when('/certificates', {
-                templateUrl: 'views/certificate-list.html',
-                controller: 'CertificateListController'
-            })
-            .when('/certificates/:certificateId', {
-                templateUrl: 'views/certificate-edit.html',
-                controller: 'CertificateEditController'
-            })
-            .when('/upstreams', {
-                templateUrl: 'views/upstream-list.html',
-                controller: 'UpstreamListController'
-            })
-            .when('/upstreams/:upstreamId', {
-                templateUrl: 'views/upstream-edit.html',
-                controller: 'UpstreamEditController'
+            .when('/zcash', {
+                templateUrl: 'views/zcash.html',
+                controller: 'ZcashController'
             })
             .when('/settings', {
                 templateUrl: 'views/settings.html',
                 controller: 'SettingsController'
             })
             .otherwise({
-                templateUrl: 'views/dashboard.html',
-                controller: 'DashboardController'
+                templateUrl: 'views/add-coin.html',
+                controller: 'AddCoinController'
             });
     }]);
 

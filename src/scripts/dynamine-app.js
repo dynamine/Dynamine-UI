@@ -1,5 +1,9 @@
 'use strict';
 
+// node dependencies
+var fs = require('fs');
+var net = require('net');
+
 /* global angular:true ngDependency:true */
 var app = angular.module('Dynamine', ['ngAnimate', 'base64'].concat(typeof ngDependency === 'undefined' ? [] : ngDependency));
 
@@ -207,3 +211,38 @@ app.filter('splice', function () {
         return input.join(', ');
     };
 });
+
+/**
+* Initializing app config here
+* TODO: Test this
+*/
+app.run(['dynamineConfig', 'daemon', 'toast', function(config, daemon, toast){
+  config.loadConfig();
+  daemon.registerCmdHandler("resources", function(data) {
+    let fmtData = JSON.parse(data);
+    let valedResources = [];
+    if(fmtData.resources && fmtData.resources.length > 0) {
+      for (let i = 0; i < fmtData.resources.length; i++) {
+        validResources.push({
+          "name": fmtData.resources[i],
+          "allocated": false,
+          "coin": ""
+        });
+      }
+      config.syncResources(fmtData);
+    } else {
+      toast.error("daemon returned zero resources");
+    }
+  });
+
+  daemon.registerCmdHandler("start-miner", function(data) {
+    //TODO: implement
+  });
+
+  daemon.registerCmdHandler("stop-miner", function(data) {
+    //TODO: implement
+  });
+
+  daemon.connect();
+  daemon.getResources();
+}]);
