@@ -37,10 +37,6 @@
                 templateUrl: 'views/bitcoin.html',
                 controller: 'BitcoinController'
             })
-            .when('/ethereum', {
-                templateUrl: 'views/ethereum.html',
-                controller: 'EthereumController'
-            })
             .when('/litecoin', {
                 templateUrl: 'views/litecoin.html',
                 controller: 'LitecoinController'
