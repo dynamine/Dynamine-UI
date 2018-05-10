@@ -70,24 +70,22 @@
     <!-- Begin Resource Allocation Page -->
     <div  data-ng-show="tabs.isSelected(2)">
       <div class="row">
-        <div class="col md-6">
+        <div class="col md-8">
           <div class="panel panel-border info">
-            <div class="panel__heading">[localhost] Allocate GPUs</div>
+            <div class="panel__heading">[{{ getDaemonHost() }}] Allocate GPUs</div>
             <div class="panel__body align-left">
-              <div class="padding-10"><label class="checkbox success"><input type="checkbox"><span class="pad-left-10">GPU 1</span></label></div>
-              <div class="padding-10"><label class="checkbox success"><input type="checkbox"><span class="pad-left-10">GPU 2</span></label></div>
-              <div class="padding-10"><label class="checkbox success"><input type="checkbox"><span class="pad-left-10">GPU 3</span></label></div>
+              <div class="padding-10" data-ng-repeat="resource in resources"><label class="checkbox success"><input id="{{ resource.name }}" data-ng-checked="resource.allocated" data-ng-click="allocateResource(resource)" type="checkbox"><span class="pad-left-10">{{ resource.name.split(":")[1] }}</span><span data-ng-show="resource.allocated"> - allocated to {{ resource.coin }}</span></label></div>
             </div>
           </div>
         </div>
-        <div class="col md-6">
+        <!-- <div class="col md-6">
           <div class="panel panel-border info">
             <div class="panel__heading">[localhost] Allocate CPU Cores</div>
             <div class="panel__body">
               <md-slider id="core-slider" max="10" aria-label="Allocated CPU Cores" md-discrete />
             </div>
           </div>
-        </div>
+        </div> -->
       </div> <!-- .row-->
 
       <div class="row" data-ng-controller="RemoveCoinController">

@@ -12,16 +12,35 @@
         return new Chart (angular.element(container)[0].getContext('2d'), data);
     };
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', function ($scope, ajax, toast, viewFactory, dynamineConfig) {
+    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'daemon', function ($scope, ajax, toast, viewFactory, dynamineConfig, daemon) {
         viewFactory.title = 'Ethereum';
         viewFactory.prevUrl = null;
+        let coinName = "ethereum";
+
+        $scope.resources = dynamineConfig.getResources();
+
+        $scope.allocateResource = function(resource) {
+          if( document.getElementById(resource.name).checked ) {
+            dynamineConfig.allocateResource(true, resource.name, coinName);
+            $scope.resources = dynamineConfig.getResources();
+            //TODO: notify daemon;
+          } else {
+            dynamineConfig.allocateResource(false, resource.name, "");
+            $scope.resources = dynamineConfig.getResources();
+            //TODO: notify daemon;
+          }
+        }
 
         $scope.getPoolHost = function() {
-          return dynamineConfig.getInfoForCoin('ethereum').poolServer;
+          return dynamineConfig.getInfoForCoin(coinName).poolServer;
         }
 
         $scope.getWalletAddress = function() {
-          return dynamineConfig.getInfoForCoin('ethereum').walletAddress;
+          return dynamineConfig.getInfoForCoin(coinName).walletAddress;
+        }
+
+        $scope.getDaemonHost = function() {
+          return dynamineConfig.getConfig().daemonHost;
         }
 
         $scope.refreshWalletTokens = function(master) {
