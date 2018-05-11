@@ -72,6 +72,8 @@
           if( document.getElementById(resource.name).checked) {
             if(resource.coin && resource.coin != coinName) {
               daemon.stopCoin(resource.name);
+              coinMetrics.clearMetricsByName(resource.coin, "hashRate"); //empty metrics for old coin
+              $scope.refreshHashRate();
             }
             dynamineConfig.allocateResource(true, resource.name, coinName);
             daemon.startCoin(resource.name, dynamineConfig.getInfoForCoin(coinName).algorithm,  dynamineConfig.getInfoForCoin(coinName).walletAddress, dynamineConfig.getInfoForCoin(coinName).poolServer, dynamineConfig.getInfoForCoin(coinName).poolPassword);
@@ -79,10 +81,11 @@
           } else {
             dynamineConfig.allocateResource(false, resource.name, "");
             daemon.stopCoin(resource.name);
+            coinMetrics.clearMetricsByName(coinName, "hashRate"); //clear our metrics, update graph
+            $scope.refreshHashRate();
             $scope.resources = dynamineConfig.getResources();
           }
         }
-
 
         $scope.resourceChecked = function(resource) {
           return (resource.allocated && resource.coin == coinName);

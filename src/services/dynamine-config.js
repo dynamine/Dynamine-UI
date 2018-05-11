@@ -12,13 +12,13 @@
       "coins": {
         "bitcoin": {
           "enabled": false,
-          "algorithm": "",
-          "binary": "",
+          "algorithm": "bitcoin",
+          "binary": "ccminer-x64",
           "walletAddress": "",
           "walletAPIHost": "3D2oetdNuZUqQHPJmcMDDHYoqkyNVsFk9r",
-          "poolServer": "",
-          "poolUsername": "",
-          "poolPassword": ""
+          "poolServer": "stratum+tcp://rvn.suprnova.cc:6666",
+          "poolUsername": "tpruvot.win",
+          "poolPassword": "x"
         },
         "litecoin": {
           "enabled": false,
