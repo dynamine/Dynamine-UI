@@ -12,12 +12,55 @@
         return new Chart (angular.element(container)[0].getContext('2d'), data);
     };
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'callliteWallet', 'daemon', function ($scope, ajax, toast, viewFactory, dynamineConfig, callliteWallet, daemon) {
+    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'callliteWallet', 'daemon', 'coinMetrics', function ($scope, ajax, toast, viewFactory, dynamineConfig, callliteWallet, daemon, coinMetrics) {
         viewFactory.title = 'Litecoin';
         viewFactory.prevUrl = null;
-        var walletAddress;
-        var walletstats;
         let config = dynamineConfig.getConfig();
+        var walletAddress;
+        var walbal;
+        var walnumtrans;
+        var payments;
+        var coinchart;
+
+        walletAddress = callliteWallet.callconfig(dynamineConfig);
+        walbal = callliteWallet.callwalletbal(walletAddress);
+        walnumtrans = callliteWallet.callwalletnumtrans(walletAddress);
+        payments = callliteWallet.callwallettrans(walletAddress);
+        console.log("Transactions: ");
+        console.log(payments);
+
+        $scope.getWalletBalance = function() {
+            walbal = '' + walbal;
+            return walbal;
+        }
+
+         $scope.getWalletNumTrans = function() {
+             walnumtrans = '' + walnumtrans;
+             return walnumtrans;
+         }
+
+
+        $scope.getWalletPayment1 = function() {
+            console.log("Transaction type: " + typeof(payments));
+            console.log(payments);
+            return payments[0];
+        }
+
+        $scope.getWalletPayment2 = function() {
+            return payments[1];
+        }
+
+        $scope.getWalletPayment3 = function() {
+            return payments[2];
+        }
+
+        $scope.getWalletPayment4 = function() {
+            return payments[3];
+        }
+
+        $scope.getWalletPayment5 = function() {
+            return payments[4];
+        }
 
         viewFactory.prevUrl = null
         let coinName = "litecoin";
@@ -43,18 +86,6 @@
           return (resource.allocated && resource.coin == coinName);
         }
 
-
-        //walletAddress = callliteWallet.callconfig(dynamineConfig);
-        //walletstats = callliteWallet.callwallet(walletAddress);
-        // console.log(walletAddress);
-        $scope.getWalletAPIHost = function() {
-            return walletAddress;
-        }
-
-        $scope.getWalletStats = function() {
-            return walletAddress;
-        }
-
         $scope.getPoolHost = function() {
           return dynamineConfig.getInfoForCoin(coinName).poolServer;
         }
@@ -68,16 +99,21 @@
         }
 
         $scope.refreshWalletTokens = function(master) {
-          createChart('#LitecoinWalletChart', {
+          coinchart = createChart('#LitecoinWalletChart', {
               type: 'line',
               data: { labels: [], datasets: [{
-                  data: [ 0.01, 0.025, 0.011, 0.02],
+                  data: [ payments[0], payments[1], payments[2], payments[3], payments[4], payments[5], payments[6], payments[7], payments[8], payments[9], payments[10], payments[11], payments[12], payments[13], payments[14], payments[15], payments[16], payments[17], payments[18], payments[19], payments[20], payments[21], payments[22], payments[23]],
                   label: 'coins',
                   backgroundColor: ['rgba(24, 138, 226, 0.5)', 'rgba(16, 196, 105, 0.5)', 'rgba(128, 197, 218, 0.5)',
                       'rgba(248, 142, 15, 0.5)', 'rgba(207, 32, 241, 0.5)', 'rgba(91, 105, 188, 0.5)', 'rgba(24, 138, 226, 0.5)']
                   //backgroundColor:['#10C469', '#FFCE56']
               }]}
           });
+
+          setInterval(function(){
+            var payments = callliteWallet.callwallettrans(walletAddress);
+            coinchart.update(payments);
+            }, 100000);
 
           if(!master || master !== true)
               toast.success('Timers data has been updated');
@@ -88,7 +124,7 @@
           createChart('#LitecoinHashChart', {
               type: 'line',
               data: { labels: [], datasets: [{
-                  data: [ 30, 40, 15, 80, 45, 90], //TODO: Chnage to host data
+                  data: coinMetrics.getMetricsByName(coinName, 'hashRate'),
                   backgroundColor: ['rgba(24, 138, 226, 0.5)', 'rgba(16, 196, 105, 0.5)', 'rgba(128, 197, 218, 0.5)',
                       'rgba(248, 142, 15, 0.5)', 'rgba(207, 32, 241, 0.5)', 'rgba(91, 105, 188, 0.5)', 'rgba(24, 138, 226, 0.5)'],
                   borderColor: ['#188AE2', '#10C469', '#80C5DA', '#F88E0F', '#CF20F1', '#5B69BC', '#188AE2'],

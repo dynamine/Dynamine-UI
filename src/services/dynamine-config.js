@@ -15,7 +15,7 @@
           "algorithm": "",
           "binary": "",
           "walletAddress": "",
-          "walletAPIHost": "",
+          "walletAPIHost": "3D2oetdNuZUqQHPJmcMDDHYoqkyNVsFk9r",
           "poolServer": "",
           "poolUsername": "",
           "poolPassword": ""
@@ -25,7 +25,7 @@
           "algorithm": "",
           "binary": "",
           "walletAddress": "",
-          "walletAPIHost": "",
+          "walletAPIHost": "LTU2cds4aSdXFip9sV4gXphnhxGQjgfjmg",
           "poolServer": "",
           "poolUsername": "",
           "poolPassword": ""
@@ -45,7 +45,7 @@
           "algorithm": "",
           "binary": "",
           "walletAddress": "",
-          "walletAPIHost": "",
+          "walletAPIHost": "t1cArVf7BgN3zPx6UHGy87ZAurTA4AQejj7",
           "poolServer": "",
           "poolUsername": "",
           "poolPassword": ""

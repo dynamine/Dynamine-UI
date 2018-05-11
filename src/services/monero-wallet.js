@@ -1,5 +1,5 @@
 (function(angular, app) {
-    app.factory('callzcashWallet', ['dynamineConfig', 'ajax', function(dynamineConfig, ajax){
+    app.factory('callmoneroWallet', ['dynamineConfig', 'ajax', function(dynamineConfig, ajax){
         
 
         var balance;
@@ -9,14 +9,14 @@
 
         return {
         callconfig: function (dynamineConfig) {
-                var walletAddress = dynamineConfig.getInfoForCoin("zcash").walletAPIHost;
+                var walletAddress = dynamineConfig.getInfoForCoin("monero").walletAPIHost;
                 return walletAddress;
         },    
 
         callwalletbal: function(walletAddress) {
                 //Get wallet address full endpoint and parse
                 // $.ajax({
-                //         url: "https://api.zcha.in/v2/mainnet/accounts/" + walletAddress,
+                //         url: "https://api.blockcypher.com/v1/btc/main/addrs/" + walletAddress+ "/full",
                 //         type: "GET",
                 //         async: false,
                 //         datatype: "json",
@@ -24,8 +24,7 @@
                 //             balance = data["balance"];
                 //         }
                 // });
-                balance = "23804289200"
-
+                balance = "1883000045"
   
                 return balance;
         },
@@ -33,25 +32,25 @@
         callwalletnumtrans: function(walletAddress) {
                 //Get wallet address full endpoint and parse
                 // $.ajax({
-                //         url: "https://api.zcha.in/v2/mainnet/accounts/" + walletAddress,
+                //         url: "https://api.blockcypher.com/v1/btc/main/addrs/" + walletAddress+ "/full",
                 //         type: "GET",
                 //         async: false,
                 //         datatype: "json",
                 //         success: function(data) {
-                //             maxtransactions = Object.keys(data).length;
+                //             maxtransactions = data["n_tx"];
                 //         }
                 // });
-                maxtransactions = "639932";
+                maxtransactions = "400689"
+
   
                 return maxtransactions;
         },
 
         callwallettrans: function(walletAddress) {
                 //Get wallet address full endpoint and parse
-                transactions = [ 104584, 118655, 98979, 9775, 6655, 6887, 4422, 6483, 9580, 12676, 10755, 7755, 9657, 6589, 5893, 6657, 8896, 10742, 11466, 12332, 11433, 11543, 10053, 12743];
-                // transactions = [];
+                transactions = [ 64584, 78655, 98979, 7775, 7655, 9887, 7422, 8483, 9580, 9676, 8755, 7755, 8657, 6589, 8893, 9657, 8896, 7742, 7466, 7332, 7433, 8543, 9053, 8743];
                 // $.ajax({
-                //         url: "https://api.zcha.in/v2/mainnet/accounts/" + walletAddress + "/recv?limit=24&offset=0",
+                //         url: "https://api.blockcypher.com/v1/btc/main/addrs/" + walletAddress,
                 //         type: "GET",
                 //         async: false,
                 //         datatype: "json",
@@ -59,8 +58,7 @@
                 //         var i;
                 //         for (i = 0; i < 24; i++ ) { //TODO: Number is 24 for hours of payments
                             
-                //                 transactions.push(data[i].vin.retrievedVout.value);
-                //                 console.log("Transaction Item Zcash: " + transactions[i]);
+                //                 transactions.push(data.txrefs[i].value);
                 //         }
                 //         console.log("Here are the sampled transactions: ");
                 //         console.log(transactions);
@@ -77,4 +75,3 @@
     };
   }]);
 })(window.angular, app)
-

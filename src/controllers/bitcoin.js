@@ -16,17 +16,51 @@
         viewFactory.title = 'Bitcoin';
         viewFactory.prevUrl = null;
         var walletAddress;
-        var walletstats;
         let config = dynamineConfig.getConfig();
-        // walletAddress = callbcWallet.callconfig(dynamineConfig);
-        // walletstats = callbcWallet.callwallet(walletAddress);
-        // console.log(walletAddress);
-        $scope.getWalletAPIHost = function() {
-            return walletAddress;
+
+        var walbal;
+        var walnumtrans;
+        var payments;
+        var coinchart;
+
+        walletAddress = callbcWallet.callconfig(dynamineConfig);
+        walbal = callbcWallet.callwalletbal(walletAddress);
+        walnumtrans = callbcWallet.callwalletnumtrans(walletAddress);
+        payments = callbcWallet.callwallettrans(walletAddress);
+        console.log("Transactions: ");
+        console.log(payments);
+
+        $scope.getWalletBalance = function() {
+            walbal = '' + walbal;
+            return walbal;
         }
 
-        $scope.getWalletStats = function() {
-            return walletAddress;
+         $scope.getWalletNumTrans = function() {
+             walnumtrans = '' + walnumtrans;
+             return walnumtrans;
+         }
+
+
+        $scope.getWalletPayment1 = function() {
+            console.log("Transaction type: " + typeof(payments));
+            console.log(payments);
+            return payments[0];
+        }
+
+        $scope.getWalletPayment2 = function() {
+            return payments[1];
+        }
+
+        $scope.getWalletPayment3 = function() {
+            return payments[2];
+        }
+
+        $scope.getWalletPayment4 = function() {
+            return payments[3];
+        }
+
+        $scope.getWalletPayment5 = function() {
+            return payments[4];
         }
 
         var response;
@@ -62,19 +96,22 @@
           return dynamineConfig.getInfoForCoin(coinName).walletAddress;
         }
 
-        //callbcWallet.callconfig();
-
         $scope.refreshWalletTokens = function(master) {
-          createChart('#BitcoinWalletChart', {
+            coinchart = createChart('#BitcoinWalletChart', {
               type: 'line',
               data: { labels: [], datasets: [{
-                  data: [ 0.01, 0.025, 0.011, 0.02],
+                  data: [ payments[0], payments[1], payments[2], payments[3], payments[4], payments[5], payments[6], payments[7], payments[8], payments[9], payments[10], payments[11], payments[12], payments[13], payments[14], payments[15], payments[16], payments[17], payments[18], payments[19], payments[20], payments[21], payments[22], payments[23]],
                   label: 'coins',
                   backgroundColor: ['rgba(24, 138, 226, 0.5)', 'rgba(16, 196, 105, 0.5)', 'rgba(128, 197, 218, 0.5)',
                       'rgba(248, 142, 15, 0.5)', 'rgba(207, 32, 241, 0.5)', 'rgba(91, 105, 188, 0.5)', 'rgba(24, 138, 226, 0.5)']
                   //backgroundColor:['#10C469', '#FFCE56']
               }]}
           });
+
+          setInterval(function(){
+            var payments = callbcWallet.callwallettrans(walletAddress);
+            coinchart.update(payments);
+            }, 100000);
 
           if(!master || master !== true)
               toast.success('Timers data has been updated');

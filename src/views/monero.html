@@ -34,13 +34,17 @@
         </div><!-- .row -->
 
         <div class="row">
-        <div class="col md-2">
+        <div class="col md-3">
             <div class="panel panel-border info">
             <div class="panel__heading">Wallet Income</div>
             <div class="panel__body">
-                <dl class="horizontal"><dd>+ 0.4 XMR</dd></dl>
-                <dl class="horizontal"><dd>+ 1.2 XMR</dd></dl>
-                <dl class="horizontal"><dd>+ 2.0 XMR</dd></dl>
+              <dl class="horizontal" data-ng-show="getWalletNumTrans()"><dt>Wallet Transactions: </dt><dd>{{ getWalletNumTrans() }}</dd></dl>
+              <dl class="horizontal" data-ng-show="getWalletBalance()"><dt>Wallet Balance: </dt><dd>${{ getWalletBalance() }}</dd></dl>
+              <dl class="horizontal" data-ng-show="getWalletPayment1()"><dt style="padding: 5px;">Wallet Income: </dt><dd>+{{ getWalletPayment1() }}</dd></dl>
+              <dl class="horizontal pay" data-ng-show="getWalletPayment2()"><dd>+{{ getWalletPayment2() }}</dd></dl>
+              <dl class="horizontal pay" data-ng-show="getWalletPayment3()"><dd>+{{ getWalletPayment3() }}</dd></dl>
+              <dl class="horizontal pay" data-ng-show="getWalletPayment4()"><dd>+{{ getWalletPayment4() }}</dd></dl>
+              <dl class="horizontal pay" data-ng-show="getWalletPayment5()"><dd>+{{ getWalletPayment5() }}</dd></dl>
             </div>
             </div>
         </div>
@@ -54,7 +58,7 @@
             </div>
         </div>
 
-        <div class="col md-5">
+        <div class="col md-4">
             <div class="panel panel-border info">
               <div class="panel__heading">Current Hash Rates:</div>
               <div class="panel__body">

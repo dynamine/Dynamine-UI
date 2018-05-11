@@ -40,9 +40,9 @@
     let daemonConn = new net.Socket();
 
     let sendCmdTCP = function(cmd) {
-      let buf = Buffer.alloc(BUFF_SIZE);
-      buf.write(cmd);
-      //let buf = Buffer.from(cmd); //use for local test
+      // let buf = Buffer.alloc(BUFF_SIZE);
+      // buf.write(cmd);
+      let buf = Buffer.from(cmd); //use for local test
       daemonConn.write(buf, "utf8");
       console.log("sent: " + cmd );
     }
@@ -57,7 +57,7 @@
       daemonConn.on('data', (dataRaw) => {
         console.log("raw inbound: " + dataRaw.toString('utf8'));
         let jsonStr = dataRaw.toString('utf8').replace(new RegExp("\\\\", 'g'), "");
-        console.log("fmt inbound: " + JSON.stringify(data));
+        console.log("fmt inbound: " + jsonStr);
         let data = JSON.parse(jsonStr);
         if(angular.isDefined(handlers[data.cmd])){
           handlers[data.cmd](data);
