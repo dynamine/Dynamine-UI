@@ -261,3 +261,11 @@ dl.horizontal > dd { width: 60%; font-size: 0.96rem; }
 
 .pull-right { float: right; position: relative; }
 .pull-left { float: left; position: relative; }
+
+dd {
+    text-align: right;
+}
+
+.pay {
+    text-align: right;
+}
