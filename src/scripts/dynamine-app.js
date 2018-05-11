@@ -216,33 +216,62 @@ app.filter('splice', function () {
 * Initializing app config here
 * TODO: Test this
 */
-app.run(['dynamineConfig', 'daemon', 'toast', function(config, daemon, toast){
+app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$rootScope', function(config, daemon, toast, coinMetrics, $interval, $rootScope){
+  /**
+  * Config and daemon initialization here
+  */
   config.loadConfig();
-  daemon.registerCmdHandler("resources", function(data) {
-    let fmtData = JSON.parse(data);
-    let valedResources = [];
-    if(fmtData.resources && fmtData.resources.length > 0) {
-      for (let i = 0; i < fmtData.resources.length; i++) {
+  daemon.registerCmdHandler('resources', function(respData) {
+    let validResources = [];
+    if(respData.data.resources) {
+      for (let i = 0; i < respData.data.resources.length; i++) {
         validResources.push({
-          "name": fmtData.resources[i],
+          "name": respData.data.resources[i],
           "allocated": false,
-          "coin": ""
+          "coin": "",
+          "hashRate": 0
         });
       }
-      config.syncResources(fmtData);
+      config.syncResources(validResources);
     } else {
-      toast.error("daemon returned zero resources");
+      toast.error('daemon returned zero resources');
     }
   });
 
-  daemon.registerCmdHandler("start-miner", function(data) {
-    //TODO: implement
+  daemon.registerCmdHandler('hashRate', function(respData) {
+    let resource = config.getResource(respData.data.resource);
+    if( angular.isDefined(respData.data.hashRate) ) {
+      coinMetrics.addMetric(resource.coin, 'hashRate', respData.data.hashRate); // updating hash rate history
+      config.allocateResource(true, resource.name, resource.coin, respData.data.hashRate); // updating the resource with the current hash rate
+      $rootScope.$broadcast(resource.coin + 'HashRate', {}); //let the controller know to refresh it's graph. ONLY updates if the controller view is loaded
+    }
   });
 
-  daemon.registerCmdHandler("stop-miner", function(data) {
-    //TODO: implement
-  });
+  // daemon.registerCmdHandler("start-miner", function(data) {
+  //   //TODO: implement
+  // });
+  //
+  // daemon.registerCmdHandler("stop-miner", function(data) {
+  //   //TODO: implement
+  // });
 
   daemon.connect();
   daemon.getResources();
+
+  //daemon.getHashRate('test');
+
+  /**
+  * setting up polling loops for grabbing metrics here
+  */
+
+  let getHashRates = function () {
+    let resources = config.getResources();
+    for(let i = 0; i < resources.length; i++) {
+      if(resources[i].allocated) {
+        daemon.getHashRate(resources[i].name);
+      }
+    }
+  }
+
+  $interval(getHashRates, 10000); // get rate every minute
 }]);
