@@ -1,6 +1,6 @@
 (function(angular, app){
   app.factory('coinMetrics', [function() {
-    let MAX_METRICS = 30;
+    let MAX_METRICS = 6;
 
     let metrics = {
       bitcoin: {

@@ -17,6 +17,7 @@
         viewFactory.prevUrl = null;
         var walletAddress;
         let config = dynamineConfig.getConfig();
+        let hashRateLabels = [];
 
         var walbal;
         var walnumtrans;
@@ -125,17 +126,32 @@
           //Populating chart with static data for the sake of wireframes
           createChart('#BitcoinHashChart', {
               type: 'line',
-              data: { labels: [], datasets: [{
+              data: {
+                labels: hashRateLabels,
+                datasets: [{
                   data: coinMetrics.getMetricsByName(coinName, 'hashRate'),
                   backgroundColor: ['rgba(24, 138, 226, 0.5)', 'rgba(16, 196, 105, 0.5)', 'rgba(128, 197, 218, 0.5)',
                       'rgba(248, 142, 15, 0.5)', 'rgba(207, 32, 241, 0.5)', 'rgba(91, 105, 188, 0.5)', 'rgba(24, 138, 226, 0.5)'],
                   borderColor: ['#188AE2', '#10C469', '#80C5DA', '#F88E0F', '#CF20F1', '#5B69BC', '#188AE2'],
-                  borderWidth: 1, label: 'net hash rate'
-              }] }
+                  borderWidth: 1,
+                  label: 'net hash rate'
+                }]
+              },
+              options: {
+                scales: {
+                  xAxes: [{
+                    display: false
+                  }]
+                }
+              }
           });
         };
-
         $scope.$on(coinName+'HashRate', function(event, data) {
+          hashRateLabels = [];
+          let metricData = coinMetrics.getMetricsByName(coinName, 'hashRate');
+          for (let i =0; i < metricData.length; i++) {
+            hashRateLabels.push(i);
+          }
           $scope.refreshHashRate(); // refreshing hashrate when receive a new metric
         });
 

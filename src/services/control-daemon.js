@@ -55,9 +55,9 @@
       });
 
       daemonConn.on('data', (dataRaw) => {
-        console.log("raw inbound: " + dataRaw.toString('utf8'));
+        //console.log("raw inbound: " + dataRaw.toString('utf8'));
         let jsonStr = dataRaw.toString('utf8').replace(new RegExp("\\\\", 'g'), "");
-        console.log("fmt inbound: " + jsonStr);
+        //console.log("fmt inbound: " + jsonStr);
         let data = JSON.parse(jsonStr);
         if(angular.isDefined(handlers[data.cmd])){
           handlers[data.cmd](data);
