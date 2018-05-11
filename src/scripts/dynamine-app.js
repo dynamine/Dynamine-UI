@@ -221,12 +221,12 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
   * Config and daemon initialization here
   */
   config.loadConfig();
-  daemon.registerCmdHandler('resources', function(data) {
+  daemon.registerCmdHandler('resources', function(respData) {
     let validResources = [];
-    if(data.resources) {
-      for (let i = 0; i < data.resources.length; i++) {
+    if(respData.data.resources) {
+      for (let i = 0; i < respData.data.resources.length; i++) {
         validResources.push({
-          "name": data.resources[i],
+          "name": respData.data.resources[i],
           "allocated": false,
           "coin": "",
           "hashRate": 0
