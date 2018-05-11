@@ -39,7 +39,7 @@
               daemon.stopCoin(resource.name);
             }
             dynamineConfig.allocateResource(true, resource.name, coinName);
-            daemon.startCoin(resource.name, "", "", dynamineConfig.getInfoForCoin(coinName).poolServer, dynamineConfig.getInfoForCoin(coinName).poolPassword);
+          daemon.startCoin(resource.name, dynamineConfig.getInfoForCoin(coinName).algorithm,  dynamineConfig.getInfoForCoin(coinName).walletAddress, dynamineConfig.getInfoForCoin(coinName).poolServer, dynamineConfig.getInfoForCoin(coinName).poolPassword);
             $scope.resources = dynamineConfig.getResources();
           } else {
             dynamineConfig.allocateResource(false, resource.name, "");
@@ -92,10 +92,11 @@
                   borderWidth: 1, label: 'net hash rate'
               }] }
           });
-
-          if(!master || master !== true)
-              toast.success('Node Status data has been updated');
         };
+
+        $scope.$on(coinName+'HashRate', function(event, data) {
+          $scope.refreshHashRate(); // refreshing hashrate when receive a new metric
+        });
 
         $scope.refreshHashRate(true);
         $scope.refreshWalletTokens(true);

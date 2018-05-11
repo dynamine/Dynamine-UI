@@ -1,5 +1,7 @@
 (function(angular, app, net) {
   app.factory('daemon',[ 'toast', 'dynamineConfig', function(toast, dynamineConfig){
+    let BUFF_SIZE = 1024;
+
     let handlers = {} //where we will put code that handles incoming data
 
     let startCoinCmd = {
@@ -28,7 +30,22 @@
       "data": {}
     }
 
+    let hashRateCmd = {
+      "cmd": "hashRate",
+      "data": {
+        "resource": "",
+      }
+    }
+
     let daemonConn = new net.Socket();
+
+    let sendCmdTCP = function(cmd) {
+      let buf = Buffer.alloc(BUFF_SIZE);
+      buf.write(cmd);
+      //let buf = Buffer.from(cmd); //use for local test
+      daemonConn.write(buf, "utf8");
+      console.log("sent: " + cmd );
+    }
 
     let connectToDaemon = function() {
       let config = dynamineConfig.getConfig();
@@ -38,9 +55,12 @@
       });
 
       daemonConn.on('data', (dataRaw) => {
-        let data = JSON.parse(dataRaw);
-
-        //TODO: Handle map incoming commands to handlers
+        console.log("raw inbound: " + dataRaw.toString('utf8'));
+        let data = JSON.parse(dataRaw.toString('utf8'));
+        // console.log(JSON.stringify(data));
+        if(angular.isDefined(handlers[data.cmd])){
+          handlers[data.cmd](data);
+        }
       });
 
       daemonConn.on('end', () => {
@@ -57,17 +77,18 @@
         startCoinCmd.data.miner_args['-o'] = poolServer;
         startCoinCmd.data.miner_args['-u'] = walletAddress;
         startCoinCmd.data.miner_args['-p'] = poolPassword;
-        daemonConn.write(JSON.stringify(startCoinCmd));
-        console.log("starting: " + resource); //TODO: remove
+        sendCmdTCP(angular.toJson(startCoinCmd));
       },
       stopCoin: function(resource) {
         stopCoinCmd.data.deviceID = resource;
-
-        daemonConn.write(JSON.stringify(stopCoinCmd))
-        console.log("stopping: " + resource);
+        sendCmdTCP(angular.toJson(stopCoinCmd));
       },
       getResources: function() {
-        daemonConn.write(JSON.stringify(resourcesCmd));
+        sendCmdTCP(angular.toJson(resourcesCmd));
+      },
+      getHashRate: function(resource) {
+        hashRateCmd.data.resource = resource;
+        sendCmdTCP(angular.toJson(hashRateCmd));
       },
       disconnect: function() {
         daemonConn.end();
@@ -80,7 +101,7 @@
       * These handlers must be registered with this controller to be used.
       */
       registerCmdHandler: function(cmdName, callback) {
-        handlers['cmdName'] = callback;
+        handlers[cmdName] = callback;
       }
     }
   }]);

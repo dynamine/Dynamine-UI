@@ -58,9 +58,8 @@
             <div class="panel panel-border info">
               <div class="panel__heading">Current Hash Rates:</div>
               <div class="panel__body">
-                <dl class="horizontal"><dt>localhost.gpu0:</dt><dd>5.34mh/s</dd></dl>
-                <dl class="horizontal"><dt>localhost.gpu1:</dt><dd>10.1Gh/s</dd></dl>
-                <dl class="horizontal"><dt>Total:</dt><dd>10.1534 Gh/s</dd></dl>
+                <dl data-ng-repeat="resource in resources" data-ng-show="resourceChecked(resource)" class="horizontal"><dt>{{ resource.name }}:</dt><dd>{{ resource.hashRate }}mh/s</dd></dl>
+                <!-- <dl class="horizontal"><dt>Total:</dt><dd>10.1534 Gh/s</dd></dl> -->
               </div>
             </div>
         </div>
