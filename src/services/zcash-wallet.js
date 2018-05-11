@@ -24,7 +24,7 @@
                 //             balance = data["balance"];
                 //         }
                 // });
-                maxtransactions = "67874444"
+                balance = "23804289200"
 
   
                 return balance;
@@ -32,16 +32,16 @@
 
         callwalletnumtrans: function(walletAddress) {
                 //Get wallet address full endpoint and parse
-                $.ajax({
-                        url: "https://api.zcha.in/v2/mainnet/accounts/" + walletAddress,
-                        type: "GET",
-                        async: false,
-                        datatype: "json",
-                        success: function(data) {
-                            maxtransactions = Object.keys(data).length;
-                        }
-                });
-
+                // $.ajax({
+                //         url: "https://api.zcha.in/v2/mainnet/accounts/" + walletAddress,
+                //         type: "GET",
+                //         async: false,
+                //         datatype: "json",
+                //         success: function(data) {
+                //             maxtransactions = Object.keys(data).length;
+                //         }
+                // });
+                maxtransactions = "639932";
   
                 return maxtransactions;
         },
