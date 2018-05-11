@@ -24,7 +24,7 @@
         "bitcoin": {
           "enabled": false,
           "walletAddress": "",
-          "walletAPIHost": "3PcLNBXR7a3twhvMPMw4uG9pXF5Qqn5WGk",
+          "walletAPIHost": "3D2oetdNuZUqQHPJmcMDDHYoqkyNVsFk9r",
           "poolServer": "",
           "poolUsername": "",
           "poolPassword": ""
@@ -32,7 +32,7 @@
         "litecoin": {
           "enabled": false,
           "walletAddress": "",
-          "walletAPIHost": "3PcLNBXR7a3twhvMPMw4uG9pXF5Qqn5WGk",
+          "walletAPIHost": "LTU2cds4aSdXFip9sV4gXphnhxGQjgfjmg",
           "poolServer": "",
           "poolUsername": "",
           "poolPassword": ""
@@ -48,7 +48,7 @@
         zcash: {
           "enabled": false,
           "walletAddress": "",
-          "walletAPIHost": "t1dbxzQi5oCeuJWwbCSwNLuyyB5ueRKeG8n",
+          "walletAPIHost": "t1cArVf7BgN3zPx6UHGy87ZAurTA4AQejj7",
           "poolServer": "",
           "poolUsername": "",
           "poolPassword": ""

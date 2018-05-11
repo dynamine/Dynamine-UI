@@ -1,10 +1,7 @@
 (function(angular, app) {
     app.factory('callliteWallet', ['dynamineConfig', 'ajax', function(dynamineConfig, ajax){
         
-        var config = dynamineConfig;
-        //var name = dynamineConfig.getConfig("litecoin").clusterId;
-        var walletdatastats;
-        var name = "Gfuen";
+
         var balance;
         var maxtransactions;
         var transactions = [];
@@ -15,28 +12,16 @@
                 var walletAddress = dynamineConfig.getInfoForCoin("litecoin").walletAPIHost;
                 return walletAddress;
         },    
-                
-        
-        callwallet: function(walletAddress) {
-               
-                //Get wallet address full endpoint
+
+        callwalletbal: function(walletAddress) {
+                //Get wallet address full endpoint and parse
                 $.ajax({
-                        url: "https://api.blockcypher.com/v1/btc/main/addrs/" + walletAddress+ "/full",
+                        url: "https://api.blockcypher.com/v1/ltc/main/addrs/" + walletAddress+ "/full",
                         type: "GET",
                         async: false,
                         datatype: "json",
                         success: function(data) {
                             balance = data["balance"];
-                            maxtransactions = data["n_tx"];
-                            var i;
-                        //     for (i = 0; i < maxtransactions; i++ ) {
-                        //         transactions.push(data.txs[i]);
-                        //     }
-                            transactions.push(balance);
-                            transactions.push(maxtransactions);
-                            console.log(data);
-                            console.log(balance);
-            
                         }
                 });
 
@@ -44,31 +29,46 @@
                 return balance;
         },
 
-        callwalletbal: function(walletAddress) {
-                //Get wallet address full endpoint
+        callwalletnumtrans: function(walletAddress) {
+                //Get wallet address full endpoint and parse
                 $.ajax({
-                        url: "https://api.blockcypher.com/v1/btc/main/addrs/" + walletAddress+ "/full",
+                        url: "https://api.blockcypher.com/v1/ltc/main/addrs/" + walletAddress+ "/full",
                         type: "GET",
                         async: false,
                         datatype: "json",
                         success: function(data) {
-                            balance = data["balance"];
                             maxtransactions = data["n_tx"];
-                            var i;
-                        //     for (i = 0; i < maxtransactions; i++ ) {
-                        //         transactions.push(data.txs[i]);
-                        //     }
-                            transactions.push(balance);
-                            transactions.push(maxtransactions);
-                            console.log(data);
-                            console.log(balance);
-
                         }
                 });
 
   
                 return maxtransactions;
+        },
+
+        callwallettrans: function(walletAddress) {
+                //Get wallet address full endpoint and parse
+                transactions = [];
+                $.ajax({
+                        url: "https://api.blockcypher.com/v1/ltc/main/addrs/" + walletAddress,
+                        type: "GET",
+                        async: false,
+                        datatype: "json",
+                        success: function(data) {
+                        var i;
+                        for (i = 0; i < 24; i++ ) { //TODO: Number is 24 for hours of payments change later possibly 
+                            
+                                transactions.push(data.txrefs[i].value);
+                        }
+                        console.log("Here are the sampled transactions: ");
+                        console.log(transactions);
+
+                        }
+                });
+
+  
+                return transactions;
         }
+
 
       
     };

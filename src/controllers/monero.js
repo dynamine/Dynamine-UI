@@ -12,10 +12,25 @@
         return new Chart (angular.element(container)[0].getContext('2d'), data);
     };
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig',function ($scope, ajax, toast, viewFactory, dynamineConfig) {
+    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'callmoneroWallet',function ($scope, ajax, toast, viewFactory, dynamineConfig, callmoneroWallet) {
         viewFactory.title = 'Monero';
         viewFactory.prevUrl = null;
         let coinName = "monero";
+        var walletAddress;
+        var walbal = "";
+        var walnumtrans = "";
+
+        walletAddress = callliteWallet.callconfig(dynamineConfig);
+        walbal = callmoneroWallet.callbalance();
+        console.log(typeof(walbal));
+        console.log(typeof(walnumtrans));
+        $scope.getWalletBalance = function() {
+            console.log("Display: ");
+            console.log(typeof(walbal));
+            walbal = '' + walbal;
+            return walbal;
+        }
+
 
         $scope.resources = dynamineConfig.getResources();
 
