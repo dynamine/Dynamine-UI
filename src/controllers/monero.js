@@ -16,20 +16,7 @@
         viewFactory.title = 'Monero';
         viewFactory.prevUrl = null;
         let coinName = "monero";
-        var walletAddress;
-        var walbal = "";
-        var walnumtrans = "";
-
-        walletAddress = callliteWallet.callconfig(dynamineConfig);
-        walbal = callmoneroWallet.callbalance();
-        console.log(typeof(walbal));
-        console.log(typeof(walnumtrans));
-        $scope.getWalletBalance = function() {
-            console.log("Display: ");
-            console.log(typeof(walbal));
-            walbal = '' + walbal;
-            return walbal;
-        }
+        
 
 
         $scope.resources = dynamineConfig.getResources();

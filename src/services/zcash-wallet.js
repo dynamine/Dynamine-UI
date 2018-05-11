@@ -1,56 +1,78 @@
 (function(angular, app) {
     app.factory('callzcashWallet', ['dynamineConfig', 'ajax', function(dynamineConfig, ajax){
         
-        var config = dynamineConfig;
-        //var name = dynamineConfig.getConfig("zcash").clusterId;
-        var walletdatastats;
-        var name = "Gfuen";
+
+        var balance;
+        var maxtransactions;
+        var transactions = [];
+
 
         return {
         callconfig: function (dynamineConfig) {
                 var walletAddress = dynamineConfig.getInfoForCoin("zcash").walletAPIHost;
-                alert(walletAddress);
                 return walletAddress;
         },    
-                
-        
-        calltrans: function(walletAddress) {
-               
-                //Get wallet address full endpoint
+
+        callwalletbal: function(walletAddress) {
+                //Get wallet address full endpoint and parse
                 $.ajax({
-                        url: "https://api.zcha.in/v2/mainnet/accounts/" + walletAddress + "/recv?limit=15&offset=0",
+                        url: "https://api.zcha.in/v2/mainnet/accounts/" + walletAddress,
                         type: "GET",
+                        async: false,
                         datatype: "json",
                         success: function(data) {
-                            console.log(data);
-                            walletdatastats = JSON.stringify(data);
-                            console.log(walletdatastats);
+                            balance = data["balance"];
                         }
                 });
 
-
-                return walletdatastats;
+  
+                return balance;
         },
 
-        callwallet: function(walletAddress) {
-               
-            //Get wallet address full endpoint
-            $.ajax({
-                    url: "https://api.zcha.in/v2/mainnet/accounts/" + walletAddress,
-                    type: "GET",
-                    datatype: "json",
-                    success: function(data) {
-                        console.log(data);
-                        walletdatastats = JSON.stringify(data);
-                        console.log(walletdatastats);
-                    }
-            });
+        callwalletnumtrans: function(walletAddress) {
+                //Get wallet address full endpoint and parse
+                $.ajax({
+                        url: "https://api.zcha.in/v2/mainnet/accounts/" + walletAddress,
+                        type: "GET",
+                        async: false,
+                        datatype: "json",
+                        success: function(data) {
+                            maxtransactions = Object.keys(data).length;
+                        }
+                });
 
+  
+                return maxtransactions;
+        },
 
-            return walletdatastats;
-    }
+        callwallettrans: function(walletAddress) {
+                //Get wallet address full endpoint and parse
+                transactions = [];
+                $.ajax({
+                        url: "https://api.zcha.in/v2/mainnet/accounts/" + walletAddress + "/recv?limit=24&offset=0",
+                        type: "GET",
+                        async: false,
+                        datatype: "json",
+                        success: function(data) {
+                        var i;
+                        for (i = 0; i < 24; i++ ) { //TODO: Number is 24 for hours of payments
+                            
+                                transactions.push(data[i].vin.retrievedVout.value);
+                                console.log("Transaction Item Zcash: " + transactions[i]);
+                        }
+                        console.log("Here are the sampled transactions: ");
+                        console.log(transactions);
+
+                        }
+                });
+
+  
+                return transactions;
+        }
+
 
       
     };
   }]);
 })(window.angular, app)
+

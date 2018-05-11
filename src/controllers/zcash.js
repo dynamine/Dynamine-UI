@@ -19,29 +19,48 @@
         var walletAddress;
         var walbal;
         var walnumtrans;
+        var payments;
+        var coinchart;
 
         walletAddress = callzcashWallet.callconfig(dynamineConfig);
-        walnumtrans = callzcashWallet.calltrans(walletAddress);
-        walbal = callzcashWallet.callwallet(walletAddress);
+        walbal = callzcashWallet.callwalletbal(walletAddress);
+        walnumtrans = callzcashWallet.callwalletnumtrans(walletAddress);
+        payments = callzcashWallet.callwallettrans(walletAddress);
+        console.log("Transactions: ");
+        console.log(payments);
 
-        console.log(typeof(walbal));
-        console.log(typeof(walnumtrans));
         $scope.getWalletBalance = function() {
-            console.log("Display: ");
-            console.log(typeof(walbal));
             walbal = '' + walbal;
             return walbal;
         }
 
-        $scope.getWalletNumTrans = function() {
-            console.log("Display: ");
-            console.log(typeof(walnumtrans));
-            walnumtrans = '' + walnumtrans;
-            return walnumtrans;
+         $scope.getWalletNumTrans = function() {
+             walnumtrans = '' + walnumtrans;
+             return walnumtrans;
+         }
+
+
+        $scope.getWalletPayment1 = function() {
+            console.log("Transaction type: " + typeof(payments));
+            console.log(payments);
+            return payments[0];
         }
 
+        $scope.getWalletPayment2 = function() {
+            return payments[1];
+        }
 
+        $scope.getWalletPayment3 = function() {
+            return payments[2];
+        }
 
+        $scope.getWalletPayment4 = function() {
+            return payments[3];
+        }
+
+        $scope.getWalletPayment5 = function() {
+            return payments[4];
+        }
 
 
         $scope.resources = dynamineConfig.getResources();
@@ -78,16 +97,21 @@
         }
 
         $scope.refreshWalletTokens = function(master) {
-          createChart('#ZcashWalletChart', {
+          coinchart = createChart('#ZcashWalletChart', {
               type: 'line',
               data: { labels: [], datasets: [{
-                  data: [ 0.01, 0.025, 0.011, 0.02],
+                  data: payments,
                   label: 'coins',
                   backgroundColor: ['rgba(24, 138, 226, 0.5)', 'rgba(16, 196, 105, 0.5)', 'rgba(128, 197, 218, 0.5)',
                       'rgba(248, 142, 15, 0.5)', 'rgba(207, 32, 241, 0.5)', 'rgba(91, 105, 188, 0.5)', 'rgba(24, 138, 226, 0.5)']
                   //backgroundColor:['#10C469', '#FFCE56']
               }]}
           });
+
+          setInterval(function(){
+            var payments = callzcashWallet.callwallettrans(walletAddress);
+            coinchart.update(payments);
+            }, 100000);
 
           if(!master || master !== true)
               toast.success('Timers data has been updated');
