@@ -24,7 +24,7 @@
                 //             balance = data["balance"];
                 //         }
                 // });
-                balance = "1883000045"
+                balance = "1883000045";
   
                 return balance;
         },
