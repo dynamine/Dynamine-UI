@@ -247,13 +247,23 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
     }
   });
 
-  // daemon.registerCmdHandler("start-miner", function(data) {
-  //   //TODO: implement
-  // });
-  //
-  // daemon.registerCmdHandler("stop-miner", function(data) {
-  //   //TODO: implement
-  // });
+  daemon.registerCmdHandler('start-miner', function(respData) {
+    let status = respData.data.result;
+    if(status == 'success') {
+      toast.success('Successfully started miner');
+    } else {
+      toast.error('Failed to start miner');
+    }
+  });
+
+  daemon.registerCmdHandler('stop-miner', function(respData) {
+    let status = respData.data.result;
+    if(status == 'success') {
+      toast.success('Successfully stopped miner');
+    } else {
+      toast.error('Failed to stop miner');
+    }
+  });
 
   daemon.connect();
   daemon.getResources();

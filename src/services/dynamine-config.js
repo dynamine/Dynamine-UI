@@ -3,8 +3,8 @@
     const CONFIG_PATH = 'dynamine_cache.json';
 
     let config = {
-      "daemonHost": "",
-      "daemonPort": "",
+      "daemonHost": "localhost",
+      "daemonPort": "1337",
       "daemonPassword": "",
       "clusterId": "",
       "clusterPassword": "",
