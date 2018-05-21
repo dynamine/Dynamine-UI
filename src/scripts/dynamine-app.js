@@ -214,7 +214,6 @@ app.filter('splice', function () {
 
 /**
 * Initializing app config here
-* TODO: Test this
 */
 app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$rootScope', function(config, daemon, toast, coinMetrics, $interval, $rootScope){
   /**
@@ -247,7 +246,7 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
     }
   });
 
-  daemon.registerCmdHandler('start-miner', function(respData) {
+  daemon.registerCmdHandler('start-miner', (respData) => {
     let status = respData.data.result;
     if(status == 'success') {
       toast.success('Successfully started miner');
@@ -256,8 +255,8 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
     }
   });
 
-  daemon.registerCmdHandler('stop-miner', function(respData) {
-    let status = respData.data.result;
+  daemon.registerCmdHandler('stop-miner', (respData) => {
+    let status = respData.data.result; //TODO: get resource back
     if(status == 'success') {
       toast.success('Successfully stopped miner');
     } else {
@@ -265,10 +264,18 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
     }
   });
 
+  // starting miners for saved resources as soon as the UI successfully connects to the daemon
+  daemon.registerCmdHandler('init', () => {
+    let resources = config.getResources();
+    for (let i = 0; i < resources.length; i++) {
+      if (resources[i].allocated && config.getInfoForCoin(resources[i].coin).enabled) {
+        daemon.startCoin(resource[i].name, resource[i].coin);
+      }
+    }
+  });
+
   daemon.connect();
   daemon.getResources();
-
-  //daemon.getHashRate('test');
 
   /**
   * setting up polling loops for grabbing metrics here

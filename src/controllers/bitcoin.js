@@ -41,7 +41,6 @@
              return walnumtrans;
          }
 
-
         $scope.getWalletPayment1 = function() {
             console.log("Transaction type: " + typeof(payments));
             console.log(payments);

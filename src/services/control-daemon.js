@@ -50,6 +50,10 @@
     let connectToDaemon = function() {
       let config = dynamineConfig.getConfig();
       daemonConn.connect(config.daemonPort, config.daemonHost, () => {
+        if(angular.isDefined(handlers.init)) {
+          handlers.init(); // this handler should start all previously enabled miners
+        }
+
         //TODO: Handle password validation
         toast.info("connected to daemon at " + config.daemonHost + ":" + config.daemonPort);
       });
@@ -78,13 +82,15 @@
     }
 
     return {
-      startCoin: function(resource, algo, walletAddress, poolServer, poolPassword) {
+      startCoin: function(resource, coin) {
+        let coinInfo = dynamineConfig.getInfoForCoin(coin);
+
         startCoinCmd.data.resource = resource;
-        startCoinCmd.data.miner_binary = "ccminer-x64";
-        startCoinCmd.data.miner_args['-a'] = algo;
-        startCoinCmd.data.miner_args['-o'] = poolServer;
-        startCoinCmd.data.miner_args['-u'] = walletAddress;
-        startCoinCmd.data.miner_args['-p'] = poolPassword;
+        startCoinCmd.data.miner_binary = coinInfo.binary;
+        startCoinCmd.data.miner_args['-a'] = coinInfo.algorithm;
+        startCoinCmd.data.miner_args['-o'] = coinInfo.poolServer;
+        startCoinCmd.data.miner_args['-u'] = coinInfo.walletAddress;
+        startCoinCmd.data.miner_args['-p'] = coinInfo.poolPassword;
         sendCmdTCP(angular.toJson(startCoinCmd));
       },
       stopCoin: function(resource) {
