@@ -20,6 +20,6 @@ function getInstallerConfig () {
     outputDirectory: path.join(outPath, 'windows-installer'),
     exe: 'Dynamine.exe',
     setupExe: 'DynamineAppInstaller.exe',
-    setupIcon: path.join(rootPath, 'assets', 'icons', 'win', 'icon.ico')
+    setupIcon: path.join(rootPath, 'dynamineLogo.png')
   })
 }
