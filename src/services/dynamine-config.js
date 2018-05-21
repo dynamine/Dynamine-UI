@@ -30,7 +30,7 @@
           "poolUsername": "",
           "poolPassword": ""
         },
-        monero: {
+        "monero": {
           "enabled": false,
           "algorithm": "",
           "binary": "",
@@ -40,7 +40,7 @@
           "poolUsername": "",
           "poolPassword": ""
         },
-        zcash: {
+        "zcash": {
           "enabled": false,
           "algorithm": "",
           "binary": "",

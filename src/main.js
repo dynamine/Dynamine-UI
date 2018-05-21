@@ -28,7 +28,7 @@ let startMainWindow = function () {
         title: app.getName(),
         minHeight: 500,
         minWidth: 900,
-        icon: absPath + '/dynamine-256x256.png'
+        icon: path.join(__dirname,  'images/icon/dynamineLogo_64x64.png')
     });
 
     /**

@@ -232,6 +232,15 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
         });
       }
       config.syncResources(validResources);
+
+      // starting enabled resources after they are synched
+      let resources = config.getResources();
+      for (let i = 0; i < resources.length; i++) {
+        if (resources[i].allocated && config.getInfoForCoin(resources[i].coin).enabled) {
+          daemon.startCoin(resource[i].name, resource[i].coin); //if the daemon does not have that resource it will fail silently
+        }
+      }
+
     } else {
       toast.error('daemon returned zero resources');
     }
@@ -264,14 +273,8 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
     }
   });
 
-  // starting miners for saved resources as soon as the UI successfully connects to the daemon
   daemon.registerCmdHandler('init', () => {
-    let resources = config.getResources();
-    for (let i = 0; i < resources.length; i++) {
-      if (resources[i].allocated && config.getInfoForCoin(resources[i].coin).enabled) {
-        daemon.startCoin(resource[i].name, resource[i].coin);
-      }
-    }
+    //TODO: validate daemon password
   });
 
   daemon.connect();
