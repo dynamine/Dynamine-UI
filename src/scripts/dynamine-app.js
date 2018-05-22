@@ -1,6 +1,6 @@
 'use strict';
 
-// node dependencies
+// node dependencies used by angular
 var fs = require('fs');
 var net = require('net');
 
@@ -215,7 +215,7 @@ app.filter('splice', function () {
 /**
 * Initializing app config here
 */
-app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$rootScope', function(config, daemon, toast, coinMetrics, $interval, $rootScope){
+app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$rootScope', 'callbcWallet', function(config, daemon, toast, coinMetrics, $interval, $rootScope, callbcWallet){
   /**
   * Config and daemon initialization here
   */
@@ -293,5 +293,15 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
     }
   }
 
-  $interval(getHashRates, 10000); // get rate every minute
+  let getWalletTransactions = function () {
+    callbcWallet.getWalletTransactions();
+  }
+
+  let getWalletBalances = function() {
+    callbcWallet.getWalletBalance();
+  }
+  getWalletTransactions();
+  $interval(getHashRates, 10000);
+  $interval(getWalletTransactions, 30000)
+  $interval(getWalletBalances, 3000)
 }]);

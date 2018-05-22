@@ -28,15 +28,24 @@
 
             <div class="form__field">
                 <label class="field-label">Server:</label>
-                <div class="field-input"><input type="text" data-ng-model="coin.poolServer"/></div>
+                <div class="field-input"><input type="text" name="poolServer" data-ng-model="coin.poolServer" required=""/></div>
+                <div ng-show="form.$submitted || form.walletAddress.$touched">
+                  <div ng-show="form.walletAddress.$error.required">You must provide a pool address.</div>
+                </div>
             </div>
             <div class="form__field">
                 <label class="field-label">Username:</label>
-                <div class="field-input"><input type="text" data-ng-model="coin.poolUsername"/></div>
+                <div class="field-input"><input type="text" name="poolUsername" data-ng-model="coin.poolUsername" required=""/></div>
+                <div ng-show="form.$submitted || form.walletAddress.$touched">
+                  <div ng-show="form.walletAddress.$error.required">You must provide a pool username.</div>
+                </div>
             </div>
             <div class="form__field">
                 <label class="field-label">Password:</label>
-                <div class="field-input"><input type="password" data-ng-model="coin.poolPassword"/></div>
+                <div class="field-input"><input type="password" name="poolPassword" data-ng-model="coin.poolPassword" required=""/></div>
+                <div ng-show="form.$submitted || form.walletAddress.$touched">
+                  <div ng-show="form.walletAddress.$error.required">You must provide a pool password.</div>
+                </div>
             </div>
 
             <div class="form__field">

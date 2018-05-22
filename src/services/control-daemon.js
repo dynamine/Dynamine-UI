@@ -7,9 +7,9 @@
     let startCoinCmd = {
       "cmd": "startMiner",
       "data": {
-        "resource": "",
         "miner_binary": "",
         "miner_args": {
+          "-d": "",
           "-a": "",
           "-o": "",
           "-u": "",
@@ -75,6 +75,10 @@
         }
       });
 
+      daemonConn.on('error', (errorMsg) => {
+        toast.error("Encountered the following daemon connection issue: \"" + errorMsg + "\"");
+      });
+
       daemonConn.on('end', () => {
         toast.warning("disconnected from daemon");
         //TODO: Handle anything else dealing with disconnect
@@ -85,8 +89,8 @@
       startCoin: function(resource, coin) {
         let coinInfo = dynamineConfig.getInfoForCoin(coin);
 
-        startCoinCmd.data.resource = resource;
         startCoinCmd.data.miner_binary = coinInfo.binary;
+        startCoinCmd.data.miner_args['-d'] = resource;
         startCoinCmd.data.miner_args['-a'] = coinInfo.algorithm;
         startCoinCmd.data.miner_args['-o'] = coinInfo.poolServer;
         startCoinCmd.data.miner_args['-u'] = coinInfo.walletAddress;

@@ -4,15 +4,19 @@
 
     let metrics = {
       bitcoin: {
+        walletTransactions: [],
         hashRate: []
       },
       litecoin: {
+        walletTransactions: [],
         hashRate: []
       },
       monero: {
+        walletTransactions: [],
         hashRate: []
       },
       zcash: {
+        walletTransactions: [],
         hashRate: []
       }
     }
