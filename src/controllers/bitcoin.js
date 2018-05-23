@@ -1,17 +1,32 @@
 /* global app:true Chart:true */
-(function (angular, app, Chart, callbcWallet) { 'use strict';
+(function (angular, app, Chart) { 'use strict';
     const controller = 'BitcoinController';
     if (typeof app === 'undefined') throw (controller + ': app is undefined');
 
     Chart.defaults.global.defaultFontColor = '#9db4be';
     Chart.defaults.global.defaultFontStyle = 'bold';
 
-    app.controller(controller, ['$scope', 'toast', 'viewFactory', 'callbcWallet', 'coinMetrics', 'coinController', function ($scope, toast, viewFactory, callbcWallet, coinMetrics, coinController) {
+    app.controller(controller, ['$scope', 'viewFactory', 'bitcoinWallet', 'coinMetrics', 'coinController', function ($scope, viewFactory, bitcoinWallet, coinMetrics, coinController) {
         viewFactory.title = 'Bitcoin';
         viewFactory.prevUrl = null;
         let coinName = "bitcoin";
+        let coinSym  = "BTC";
+        let shownTransactionLimit = 3;
         let walletTokensLabels = [];
         let hashRateLabels = [];
+
+        let handleWalletTransactions = function() {
+          walletTokensLabels = [];
+          $scope.walletTransactions = [];
+          let walletTokenData = coinMetrics.getMetricsByName(coinName, 'walletTransactions');
+          for (let i =0; i < walletTokenData.length; i++) {
+            if(i < shownTransactionLimit) {
+              $scope.walletTransactions.push(walletTokenData[walletTokenData.length - i - 1]);
+            }
+            walletTokensLabels.push(i);
+          }
+          $scope.refreshWalletTokens();
+        }
 
         $scope.coinName = coinName;
 
@@ -74,21 +89,20 @@
           $scope.refreshHashRate(); // refreshing hashrate when receive a new metric
         });
 
-        $scope.$on(coinName+"walletTransactions", function(event, data) {
-          walletTokensLabels = [];
-          let walletTokenData = coinMetrics.getMetricsByName(coinName, 'walletTransactions');
-          for (let i =0; i < walletTokenData.length; i++) {
-            walletTokensLabels.push(i);
-          }
-          $scope.refreshWalletTokens();
+        $scope.$on(coinName+"WalletTransactions", function(event, data) {
+          handleWalletTransactions();
         });
 
-        callbcWallet.setWalletBalanceHandler(function(data) {
-          if(data.balance) {
-            $scope.walletBalance = data.balance;
+        bitcoinWallet.setWalletBalanceHandler(function(data) {
+          if(angular.isDefined(data.balance)) {
+            $scope.walletBalance = bitcoinWallet.satoshiToBtc(data.balance) + " " + coinSym;
           }
         });
 
+        /**
+        * initializing controller
+        */
+        handleWalletTransactions(); // may not work on first load, but prevents blank coin info otherwise
         $scope.refreshHashRate(true);
         $scope.refreshWalletTokens(true);
 

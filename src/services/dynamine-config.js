@@ -15,7 +15,6 @@
           "algorithm": "bitcoin",
           "binary": "ccminer-x64",
           "walletAddress": "",
-          "walletAPIHost": "3D2oetdNuZUqQHPJmcMDDHYoqkyNVsFk9r",
           "poolServer": "stratum+tcp://rvn.suprnova.cc:6666",
           "poolUsername": "tpruvot.win",
           "poolPassword": "x"
@@ -25,7 +24,6 @@
           "algorithm": "",
           "binary": "",
           "walletAddress": "",
-          "walletAPIHost": "LTU2cds4aSdXFip9sV4gXphnhxGQjgfjmg",
           "poolServer": "",
           "poolUsername": "",
           "poolPassword": ""
@@ -35,7 +33,6 @@
           "algorithm": "",
           "binary": "",
           "walletAddress": "",
-          "walletAPIHost": "",
           "poolServer": "",
           "poolUsername": "",
           "poolPassword": ""
@@ -45,7 +42,6 @@
           "algorithm": "",
           "binary": "",
           "walletAddress": "",
-          "walletAPIHost": "t1cArVf7BgN3zPx6UHGy87ZAurTA4AQejj7",
           "poolServer": "",
           "poolUsername": "",
           "poolPassword": ""

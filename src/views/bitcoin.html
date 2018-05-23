@@ -38,12 +38,8 @@
             <div class="panel panel-border info">
             <div class="panel__heading">Wallet Income</div>
             <div class="panel__body">
-                <dl class="horizontal" data-ng-show"walletBalance"><dt>Wallet Balance: </dt><dd>{{ walletBalance }}</dd></dl>
-                <dl class="horizontal" data-ng-show="getWalletPayment1()"><dt style="padding: 5px;">Wallet Income: </dt><dd>+{{ getWalletPayment1() }}</dd></dl>
-                <dl class="horizontal pay" data-ng-show="getWalletPayment2()"><dd>+{{ getWalletPayment2() }}</dd></dl>
-                <dl class="horizontal pay" data-ng-show="getWalletPayment3()"><dd>+{{ getWalletPayment3() }}</dd></dl>
-                <dl class="horizontal pay" data-ng-show="getWalletPayment4()"><dd>+{{ getWalletPayment4() }}</dd></dl>
-                <dl class="horizontal pay" data-ng-show="getWalletPayment5()"><dd>+{{ getWalletPayment5() }}</dd></dl>
+                <dl class="horizontal" data-ng-show="walletBalance"><dt>Wallet Balance: </dt><dd>{{ walletBalance }}</dd></dl>
+                <dl class="horizontal" data-ng-repeat="transaction in walletTransactions track by $index"><dt style="padding: 5px;" data-ng-show="{{$index == 0}}">Wallet Income: </dt><dd>+{{ transaction }} BTC</dd></dl>
             </div>
             </div>
         </div>
@@ -61,7 +57,7 @@
             <div class="panel panel-border info">
               <div class="panel__heading">Current Hash Rates:</div>
               <div class="panel__body">
-                  <dl data-ng-repeat="resource in coinController.resources" data-ng-show="coinController.resourceChecked(coinName, resource)" class="horizontal"><dt>{{ resource.name }}:</dt><dd>{{ resource.hashRate }}mh/s</dd></dl>
+                  <dl data-ng-repeat="resource in coinController.resources" data-ng-show="{{ coinController.resourceChecked(coinName, resource) && resource.hashRate > 0 }}" class="horizontal"><dt>{{ resource.name }}:</dt><dd>{{ resource.hashRate }}mh/s</dd></dl>
               </div>
             </div>
         </div>
@@ -75,7 +71,7 @@
           <div class="panel panel-border info">
             <div class="panel__heading">[{{ coinController.getDaemonHost() }}] Allocate GPUs</div>
             <div class="panel__body align-left">
-              <div class="padding-10" data-ng-repeat="resource in coinController.resources"><label class="checkbox success"><input id="{{ resource.name }}" data-ng-checked="coinController.resourceChecked(coinName, resource)" data-ng-click="coinController.allocateResource(coinName, resource)" type="checkbox"><span class="pad-left-10">{{ resource.name.split(".")[1]}} - {{resource.name.split(".")[2] }}</span><span data-ng-show="resource.allocated"> - allocated to {{ resource.coin }}</span></label></div>
+              <div class="padding-10" data-ng-repeat="resource in coinController.resources"><label class="checkbox success"><input id="{{ resource.name }}" data-ng-checked="coinController.resourceChecked(coinName, resource)" data-ng-click="coinController.allocateResource(coinName, resource, this)" type="checkbox"><span class="pad-left-10">{{ resource.name.split(".")[1]}} - {{resource.name.split(".")[2] }}</span><span data-ng-show="resource.allocated"> - allocated to {{ resource.coin }}</span></label></div>
             </div>
           </div>
         </div>

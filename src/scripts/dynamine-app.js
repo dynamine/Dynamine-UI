@@ -215,7 +215,7 @@ app.filter('splice', function () {
 /**
 * Initializing app config here
 */
-app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$rootScope', 'callbcWallet', function(config, daemon, toast, coinMetrics, $interval, $rootScope, callbcWallet){
+app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$rootScope', 'bitcoinWallet', 'litecoinWallet', 'zcashWallet', function(config, daemon, toast, coinMetrics, $interval, $rootScope, bitcoinWallet, litecoinWallet, zcashWallet){
   /**
   * Config and daemon initialization here
   */
@@ -293,15 +293,25 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
     }
   }
 
-  let getWalletTransactions = function () {
-    callbcWallet.getWalletTransactions();
+  let getCoinMetrics = function () {
+    if(config.isCoinEnabled("bitcoin")) {
+      bitcoinWallet.getWalletTransactions();
+      bitcoinWallet.getWalletBalance();
+    }
+    if(config.isCoinEnabled("litecoin")) {
+       litecoinWallet.getWalletTransactions();
+       litecoinWallet.getWalletBalance();
+    }
+    //TODO: start monero
+    if(config.isCoinEnabled("zcash")) {
+       zcashWallet.getWalletTransactions();
+       zcashWallet.getWalletBalance();
+    }
   }
 
-  let getWalletBalances = function() {
-    callbcWallet.getWalletBalance();
-  }
-  getWalletTransactions();
   $interval(getHashRates, 10000);
-  $interval(getWalletTransactions, 30000)
-  $interval(getWalletBalances, 3000)
+  $interval(getCoinMetrics, 30000);
+
+  // initializing coin metrics since they are saved in coinMetrics service
+  getCoinMetrics();
 }]);

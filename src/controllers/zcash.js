@@ -12,7 +12,7 @@
         return new Chart (angular.element(container)[0].getContext('2d'), data);
     };
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'callzcashWallet', 'daemon', 'coinMetrics', function ($scope, ajax, toast, viewFactory, dynamineConfig, callzcashWallet, daemon, coinMetrics) {
+    app.controller(controller, ['$scope', 'coinController', 'viewFactory', 'dynamineConfig', 'zcashWallet', 'daemon', 'coinMetrics', function ($scope, coinController, viewFactory, dynamineConfig, zcashWallet, daemon, coinMetrics) {
         viewFactory.title = 'Zcash';
         viewFactory.prevUrl = null;
         let coinName = "zcash";
@@ -20,91 +20,10 @@
         let config = dynamineConfig.getConfig();
         let hashRateLabels = [];
 
-        var walbal;
-        var walnumtrans;
-        var payments;
-        var coinchart;
-
-        walletAddress = callzcashWallet.callconfig(dynamineConfig);
-        walbal = callzcashWallet.callwalletbal(walletAddress);
-        walnumtrans = callzcashWallet.callwalletnumtrans(walletAddress);
-        payments = callzcashWallet.callwallettrans(walletAddress);
-        console.log("Transactions: ");
-        console.log(payments);
-
-        $scope.getWalletBalance = function() {
-            walbal = '' + walbal;
-            return walbal;
-        }
-
-         $scope.getWalletNumTrans = function() {
-             walnumtrans = '' + walnumtrans;
-             return walnumtrans;
-         }
-
-
-        $scope.getWalletPayment1 = function() {
-            console.log("Transaction type: " + typeof(payments));
-            console.log(payments);
-            return payments[0];
-        }
-
-        $scope.getWalletPayment2 = function() {
-            return payments[1];
-        }
-
-        $scope.getWalletPayment3 = function() {
-            return payments[2];
-        }
-
-        $scope.getWalletPayment4 = function() {
-            return payments[3];
-        }
-
-        $scope.getWalletPayment5 = function() {
-            return payments[4];
-        }
-
-
-        $scope.resources = dynamineConfig.getResources();
-
-        $scope.allocateResource = function(resource) {
-          if( document.getElementById(resource.name).checked) {
-            if(resource.coin && resource.coin != coinName) {
-              daemon.stopCoin(resource.name);
-              coinMetrics.clearMetricsByName(resource.coin, "hashRate"); //empty metrics for old coin
-              $scope.refreshHashRate();
-            }
-            dynamineConfig.allocateResource(true, resource.name, coinName);
-            daemon.startCoin(resource.name, dynamineConfig.getInfoForCoin(coinName).algorithm,  dynamineConfig.getInfoForCoin(coinName).walletAddress, dynamineConfig.getInfoForCoin(coinName).poolServer, dynamineConfig.getInfoForCoin(coinName).poolPassword);
-            $scope.resources = dynamineConfig.getResources();
-          } else {
-            dynamineConfig.allocateResource(false, resource.name, "");
-            daemon.stopCoin(resource.name);
-            coinMetrics.clearMetricsByName(coinName, "hashRate"); //clear our metrics, update graph
-            $scope.refreshHashRate();
-            $scope.resources = dynamineConfig.getResources();
-          }
-        }
-
-        $scope.resourceChecked = function(resource) {
-          return (resource.allocated && resource.coin == coinName);
-        }
-
-        $scope.getPoolHost = function() {
-          return dynamineConfig.getInfoForCoin(coinName).poolServer;
-        }
-
-        $scope.getWalletAddress = function() {
-          return dynamineConfig.getInfoForCoin(coinName).walletAddress;
-        }
-
-        $scope.getDaemonHost = function() {
-          return dynamineConfig.getConfig().daemonHost;
-        }
+        $scope.coinController = coinController;
 
         $scope.refreshWalletTokens = function(master) {
-          coinchart = createChart('#ZcashWalletChart', {
+          createChart('#ZcashWalletChart', {
               type: 'line',
               data: { labels: [], datasets: [{
                   data: [ 104584, 118655, 98979, 9775, 6655, 6887, 4422, 6483, 9580, 12676, 10755, 7755, 9657, 6589, 5893, 6657, 8896, 10742, 11466, 12332, 11433, 11543, 10053, 12743],
@@ -114,14 +33,6 @@
                   //backgroundColor:['#10C469', '#FFCE56']
               }]}
           });
-
-          setInterval(function(){
-            var payments = callzcashWallet.callwallettrans(walletAddress);
-            coinchart.update(payments);
-            }, 100000);
-
-          if(!master || master !== true)
-              toast.success('Timers data has been updated');
         };
 
         $scope.refreshHashRate = function(master) {

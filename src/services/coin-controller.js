@@ -1,5 +1,5 @@
 (function (angular, app) {
-  app.factory('coinController', [ 'dynamineConfig', 'callbcWallet', 'daemon', 'coinMetrics', function (dynamineConfig, callbcWallet, daemon, coinMetrics) {
+  app.factory('coinController', [ 'dynamineConfig', 'daemon', 'coinMetrics', function (dynamineConfig, daemon, coinMetrics) {
 
 
     return {
@@ -9,17 +9,19 @@
           return new Chart (angular.element(container)[0].getContext('2d'), data);
       },
       resources: dynamineConfig.getResources(),
-      allocateResources: function(coinName, resource, $scope) {
+      allocateResource: function(coinName, resource, $scope) {
         if( document.getElementById(resource.name).checked) {
           if(resource.coin && resource.coin != coinName) {
             daemon.stopCoin(resource.name);
             coinMetrics.clearMetricsByName(resource.coin, "hashRate"); //empty metrics for old coin
             $scope.refreshHashRate();
           }
+          console.log("enable");
           dynamineConfig.allocateResource(true, resource.name, coinName);
           daemon.startCoin(resource.name, dynamineConfig.getInfoForCoin(coinName).algorithm,  dynamineConfig.getInfoForCoin(coinName).walletAddress, dynamineConfig.getInfoForCoin(coinName).poolServer, dynamineConfig.getInfoForCoin(coinName).poolPassword);
           $scope.resources = dynamineConfig.getResources();
         } else {
+          console.log("disable");
           dynamineConfig.allocateResource(false, resource.name, "");
           daemon.stopCoin(resource.name);
           coinMetrics.clearMetricsByName(coinName, "hashRate"); //clear our metrics, update graph
@@ -38,9 +40,6 @@
       },
       getWalletAddress: function(coinName) {
         return dynamineConfig.getInfoForCoin(coinName).walletAddress;
-      },
-      getWalletPayment: function(idx) {
-
       }
     }
   }]);
