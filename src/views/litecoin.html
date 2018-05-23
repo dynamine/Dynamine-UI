@@ -39,7 +39,7 @@
             <div class="panel__heading">Wallet Income</div>
             <div class="panel__body">
               <dl class="horizontal" data-ng-show="walletBalance"><dt>Wallet Balance: </dt><dd>{{ walletBalance }}</dd></dl>
-              <dl class="horizontal" data-ng-repeat="transaction in walletTransactions track by $index"><dt style="padding: 5px;" data-ng-show="{{$index == 0}}">Wallet Income: </dt><dd>+{{ transaction }} LTC</dd></dl>
+              <dl class="horizontal" data-ng-repeat="transaction in walletTransactions track by $index"><dt style="padding: 5px;"><div data-ng-show="{{$index == 0}}">Wallet Income: </div></dt><dd>+{{ transaction }} LTC</dd></dl>
             </div>
             </div>
         </div>

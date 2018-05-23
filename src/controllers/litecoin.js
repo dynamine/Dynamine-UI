@@ -20,6 +20,10 @@
         let shownTransactionLimit = 3;
         let walletTokensLabels = [];
         let hashRateLabels = [];
+
+        /**
+        * defining angular pubsub handlers
+        */
         let handleWalletTransactions = function() {
           walletTokensLabels = [];
           $scope.walletTransactions = [];
@@ -33,6 +37,13 @@
           $scope.refreshWalletTokens();
         }
 
+        let handleWalletBallance = function() {
+          $scope.walletBalance = coinMetrics.getMetricsByName(coinName, 'walletBalance') + " " + coinSym;
+        }
+
+        /**
+        * Defining scope functions that change per coin conttroller
+        */
         $scope.coinName = coinName;
 
         $scope.coinController = coinController;
@@ -85,6 +96,9 @@
           });
         };
 
+        /**
+        * Initializing angular pubsub consumers for this controller
+        */
         $scope.$on(coinName+'HashRate', function(event, data) {
           hashRateLabels = [];
           let metricData = coinMetrics.getMetricsByName(coinName, 'hashRate');
@@ -94,15 +108,9 @@
           $scope.refreshHashRate(); // refreshing hashrate when receive a new metric
         });
 
-        $scope.$on(coinName+"WalletTransactions", function(event, data) {
-          handleWalletTransactions();
-        });
+        $scope.$on(coinName + "WalletTransactions", handleWalletTransactions());
 
-        litecoinWallet.setWalletBalanceHandler(function(data) {
-          if(angular.isDefined(data.balance)) {
-            $scope.walletBalance = litecoinWallet.photonToLTC(data.balance) + " " + coinSym;
-          }
-        });
+        $scope.$on(coinName + 'WalletBalance', handleWalletBallance());
 
         /**
         * initializing controller

@@ -15,10 +15,31 @@
     app.controller(controller, ['$scope', 'coinController', 'viewFactory', 'dynamineConfig', 'zcashWallet', 'daemon', 'coinMetrics', function ($scope, coinController, viewFactory, dynamineConfig, zcashWallet, daemon, coinMetrics) {
         viewFactory.title = 'Zcash';
         viewFactory.prevUrl = null;
-        let coinName = "zcash";
-        var walletAddress;
-        let config = dynamineConfig.getConfig();
+        let coinName = 'zcash';
+        let coinSym = 'ZEC'
+        let shownTransactionLimit = 3;
         let hashRateLabels = [];
+        let walletTokensLabels = [];
+
+        /**
+        * defining angular pubsub handlers
+        */
+        let handleWalletTransactions = function() {
+          walletTokensLabels = [];
+          $scope.walletTransactions = [];
+          let walletTokenData = coinMetrics.getMetricsByName(coinName, 'walletTransactions');
+          for (let i =0; i < walletTokenData.length; i++) {
+            if(i < shownTransactionLimit) {
+              $scope.walletTransactions.push(walletTokenData[walletTokenData.length - i - 1]);
+            }
+            walletTokensLabels.push(i);
+          }
+          $scope.refreshWalletTokens();
+        }
+
+        let handleWalletBallance = function() {
+          $scope.walletBalance = coinMetrics.getMetricsByName(coinName, 'walletBalance') + " " + coinSym;
+        }
 
         $scope.coinController = coinController;
 
@@ -69,6 +90,12 @@
           $scope.refreshHashRate(); // refreshing hashrate when receive a new metric
         });
 
+        $scope.$on(coinName + "WalletTransactions", handleWalletTransactions());
+
+        $scope.$on(coinName + 'WalletBalance', handleWalletBallance());
+
+        handleWalletTransactions();
+        handleWalletBallance();
         $scope.refreshHashRate(true);
         $scope.refreshWalletTokens(true);
 
