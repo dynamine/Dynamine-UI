@@ -23,27 +23,6 @@
             toast.success('Daemon Connecting');
         }
 
-        
-        //Call login page if not running locally
-        // const path = require('path');
-
-        // console.log("Path: ");
-        // console.log(path);
-        // console.log($element);
-
-
-
-
-        // console.log("Windows location href");
-        // console.log(window.location.href);
-        // console.log("Host");
-        // console.log($scope.dynamineConfig.host)
-        // if($scope.dynamineConfig.host == "localhost") {
-        //     $element.fadeOut({ duration: 300, complete: function () { window.location.href = 'index.html'; } });
-        // }
-        // else {
-
-        // }
 
     }]);
 })(window, window.angular, app, ipcRenderer, dynamineConfig);
