@@ -3,8 +3,8 @@
     const CONFIG_PATH = 'dynamine_cache.json';
 
     let config = {
-      "daemonHost": "",
-      "daemonPort": "",
+      "daemonHost": "localhost",
+      "daemonPort": "1337",
       "daemonPassword": "",
       "clusterId": "",
       "clusterPassword": "",
@@ -12,40 +12,36 @@
       "coins": {
         "bitcoin": {
           "enabled": false,
-          "algorithm": "",
-          "binary": "",
+          "algorithm": "bitcoin",
+          "binary": "ccminer-x64",
           "walletAddress": "",
-          "walletAPIHost": "3D2oetdNuZUqQHPJmcMDDHYoqkyNVsFk9r",
-          "poolServer": "",
-          "poolUsername": "",
-          "poolPassword": ""
+          "poolServer": "stratum+tcp://rvn.suprnova.cc:6666",
+          "poolUsername": "tpruvot.win",
+          "poolPassword": "x"
         },
         "litecoin": {
           "enabled": false,
           "algorithm": "",
           "binary": "",
           "walletAddress": "",
-          "walletAPIHost": "LTU2cds4aSdXFip9sV4gXphnhxGQjgfjmg",
           "poolServer": "",
           "poolUsername": "",
           "poolPassword": ""
         },
-        monero: {
+        "monero": {
           "enabled": false,
           "algorithm": "",
           "binary": "",
           "walletAddress": "",
-          "walletAPIHost": "",
           "poolServer": "",
           "poolUsername": "",
           "poolPassword": ""
         },
-        zcash: {
+        "zcash": {
           "enabled": false,
           "algorithm": "",
           "binary": "",
           "walletAddress": "",
-          "walletAPIHost": "t1cArVf7BgN3zPx6UHGy87ZAurTA4AQejj7",
           "poolServer": "",
           "poolUsername": "",
           "poolPassword": ""
@@ -198,7 +194,7 @@
           saveConfig();
         },
         getResources: function() {
-          return config.resources
+          return Object.assign([], config.resources);
         },
         /**
         * returns a resource object with the specified name or nothing if resource is not found

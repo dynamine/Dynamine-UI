@@ -7,9 +7,9 @@
     let startCoinCmd = {
       "cmd": "startMiner",
       "data": {
-        "resource": "",
         "miner_binary": "",
         "miner_args": {
+          "-d": "",
           "-a": "",
           "-o": "",
           "-u": "",
@@ -40,9 +40,9 @@
     let daemonConn = new net.Socket();
 
     let sendCmdTCP = function(cmd) {
-      // let buf = Buffer.alloc(BUFF_SIZE);
-      // buf.write(cmd);
-      let buf = Buffer.from(cmd); //use for local test
+      let buf = Buffer.alloc(BUFF_SIZE);
+      buf.write(cmd);
+      //let buf = Buffer.from(cmd); //use for local test
       daemonConn.write(buf, "utf8");
       console.log("sent: " + cmd );
     }
@@ -50,18 +50,33 @@
     let connectToDaemon = function() {
       let config = dynamineConfig.getConfig();
       daemonConn.connect(config.daemonPort, config.daemonHost, () => {
+        if(angular.isDefined(handlers.init)) {
+          handlers.init(); // this handler should start all previously enabled miners
+        }
+
         //TODO: Handle password validation
         toast.info("connected to daemon at " + config.daemonHost + ":" + config.daemonPort);
       });
 
-      daemonConn.on('data', (dataRaw) => {
-        console.log("raw inbound: " + dataRaw.toString('utf8'));
-        let jsonStr = dataRaw.toString('utf8').replace(new RegExp("\\\\", 'g'), "");
-        console.log("fmt inbound: " + jsonStr);
-        let data = JSON.parse(jsonStr);
-        if(angular.isDefined(handlers[data.cmd])){
-          handlers[data.cmd](data);
+      daemonConn.on('data', (respRaw) => {
+        console.log("raw inbound: " + respRaw.toString('utf8'));
+        //let jsonStr = dataRaw.toString('utf8').replace(new RegExp("\\\\", 'g'), "");
+        let jsonStr = respRaw.toString('utf8').replace(/\0/g, '');
+        let resp = JSON.parse(jsonStr);
+        if(angular.isDefined(resp.data)) {
+          let dataStr = resp.data.replace('/\\\\/g', '');
+          let data = JSON.parse(dataStr);
+          resp.data = data;
         }
+
+        console.log( "beautiful resp " + angular.toJson(resp));
+        if(angular.isDefined(handlers[resp.cmd])){
+          handlers[resp.cmd](resp);
+        }
+      });
+
+      daemonConn.on('error', (errorMsg) => {
+        toast.error("Encountered the following daemon connection issue: \"" + errorMsg + "\"");
       });
 
       daemonConn.on('end', () => {
@@ -71,13 +86,15 @@
     }
 
     return {
-      startCoin: function(resource, algo, walletAddress, poolServer, poolPassword) {
-        startCoinCmd.data.resource = resource;
-        startCoinCmd.data.miner_binary = "ccminer-x64";
-        startCoinCmd.data.miner_args['-a'] = algo;
-        startCoinCmd.data.miner_args['-o'] = poolServer;
-        startCoinCmd.data.miner_args['-u'] = walletAddress;
-        startCoinCmd.data.miner_args['-p'] = poolPassword;
+      startCoin: function(resource, coin) {
+        let coinInfo = dynamineConfig.getInfoForCoin(coin);
+
+        startCoinCmd.data.miner_binary = coinInfo.binary;
+        startCoinCmd.data.miner_args['-d'] = resource;
+        startCoinCmd.data.miner_args['-a'] = coinInfo.algorithm;
+        startCoinCmd.data.miner_args['-o'] = coinInfo.poolServer;
+        startCoinCmd.data.miner_args['-u'] = coinInfo.walletAddress;
+        startCoinCmd.data.miner_args['-p'] = coinInfo.poolPassword;
         sendCmdTCP(angular.toJson(startCoinCmd));
       },
       stopCoin: function(resource) {

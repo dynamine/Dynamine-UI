@@ -1,76 +1,44 @@
 (function(angular, app) {
-    app.factory('callliteWallet', ['dynamineConfig', 'ajax', function(dynamineConfig, ajax){
-        
+  app.factory('litecoinWallet', ['dynamineConfig', 'coinMetrics', 'ajax', '$rootScope', function(dynamineConfig,  coinMetrics, ajax, $rootScope){
+    let MAX_TRANSACTIONS  = 20;
+    let coinName = 'litecoin';
+    let walletApiAddress = 'https://api.blockcypher.com/v1/ltc/main/addrs/';
 
-        var balance;
-        var maxtransactions;
-        var transactions = [];
+    return {
+      photonToLTC: function(photons) {
+        return (photons * 0.00000001).toFixed(8);
+      },
+      getWalletBalance: function() {
+        let walletAddress = dynamineConfig.getInfoForCoin(coinName).walletAddress;
+        let self = this;
 
+        $.ajax({
+          url: walletApiAddress + walletAddress+ "/full",
+          type: "GET",
+          datatype: "json",
+          success: function(data) {
+            coinMetrics.setSingleMetric(coinName, 'walletBalance', self.photonToLTC(data.balance));
+            $rootScope.$broadcast(coinName + 'WalletBalance', {});
+          }
+        });
+      },
 
-        return {
-        callconfig: function (dynamineConfig) {
-                var walletAddress = dynamineConfig.getInfoForCoin("litecoin").walletAPIHost;
-                return walletAddress;
-        },    
-
-        callwalletbal: function(walletAddress) {
-                //Get wallet address full endpoint and parse
-                $.ajax({
-                        url: "https://api.blockcypher.com/v1/ltc/main/addrs/" + walletAddress+ "/full",
-                        type: "GET",
-                        async: false,
-                        datatype: "json",
-                        success: function(data) {
-                            balance = data["balance"];
-                        }
-                });
-
-  
-                return balance;
-        },
-
-        callwalletnumtrans: function(walletAddress) {
-                //Get wallet address full endpoint and parse
-                $.ajax({
-                        url: "https://api.blockcypher.com/v1/ltc/main/addrs/" + walletAddress+ "/full",
-                        type: "GET",
-                        async: false,
-                        datatype: "json",
-                        success: function(data) {
-                            maxtransactions = data["n_tx"];
-                        }
-                });
-
-  
-                return maxtransactions;
-        },
-
-        callwallettrans: function(walletAddress) {
-                //Get wallet address full endpoint and parse
-                transactions = [];
-                $.ajax({
-                        url: "https://api.blockcypher.com/v1/ltc/main/addrs/" + walletAddress,
-                        type: "GET",
-                        async: false,
-                        datatype: "json",
-                        success: function(data) {
-                        var i;
-                        for (i = 0; i < 24; i++ ) { //TODO: Number is 24 for hours of payments change later possibly 
-                            
-                                transactions.push(data.txrefs[i].value);
-                        }
-                        console.log("Here are the sampled transactions: ");
-                        console.log(transactions);
-
-                        }
-                });
-
-  
-                return transactions;
-        }
-
-
-      
+      getWalletTransactions: function() {
+        let walletAddress = dynamineConfig.getInfoForCoin(coinName).walletAddress;
+        let self = this;
+        $.ajax({
+          url: walletApiAddress + walletAddress + "?limit=" + MAX_TRANSACTIONS,
+          type: "GET",
+          datatype: "json",
+          success: function(data) {
+            // console.log("txn data: " + JSON.stringify(data));
+            for (let i = 0; i < data.txrefs.length; i++) {
+              coinMetrics.addMetric(coinName, "walletTransactions", self.photonToLTC(data.txrefs[data.txrefs.length - i - 1].value)); //save everyhthing and send a notification to the UI to refresh
+            }
+            $rootScope.$broadcast(coinName + 'WalletTransactions', {});
+          }
+        });
+      }
     };
   }]);
 })(window.angular, app)

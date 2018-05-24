@@ -14,7 +14,7 @@
 
         $scope.addCoin = function(coin) {
           if(!coin.name || !coin.walletAddress) {
-            toast.error("Must specify a coin and wallet address");
+            toast.error("Please enter all required fields");
           } else {
             dynamineConfig.addCoin(coin);
             toast.success('Coin Added');

@@ -1,6 +1,6 @@
 'use strict';
 
-// node dependencies
+// node dependencies used by angular
 var fs = require('fs');
 var net = require('net');
 
@@ -214,9 +214,8 @@ app.filter('splice', function () {
 
 /**
 * Initializing app config here
-* TODO: Test this
 */
-app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$rootScope', function(config, daemon, toast, coinMetrics, $interval, $rootScope){
+app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$rootScope', 'bitcoinWallet', 'litecoinWallet', 'zcashWallet', function(config, daemon, toast, coinMetrics, $interval, $rootScope, bitcoinWallet, litecoinWallet, zcashWallet){
   /**
   * Config and daemon initialization here
   */
@@ -233,6 +232,15 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
         });
       }
       config.syncResources(validResources);
+
+      // starting enabled resources after they are synched
+      let resources = config.getResources();
+      for (let i = 0; i < resources.length; i++) {
+        if (resources[i].allocated && config.getInfoForCoin(resources[i].coin).enabled) {
+          daemon.startCoin(resource[i].name, resource[i].coin); //if the daemon does not have that resource it will fail silently
+        }
+      }
+
     } else {
       toast.error('daemon returned zero resources');
     }
@@ -247,18 +255,30 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
     }
   });
 
-  // daemon.registerCmdHandler("start-miner", function(data) {
-  //   //TODO: implement
-  // });
-  //
-  // daemon.registerCmdHandler("stop-miner", function(data) {
-  //   //TODO: implement
-  // });
+  daemon.registerCmdHandler('startMiner', (respData) => {
+    let status = respData.data.result;
+    if(status == 'success') {
+      toast.success('Successfully started miner');
+    } else {
+      toast.error('Failed to start miner');
+    }
+  });
+
+  daemon.registerCmdHandler('stopMiner', (respData) => {
+    let status = respData.data.result; //TODO: get resource back
+    if(status == 'success') {
+      toast.success('Successfully stopped miner');
+    } else {
+      toast.error('Failed to stop miner');
+    }
+  });
+
+  daemon.registerCmdHandler('init', () => {
+    //TODO: validate daemon password
+  });
 
   daemon.connect();
   daemon.getResources();
-
-  //daemon.getHashRate('test');
 
   /**
   * setting up polling loops for grabbing metrics here
@@ -273,5 +293,24 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
     }
   }
 
-  $interval(getHashRates, 10000); // get rate every minute
+  let getCoinMetrics = function () {
+    if(config.isCoinEnabled("bitcoin")) {
+      bitcoinWallet.getWalletTransactions();
+      bitcoinWallet.getWalletBalance();
+    }
+    if(config.isCoinEnabled("litecoin")) {
+       litecoinWallet.getWalletTransactions();
+       litecoinWallet.getWalletBalance();
+    }
+    if(config.isCoinEnabled("zcash")) {
+       zcashWallet.getWalletTransactions();
+       zcashWallet.getWalletBalance();
+    }
+  }
+
+  $interval(getHashRates, 10000);
+  $interval(getCoinMetrics, 30000);
+
+  // initializing coin metrics since they are saved in coinMetrics service
+  getCoinMetrics();
 }]);
