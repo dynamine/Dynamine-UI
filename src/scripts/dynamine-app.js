@@ -255,7 +255,7 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
     }
   });
 
-  daemon.registerCmdHandler('start-miner', (respData) => {
+  daemon.registerCmdHandler('startMiner', (respData) => {
     let status = respData.data.result;
     if(status == 'success') {
       toast.success('Successfully started miner');
@@ -264,7 +264,7 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
     }
   });
 
-  daemon.registerCmdHandler('stop-miner', (respData) => {
+  daemon.registerCmdHandler('stopMiner', (respData) => {
     let status = respData.data.result; //TODO: get resource back
     if(status == 'success') {
       toast.success('Successfully stopped miner');
