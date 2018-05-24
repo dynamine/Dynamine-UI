@@ -98,7 +98,7 @@
         sendCmdTCP(angular.toJson(startCoinCmd));
       },
       stopCoin: function(resource) {
-        stopCoinCmd.data.deviceID = resource;
+        stopCoinCmd.data.resource = resource;
         sendCmdTCP(angular.toJson(stopCoinCmd));
       },
       getResources: function() {

@@ -13,7 +13,7 @@
         "bitcoin": {
           "enabled": false,
           "algorithm": "bitcoin",
-          "binary": "ccminer-x64",
+          "binary": "ccminer-x64.exe",
           "walletAddress": "",
           "poolServer": "stratum+tcp://rvn.suprnova.cc:6666",
           "poolUsername": "tpruvot.win",
