@@ -25,7 +25,7 @@
         <a class="navigation__link" data-ng-show="coins.isEnabled('litecoin')" data-ng-href="#!/litecoin"><p><img src="images/Litecoin-icon.png" ></img></p><p>Litecoin</p></a>
         <a class="navigation__link" data-ng-show="coins.isEnabled('monero')" data-ng-href="#!/monero"><p><img src="images/Monero-icon.png" ></img></p> <p>Monero</p></a>
         <a class="navigation__link" data-ng-show="coins.isEnabled('zcash')" data-ng-href="#!/zcash"><p><img src="images/Zcash-icon.png" ></img></p><p>Zcash</p></a>
-        <a class="navigation__link" data-ng-href="#!/settings"><p><img src="images/settings-icon.png" ></img></p><p>Settings</p></a>
+        <a class="navigation__link" data-ng-href="#!/settings"><p><i class="material-icons">settings</i></p><p>Settings</p></a>
     </nav><!-- .navigation -->
 </aside>
 
@@ -77,12 +77,12 @@ var ngDependency  = ['ngRoute', 'ngMaterial'];
 
 <!--Loading our services-->
 <script type="text/javascript" src="services/dynamine-config.js"></script>
+<script type="text/javascript" src="services/coin-metrics.js"></script>
 <script type="text/javascript" src="services/control-daemon.js"></script>
 <script type="text/javascript" src="services/bitcoin-wallet.js"></script>
 <script type="text/javascript" src="services/litecoin-wallet.js"></script>
 <script type="text/javascript" src="services/zcash-wallet.js"></script>
-<script type="text/javascript" src="../node_modules/monero-nodejs/lib/wallet.js"></script>
-<script type="text/javascript" src="services/monero-wallet.js"></script>
+<script type="text/javascript" src="services/coin-controller.js"></script>
 
 <!--Loading our controllers-->
 <script type="text/javascript" src="controllers/header.js"></script>

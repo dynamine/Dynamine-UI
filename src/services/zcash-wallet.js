@@ -1,77 +1,40 @@
 (function(angular, app) {
-        app.factory('callzcashWallet', ['dynamineConfig', 'ajax', function(dynamineConfig, ajax){
-            
-    
-            var balance;
-            var maxtransactions;
-            var transactions = [];
-    
-    
-            return {
-            callconfig: function (dynamineConfig) {
-                    var walletAddress = dynamineConfig.getInfoForCoin("zcash").walletAPIHost;
-                    return walletAddress;
-            },    
-    
-            callwalletbal: function(walletAddress) {
-                    //Get wallet address full endpoint and parse
-                    $.ajax({
-                             url: "https://api.zcha.in/v2/mainnet/accounts/" + walletAddress,
-                             type: "GET",
-                             async: false,
-                             datatype: "json",
-                             success: function(data) {
-                                 balance = data.balance;
-                             }
-                    });
-    
-      
-                    return balance;
-            },
-    
-            callwalletnumtrans: function(walletAddress) {
-                    //Get wallet address full endpoint and parse
-                    $.ajax({
-                             url: "https://api.zcha.in/v2/mainnet/accounts/" + walletAddress + "/recv?limit=5&offset=0",
-                             type: "GET",
-                             async: false,
-                             datatype: "json",
-                             success: function(data) {
-                                 maxtransactions = Object.keys(data[0].vin).length;
-                             }
-                    });
-      
-                    return maxtransactions;
-            },
-    
-            callwallettrans: function(walletAddress) {
-                    //Get wallet address full endpoint and parse
-                    transactions = [];
-                    $.ajax({
-                             url: "https://api.zcha.in/v2/mainnet/accounts/" + walletAddress + "/recv?limit=5&offset=0",
-                             type: "GET",
-                             async: false,
-                             datatype: "json",
-                             success: function(data) {
-                            //Get number of transactions
-                             var count = Object.keys(data[0].vin).length;
-                            for (var i = 0; i < 24; i++) {
-                                    transactions.push(JSON.stringify(data[0].vin[i].retrievedVout.value));
-                            }
-                             
-    
-    
-                             }
-                    });
-    
-      
-                    return transactions;
+  app.factory('zcashWallet', ['dynamineConfig', 'coinMetrics', 'ajax', '$rootScope', function(dynamineConfig, coinMetrics, ajax, $rootScope){
+    let MAX_TRANSACTIONS  = 20;
+    let coinName = 'zcash';
+    let walletApiAddress = 'https://api.zcha.in/v2/mainnet/accounts/';
+
+
+    return {
+      getWalletBalance: function() {
+        let walletAddress = dynamineConfig.getInfoForCoin(coinName).walletAddress;
+
+        $.ajax({
+          url: walletApiAddress + walletAddress,
+          type: "GET",
+          datatype: "json",
+          success: function(data) {
+            coinMetrics.setSingleMetric(coinName, 'walletBalance', data.balance); // no need to format balance as API returns value in ZEC
+            $rootScope.$broadcast(coinName + 'WalletBalance', {});
+          }
+        });
+      },
+
+      getWalletTransactions: function() {
+        let walletAddress = dynamineConfig.getInfoForCoin(coinName).walletAddress;
+
+        $.ajax({
+          url: walletApiAddress + walletAddress + "/recv?limit=" + MAX_TRANSACTIONS + "&offset=0",
+          type: "GET",
+          datatype: "json",
+          success: function(data) {
+            for(let i = 0 ; i < data.length; i++) {
+              coinMetrics.addMetric(coinName, "walletTransactions", data[data.length - i - 1].value); // adding older metrics first so newer are always at the end of the metric array and stay there the longest
             }
-    
-    
-          
-        };
-      }]);
-    })(window.angular, app)
-    
-    
+            $rootScope.$broadcast(coinName + 'WalletTransactions', {});
+          }
+        });
+      }
+    };
+  }]);
+})(window.angular, app)

@@ -12,90 +12,41 @@
         return new Chart (angular.element(container)[0].getContext('2d'), data);
     };
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'callzcashWallet', 'daemon', 'coinMetrics', function ($scope, ajax, toast, viewFactory, dynamineConfig, callzcashWallet, daemon, coinMetrics) {
+    app.controller(controller, ['$scope', 'coinController', 'viewFactory', 'dynamineConfig', 'zcashWallet', 'daemon', 'coinMetrics', function ($scope, coinController, viewFactory, dynamineConfig, zcashWallet, daemon, coinMetrics) {
         viewFactory.title = 'Zcash';
         viewFactory.prevUrl = null;
-        let coinName = "zcash";
-        var walletAddress;
-        let config = dynamineConfig.getConfig();
-        var walbal;
-        var walnumtrans;
-        var payments;
-        var coinchart;
+        let coinName = 'zcash';
+        let coinSym = 'ZEC'
+        let shownTransactionLimit = 3;
+        let hashRateLabels = [];
+        let walletTokensLabels = [];
 
-        walletAddress = callzcashWallet.callconfig(dynamineConfig);
-        walbal = callzcashWallet.callwalletbal(walletAddress);
-        walnumtrans = callzcashWallet.callwalletnumtrans(walletAddress);
-        payments = callzcashWallet.callwallettrans(walletAddress);
-
-
-        $scope.getWalletBalance = function() {
-            walbal = '' + walbal;
-            return walbal;
-        }
-
-         $scope.getWalletNumTrans = function() {
-             walnumtrans = '' + walnumtrans;
-             return walnumtrans;
-         }
-
-
-        $scope.getWalletPayment1 = function() {
-            return payments[0];
-        }
-
-        $scope.getWalletPayment2 = function() {
-            return payments[1];
-        }
-
-        $scope.getWalletPayment3 = function() {
-            return payments[2];
-        }
-
-        $scope.getWalletPayment4 = function() {
-            return payments[3];
-        }
-
-        $scope.getWalletPayment5 = function() {
-            return payments[4];
-        }
-
-
-        $scope.resources = dynamineConfig.getResources();
-
-        $scope.allocateResource = function(resource) {
-          if( document.getElementById(resource.name).checked) {
-            if(resource.coin && resource.coin != coinName) {
-              daemon.stopCoin(resource.name);
+        /**
+        * defining angular pubsub handlers
+        */
+        let handleWalletTransactions = function() {
+          walletTokensLabels = [];
+          $scope.walletTransactions = [];
+          let walletTokenData = coinMetrics.getMetricsByName(coinName, 'walletTransactions');
+          for (let i =0; i < walletTokenData.length; i++) {
+            if(i < shownTransactionLimit) {
+              $scope.walletTransactions.push(walletTokenData[walletTokenData.length - i - 1]);
             }
-            dynamineConfig.allocateResource(true, resource.name, coinName);
-          daemon.startCoin(resource.name, dynamineConfig.getInfoForCoin(coinName).algorithm,  dynamineConfig.getInfoForCoin(coinName).walletAddress, dynamineConfig.getInfoForCoin(coinName).poolServer, dynamineConfig.getInfoForCoin(coinName).poolPassword);
-            $scope.resources = dynamineConfig.getResources();
-          } else {
-            dynamineConfig.allocateResource(false, resource.name, "");
-            daemon.stopCoin(resource.name);
-            $scope.resources = dynamineConfig.getResources();
+            walletTokensLabels.push(i);
           }
+          $scope.refreshWalletTokens();
         }
 
-        $scope.resourceChecked = function(resource) {
-          return (resource.allocated && resource.coin == coinName);
+        let handleWalletBallance = function() {
+          $scope.walletBalance = coinMetrics.getMetricsByName(coinName, 'walletBalance') + " " + coinSym;
         }
 
-        $scope.getPoolHost = function() {
-          return dynamineConfig.getInfoForCoin(coinName).poolServer;
-        }
+        $scope.coinName = coinName;
 
-        $scope.getWalletAddress = function() {
-          return dynamineConfig.getInfoForCoin(coinName).walletAddress;
-        }
-
-        $scope.getDaemonHost = function() {
-          return dynamineConfig.getConfig().daemonHost;
-        }
+        $scope.coinController = coinController;
 
         $scope.refreshWalletTokens = function(master) {
-          coinchart = createChart('#ZcashWalletChart', {
+          createChart('#ZcashWalletChart', {
               type: 'line',
               data: { labels: [], datasets: [{
                   data: payments,
@@ -105,6 +56,7 @@
                   //backgroundColor:['#10C469', '#FFCE56']
               }]}
           });
+<<<<<<< HEAD
 
           setInterval(function(){
             var payments = callzcashWallet.callwallettrans(walletAddress);
@@ -113,26 +65,60 @@
 
           if(!master || master !== true)
               toast.success('Timers data has been updated');
+=======
+>>>>>>> 11068ea0279c0dd6b965f2f7940d938f9a8091c1
         };
 
         $scope.refreshHashRate = function(master) {
           //Populating chart with static data for the sake of wireframes
           createChart('#ZcashHashChart', {
               type: 'line',
+<<<<<<< HEAD
               data: { labels: [], datasets: [{
+=======
+              data: {
+                labels: hashRateLabels,
+                datasets: [{
+>>>>>>> 11068ea0279c0dd6b965f2f7940d938f9a8091c1
                   data: coinMetrics.getMetricsByName(coinName, 'hashRate'),
                   backgroundColor: ['rgba(24, 138, 226, 0.5)', 'rgba(16, 196, 105, 0.5)', 'rgba(128, 197, 218, 0.5)',
                       'rgba(248, 142, 15, 0.5)', 'rgba(207, 32, 241, 0.5)', 'rgba(91, 105, 188, 0.5)', 'rgba(24, 138, 226, 0.5)'],
                   borderColor: ['#188AE2', '#10C469', '#80C5DA', '#F88E0F', '#CF20F1', '#5B69BC', '#188AE2'],
-                  borderWidth: 1, label: 'net hash rate'
-              }] }
+                  borderWidth: 1,
+                  label: 'net hash rate'
+                }]
+              },
+              options: {
+                scales: {
+                  xAxes: [{
+                    display: false
+                  }]
+                }
+              }
           });
         };
 
         $scope.$on(coinName+'HashRate', function(event, data) {
+<<<<<<< HEAD
           $scope.refreshHashRate(); // refreshing hashrate when receive a new metric
         });
 
+=======
+          hashRateLabels = [];
+          let metricData = coinMetrics.getMetricsByName(coinName, 'hashRate');
+          for (let i =0; i < metricData.length; i++) {
+            hashRateLabels.push(i);
+          }
+          $scope.refreshHashRate(); // refreshing hashrate when receive a new metric
+        });
+
+        $scope.$on(coinName + "WalletTransactions", handleWalletTransactions());
+
+        $scope.$on(coinName + 'WalletBalance', handleWalletBallance());
+
+        handleWalletTransactions();
+        handleWalletBallance();
+>>>>>>> 11068ea0279c0dd6b965f2f7940d938f9a8091c1
         $scope.refreshHashRate(true);
         $scope.refreshWalletTokens(true);
 

@@ -34,17 +34,12 @@
         </div><!-- .row -->
 
         <div class="row">
-        <div class="col md-2">
+        <div class="col md-3">
             <div class="panel panel-border info">
             <div class="panel__heading">Wallet Income</div>
             <div class="panel__body">
-              <dl class="horizontal" data-ng-show="getWalletNumTrans()"><dt>Wallet Transactions: </dt><dd>{{ getWalletNumTrans() }}</dd></dl>
-              <dl class="horizontal" data-ng-show="getWalletBalance()"><dt>Wallet Balance: </dt><dd>${{ getWalletBalance() }}</dd></dl>
-              <dl class="horizontal" data-ng-show="getWalletPayment1()"><dt style="padding: 5px;">Wallet Income: </dt><dd>+{{ getWalletPayment1() }}</dd></dl>
-              <dl class="horizontal pay" data-ng-show="getWalletPayment2()"><dd>+{{ getWalletPayment2() }}</dd></dl>
-              <dl class="horizontal pay" data-ng-show="getWalletPayment3()"><dd>+{{ getWalletPayment3() }}</dd></dl>
-              <dl class="horizontal pay" data-ng-show="getWalletPayment4()"><dd>+{{ getWalletPayment4() }}</dd></dl>
-              <dl class="horizontal pay" data-ng-show="getWalletPayment5()"><dd>+{{ getWalletPayment5() }}</dd></dl>
+              <dl class="horizontal" data-ng-show="walletBalance"><dt>Wallet Balance: </dt><dd>{{ walletBalance }}</dd></dl>
+              <dl class="horizontal" data-ng-repeat="transaction in walletTransactions track by $index"><dt style="padding: 5px;"><div data-ng-show="{{$index == 0}}">Wallet Income: </div></dt><dd>+{{ transaction }} LTC</dd></dl>
             </div>
             </div>
         </div>
@@ -52,19 +47,17 @@
         <div class="col md-5">
             <div class="panel panel-border info">
             <div class="panel__body">
-                <dl class="horizontal" data-ng-show="getPoolHost()"><dt>Pool Domain: </dt><dd>{{ getPoolHost() }}</dd></dl>
-                <dl class="horizontal"><dt>Wallet Address:</dt><dd>{{ getWalletAddress() }}</dd></dl>
+                <dl class="horizontal" data-ng-show="coinController.getPoolHost(coinName)"><dt>Pool Domain: </dt><dd>{{ coinController.getPoolHost(coinName) }}</dd></dl>
+                <dl class="horizontal"><dt>Wallet Address:</dt><dd>{{ coinController.getWalletAddress(coinName) }}</dd></dl>
             </div>
             </div>
         </div>
 
-        <div class="col md-5">
+        <div class="col md-4" data-ng-show="coinController.coinHasAllocatedResources(coinName)">
             <div class="panel panel-border info">
               <div class="panel__heading">Current Hash Rates:</div>
               <div class="panel__body">
-                  <dl class="horizontal"><dt>localhost.gpu0:</dt><dd>5.34mh/s</dd></dl>
-                  <dl class="horizontal"><dt>localhost.gpu1:</dt><dd>10.1Gh/s</dd></dl>
-                  <dl class="horizontal"><dt>Total:</dt><dd>10.1534 Gh/s</dd></dl>
+                  <dl data-ng-repeat="resource in coinController.resources" data-ng-show="coinController.resourceChecked(coinName, resource)" class="horizontal"><dt>{{ resource.name }}:</dt><dd>{{ resource.hashRate }}mh/s</dd></dl>
               </div>
             </div>
         </div>
@@ -76,20 +69,12 @@
       <div class="row">
         <div class="col md-8">
           <div class="panel panel-border info">
-            <div class="panel__heading">[{{ getDaemonHost() }}] Allocate GPUs</div>
+            <div class="panel__heading">[{{ coinController.getDaemonHost() }}] Allocate GPUs</div>
             <div class="panel__body align-left">
-              <div class="padding-10" data-ng-repeat="resource in resources"><label class="checkbox success"><input id="{{ resource.name }}" data-ng-checked="resourceChecked(resource)" data-ng-click="allocateResource(resource)" type="checkbox"><span class="pad-left-10">{{ resource.name.split(":")[1] }}</span><span data-ng-show="resource.allocated"> - allocated to {{ resource.coin }}</span></label></div>
+              <div class="padding-10" data-ng-repeat="resource in coinController.resources"><label class="checkbox success"><input id="{{ resource.name }}" data-ng-checked="coinController.resourceChecked(coinName, resource)" data-ng-click="coinController.allocateResource(coinName, resource, this)" type="checkbox"><span class="pad-left-10">{{ resource.name }}</span><span data-ng-show="resource.allocated"> - allocated to {{ resource.coin }}</span></label></div>
             </div>
           </div>
         </div>
-        <!-- <div class="col md-6">
-          <div class="panel panel-border info">
-            <div class="panel__heading">[localhost] Allocate CPU Cores</div>
-            <div class="panel__body">
-              <md-slider id="core-slider" max="10" aria-label="Allocated CPU Cores" md-discrete />
-            </div>
-          </div>
-        </div> -->
       </div> <!-- .row-->
 
       <div class="row" data-ng-controller="RemoveCoinController">
