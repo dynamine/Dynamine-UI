@@ -29,6 +29,15 @@
           $scope.resources = dynamineConfig.getResources();
         }
       },
+      coinHasAllocatedResources: function(coinName) {
+        let resources = dynamineConfig.getResources();
+        for(let i = 0; i < resources.length; i++) {
+          if(resources[i].coin == coinName) {
+            return true;
+          }
+        }
+        return false;
+      },
       getDaemonHost: function() {
         return dynamineConfig.getConfig().daemonHost;
       },

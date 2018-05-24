@@ -194,7 +194,7 @@
           saveConfig();
         },
         getResources: function() {
-          return Object.assign({}, config.resources);
+          return Object.assign([], config.resources);
         },
         /**
         * returns a resource object with the specified name or nothing if resource is not found

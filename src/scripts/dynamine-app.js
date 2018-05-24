@@ -302,7 +302,6 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
        litecoinWallet.getWalletTransactions();
        litecoinWallet.getWalletBalance();
     }
-    //TODO: start monero
     if(config.isCoinEnabled("zcash")) {
        zcashWallet.getWalletTransactions();
        zcashWallet.getWalletBalance();

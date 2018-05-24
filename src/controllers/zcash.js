@@ -41,6 +41,8 @@
           $scope.walletBalance = coinMetrics.getMetricsByName(coinName, 'walletBalance') + " " + coinSym;
         }
 
+        $scope.coinName = coinName;
+
         $scope.coinController = coinController;
 
         $scope.refreshWalletTokens = function(master) {
