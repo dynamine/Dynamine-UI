@@ -97,7 +97,7 @@
             coinchart = createChart('#BitcoinWalletChart', {
               type: 'line',
               data: { labels: [], datasets: [{
-                  data: [ payments[0], payments[1], payments[2], payments[3], payments[4], payments[5], payments[6], payments[7], payments[8], payments[9], payments[10], payments[11], payments[12], payments[13], payments[14], payments[15], payments[16], payments[17], payments[18], payments[19], payments[20], payments[21], payments[22], payments[23]],
+                  data: payments,
                   label: 'coins',
                   backgroundColor: ['rgba(24, 138, 226, 0.5)', 'rgba(16, 196, 105, 0.5)', 'rgba(128, 197, 218, 0.5)',
                       'rgba(248, 142, 15, 0.5)', 'rgba(207, 32, 241, 0.5)', 'rgba(91, 105, 188, 0.5)', 'rgba(24, 138, 226, 0.5)']

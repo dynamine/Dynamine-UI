@@ -12,11 +12,12 @@
         return new Chart (angular.element(container)[0].getContext('2d'), data);
     };
 
-    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'callzcashWallet', function ($scope, ajax, toast, viewFactory, dynamineConfig, callzcashWallet) {
+    app.controller(controller, ['$scope', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'callzcashWallet', 'daemon', 'coinMetrics', function ($scope, ajax, toast, viewFactory, dynamineConfig, callzcashWallet, daemon, coinMetrics) {
         viewFactory.title = 'Zcash';
         viewFactory.prevUrl = null;
         let coinName = "zcash";
         var walletAddress;
+        let config = dynamineConfig.getConfig();
         var walbal;
         var walnumtrans;
         var payments;
@@ -26,8 +27,7 @@
         walbal = callzcashWallet.callwalletbal(walletAddress);
         walnumtrans = callzcashWallet.callwalletnumtrans(walletAddress);
         payments = callzcashWallet.callwallettrans(walletAddress);
-        console.log("Transactions: ");
-        console.log(payments);
+
 
         $scope.getWalletBalance = function() {
             walbal = '' + walbal;
@@ -41,8 +41,6 @@
 
 
         $scope.getWalletPayment1 = function() {
-            console.log("Transaction type: " + typeof(payments));
-            console.log(payments);
             return payments[0];
         }
 
@@ -68,15 +66,15 @@
         $scope.allocateResource = function(resource) {
           if( document.getElementById(resource.name).checked) {
             if(resource.coin && resource.coin != coinName) {
-              //TODO: Call to remove old miner
+              daemon.stopCoin(resource.name);
             }
             dynamineConfig.allocateResource(true, resource.name, coinName);
+          daemon.startCoin(resource.name, dynamineConfig.getInfoForCoin(coinName).algorithm,  dynamineConfig.getInfoForCoin(coinName).walletAddress, dynamineConfig.getInfoForCoin(coinName).poolServer, dynamineConfig.getInfoForCoin(coinName).poolPassword);
             $scope.resources = dynamineConfig.getResources();
-            //TODO: Call to add new miner
           } else {
             dynamineConfig.allocateResource(false, resource.name, "");
+            daemon.stopCoin(resource.name);
             $scope.resources = dynamineConfig.getResources();
-            //TODO: Call to remove old miner
           }
         }
 
@@ -100,7 +98,7 @@
           coinchart = createChart('#ZcashWalletChart', {
               type: 'line',
               data: { labels: [], datasets: [{
-                  data: [ 104584, 118655, 98979, 9775, 6655, 6887, 4422, 6483, 9580, 12676, 10755, 7755, 9657, 6589, 5893, 6657, 8896, 10742, 11466, 12332, 11433, 11543, 10053, 12743],
+                  data: payments,
                   label: 'coins',
                   backgroundColor: ['rgba(24, 138, 226, 0.5)', 'rgba(16, 196, 105, 0.5)', 'rgba(128, 197, 218, 0.5)',
                       'rgba(248, 142, 15, 0.5)', 'rgba(207, 32, 241, 0.5)', 'rgba(91, 105, 188, 0.5)', 'rgba(24, 138, 226, 0.5)']
@@ -111,7 +109,7 @@
           setInterval(function(){
             var payments = callzcashWallet.callwallettrans(walletAddress);
             coinchart.update(payments);
-            }, 100000);
+            }, 10000);
 
           if(!master || master !== true)
               toast.success('Timers data has been updated');
@@ -122,17 +120,18 @@
           createChart('#ZcashHashChart', {
               type: 'line',
               data: { labels: [], datasets: [{
-                  data: [ 30, 40, 15, 80, 45, 90], //TODO: Chnage to host data
+                  data: coinMetrics.getMetricsByName(coinName, 'hashRate'),
                   backgroundColor: ['rgba(24, 138, 226, 0.5)', 'rgba(16, 196, 105, 0.5)', 'rgba(128, 197, 218, 0.5)',
                       'rgba(248, 142, 15, 0.5)', 'rgba(207, 32, 241, 0.5)', 'rgba(91, 105, 188, 0.5)', 'rgba(24, 138, 226, 0.5)'],
                   borderColor: ['#188AE2', '#10C469', '#80C5DA', '#F88E0F', '#CF20F1', '#5B69BC', '#188AE2'],
                   borderWidth: 1, label: 'net hash rate'
               }] }
           });
-
-          if(!master || master !== true)
-              toast.success('Node Status data has been updated');
         };
+
+        $scope.$on(coinName+'HashRate', function(event, data) {
+          $scope.refreshHashRate(); // refreshing hashrate when receive a new metric
+        });
 
         $scope.refreshHashRate(true);
         $scope.refreshWalletTokens(true);
