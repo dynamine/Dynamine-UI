@@ -49,22 +49,37 @@
           createChart('#ZcashWalletChart', {
               type: 'line',
               data: { labels: [], datasets: [{
-                  data: [ 104584, 118655, 98979, 9775, 6655, 6887, 4422, 6483, 9580, 12676, 10755, 7755, 9657, 6589, 5893, 6657, 8896, 10742, 11466, 12332, 11433, 11543, 10053, 12743],
+                  data: payments,
                   label: 'coins',
                   backgroundColor: ['rgba(24, 138, 226, 0.5)', 'rgba(16, 196, 105, 0.5)', 'rgba(128, 197, 218, 0.5)',
                       'rgba(248, 142, 15, 0.5)', 'rgba(207, 32, 241, 0.5)', 'rgba(91, 105, 188, 0.5)', 'rgba(24, 138, 226, 0.5)']
                   //backgroundColor:['#10C469', '#FFCE56']
               }]}
           });
+<<<<<<< HEAD
+
+          setInterval(function(){
+            var payments = callzcashWallet.callwallettrans(walletAddress);
+            coinchart.update(payments);
+            }, 10000);
+
+          if(!master || master !== true)
+              toast.success('Timers data has been updated');
+=======
+>>>>>>> 11068ea0279c0dd6b965f2f7940d938f9a8091c1
         };
 
         $scope.refreshHashRate = function(master) {
           //Populating chart with static data for the sake of wireframes
           createChart('#ZcashHashChart', {
               type: 'line',
+<<<<<<< HEAD
+              data: { labels: [], datasets: [{
+=======
               data: {
                 labels: hashRateLabels,
                 datasets: [{
+>>>>>>> 11068ea0279c0dd6b965f2f7940d938f9a8091c1
                   data: coinMetrics.getMetricsByName(coinName, 'hashRate'),
                   backgroundColor: ['rgba(24, 138, 226, 0.5)', 'rgba(16, 196, 105, 0.5)', 'rgba(128, 197, 218, 0.5)',
                       'rgba(248, 142, 15, 0.5)', 'rgba(207, 32, 241, 0.5)', 'rgba(91, 105, 188, 0.5)', 'rgba(24, 138, 226, 0.5)'],
@@ -84,6 +99,11 @@
         };
 
         $scope.$on(coinName+'HashRate', function(event, data) {
+<<<<<<< HEAD
+          $scope.refreshHashRate(); // refreshing hashrate when receive a new metric
+        });
+
+=======
           hashRateLabels = [];
           let metricData = coinMetrics.getMetricsByName(coinName, 'hashRate');
           for (let i =0; i < metricData.length; i++) {
@@ -98,6 +118,7 @@
 
         handleWalletTransactions();
         handleWalletBallance();
+>>>>>>> 11068ea0279c0dd6b965f2f7940d938f9a8091c1
         $scope.refreshHashRate(true);
         $scope.refreshWalletTokens(true);
 

@@ -1,45 +1,49 @@
 /* global app:true Chart:true */
-(function (angular, app) {
+(function (window, angular, app, ipcRenderer, dynamineConfig) {
     'use strict';
     const controller = 'SettingsController';
 
     if (typeof app === 'undefined') throw (controller + ': app is undefined');
 
     //console.log(window);
-    app.controller(controller, ['$scope', '$element', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', function ($scope, $element, ajax, toast, viewFactory, dynamineConfig) {
-        console.log("host");
-        console.log(dynamineConfig.host);
+    app.controller(controller, ['$scope', '$base64', 'ajax', 'toast', 'viewFactory', 'dynamineConfig', 'daemon', function ($scope, $base64, ajax, toast, viewFactory, dynamineConfig, daemon) {
 
         viewFactory.title = 'Settings';
         viewFactory.prevUrl = null;
         $scope.dynamineConfig = dynamineConfig;
+
+
+        //TODO: Cluster if we are still doing it
         $scope.UserLoggingIn = function() {
           toast.success('User Logging in');
         }
+
+        //Daemon Host and Password
         $scope.DaemonToggle = function() {
-            toast.success('Daemon Toggled');
+            $('#DaemonOn').click(function() {
+                if($('#DaemonOn').is(':checked')) { 
+                    daemon.connect();
+                    toast.success("Daemon Toggled On");
+                }
+             });
+             $('#DaemonOff').click(function() {
+                if($('#Daemon').is(':checked')) { 
+                    daemon.disconnect();
+                    toast.success("Daemon Toggled Off");
+                }
+             });     
+
         }
+        
+
         $scope.DaemonConnect = function() {
-            toast.success('Daemon Connecting');
+            var config = dynamineConfig.getConfig();
+            config.daemonHost = $('#DaemonHost').val();
+            config.daemonPassword = $('#DaemonPassword').val();
+            toast.success("Daemon Connection Configured");
         }
-        //Call login page if not running locally
-        const path = require('path');
-
-        console.log("Path: ");
-        console.log(path);
-        console.log($element);
 
 
-
-
-        console.log("Windows location href");
-        console.log(window.location.href);
-        if($scope.dynamineConfig.host == "localhost") {
-            $element.fadeOut({ duration: 300, complete: function () { window.location.href = 'index.html'; } });
-        }
-        else {
-
-        }
 
     }]);
-})(window.angular, app);
+})(window, window.angular, app, ipcRenderer, dynamineConfig);
