@@ -237,7 +237,7 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
       let resources = config.getResources();
       for (let i = 0; i < resources.length; i++) {
         if (resources[i].allocated && config.getInfoForCoin(resources[i].coin).enabled) {
-          daemon.startCoin(resource[i].name, resource[i].coin); //if the daemon does not have that resource it will fail silently
+          daemon.startCoin(resources[i].name, resources[i].coin); //if the daemon does not have that resource it will fail silently
         }
       }
 

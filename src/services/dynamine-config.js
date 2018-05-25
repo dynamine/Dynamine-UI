@@ -21,8 +21,8 @@
         },
         "litecoin": {
           "enabled": false,
-          "algorithm": "",
-          "binary": "",
+          "algorithm": "scrypt",
+          "binary": "ccminer-x64.exe",
           "walletAddress": "",
           "poolServer": "",
           "poolUsername": "",
@@ -30,8 +30,8 @@
         },
         "monero": {
           "enabled": false,
-          "algorithm": "",
-          "binary": "",
+          "algorithm": "cryptonight",
+          "binary": "ccminer-x64.exe",
           "walletAddress": "",
           "poolServer": "",
           "poolUsername": "",
@@ -39,8 +39,8 @@
         },
         "zcash": {
           "enabled": false,
-          "algorithm": "",
-          "binary": "",
+          "algorithm": "equihash",
+          "binary": "ccminer-x64.exe",
           "walletAddress": "",
           "poolServer": "",
           "poolUsername": "",
