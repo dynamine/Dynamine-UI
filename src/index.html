@@ -102,5 +102,20 @@ var ngDependency  = ['ngRoute', 'ngMaterial'];
     angular.element('.app-layout').fadeIn({ duration: 1000 });
 })(window.angular);
 </script>
+
+<script>
+  window.onbeforeunload = function(event) {
+    // stopping miners and closing connection
+    let daemon = angular.element('html').injector().get('daemon');
+    let config = angular.element('html').injector().get('dynamineConfig');
+    let resources = config.getResources();
+    for(let i = 0; i < resources.length; i++) {
+      if (resources[i].allocated) {
+        daemon.stopCoin(resources[i].name);
+      }
+    }
+    daemon.disconnect();
+  }
+</script>
 </body>
 </html>
