@@ -22,13 +22,27 @@
         $scope.DaemonToggle = function() {
             $('#DaemonOn').click(function() {
                 if($('#DaemonOn').is(':checked')) { 
-                    daemon.connect();
+                    var resources = dynamineConfig.getResources();
+                    for(var i = 0; i < resources.length; i++) {
+                      if(resources[i].coin == coin) {
+                        daemon.startCoin(resources[i].name, resources[i].coin); 
+                        dynamineConfig.allocateResource(true, resources[i].name, resources[i].coin, resources[i].hashRate);
+                      }
+                    }
                     toast.success("Daemon Toggled On");
                 }
              });
              $('#DaemonOff').click(function() {
                 if($('#Daemon').is(':checked')) { 
-                    daemon.disconnect();
+                    for(var key in resources.coin) {
+                        dynamineConfig.disableCoin(resources[key].coin);
+                    }
+                    var resources = dynamineConfig.getResources();
+                    for(var i = 0; i < resources.length; i++) {
+                        if(resources[i].coin == coin) {
+                            daemon.stopCoin(resources[i].name); 
+                        }
+                    }
                     toast.success("Daemon Toggled Off");
                 }
              });     
