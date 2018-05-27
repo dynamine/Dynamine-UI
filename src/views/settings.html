@@ -3,7 +3,7 @@
       <div class="col md-12">
         <div class="panel panel-border info">
           <div class="panel__body">
-            <form class="form padding-10">
+            <!-- <form class="form padding-10">
               <div class="form__field">
                 <h1>Cluster Management:</h1>
                 </div>
@@ -18,7 +18,7 @@
                 <div class="form__field">
                     <button class="btn info" type="submit" data-ng-click="UserLoggingIn()">Connect Cluster</button>
                 </div>
-            </form>
+            </form> -->
             <form class="form padding-10">
                 <div class="form__field">
                   <h1>Daemon Connection:</h1>
@@ -39,8 +39,10 @@
                 <div class="form__field">
                   <h1>Daemon Management:</h1>
                   </div>
-                  <input id="DaemonOn" type="radio"><span class="pad-left-10">Turn Daemon On</span><br>
-                  <input id="DaemonOff" type="radio"><span class="pad-left-10">Turn Daemon Off</span><br><br>
+                    <form action="">
+                        <input id="DaemonOn" type="radio" name="status"><span class="pad-left-10">Turn Daemon On</span><br>
+                        <input id="DaemonOff" type="radio" name="status"><span class="pad-left-10">Turn Daemon Off</span><br><br>                      
+                    </form>
                   <button class="btn info" data-ng-click="DaemonToggle()">Submit Daemon Status</button>
               </form>    
 
