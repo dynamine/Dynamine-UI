@@ -85,27 +85,31 @@
       });
     }
 
+    let fmtResource = function(resource) {
+      return resource.split('@')[0];
+    }
+
     return {
       startCoin: function(resource, coin) {
         let coinInfo = dynamineConfig.getInfoForCoin(coin);
 
         startCoinCmd.data.miner_binary = coinInfo.binary;
-        startCoinCmd.data.miner_args['-d'] = resource;
+        startCoinCmd.data.miner_args['-d'] = fmtResource(resource);
         startCoinCmd.data.miner_args['-a'] = coinInfo.algorithm;
         startCoinCmd.data.miner_args['-o'] = coinInfo.poolServer;
-        startCoinCmd.data.miner_args['-u'] = coinInfo.walletAddress;
+        startCoinCmd.data.miner_args['-u'] = coinInfo.poolUsername;
         startCoinCmd.data.miner_args['-p'] = coinInfo.poolPassword;
         sendCmdTCP(angular.toJson(startCoinCmd));
       },
       stopCoin: function(resource) {
-        stopCoinCmd.data.deviceID = resource;
+        stopCoinCmd.data.deviceID = fmtResource(resource);;
         sendCmdTCP(angular.toJson(stopCoinCmd));
       },
       getResources: function() {
         sendCmdTCP(angular.toJson(resourcesCmd));
       },
       getHashRate: function(resource) {
-        hashRateCmd.data.resource = resource;
+        hashRateCmd.data.resource = fmtResource(resource);;
         sendCmdTCP(angular.toJson(hashRateCmd));
       },
       disconnect: function() {
