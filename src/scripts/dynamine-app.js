@@ -268,6 +268,7 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
 
     if(status == 'success') {
       let resource = config.getResource(respData.data.resource);
+      console.log("coin name out: " + resource.coin);
       config.allocateResource(true, resource.name, resource.coin);
       toast.success('Successfully started miner');
     } else {
@@ -288,7 +289,7 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
 
     if(status == 'success') {
       let resource = config.getResource(respData.data.resource);
-      config.allocateResource(false, resource.name, "");
+      config.allocateResource(false, resource.name, resource.coin);
       toast.success('Successfully stopped miner');
     } else {
       toast.error('Failed to stop miner');

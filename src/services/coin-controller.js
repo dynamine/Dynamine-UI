@@ -16,7 +16,8 @@
             coinMetrics.clearMetricsByName(resource.coin, "hashRate"); //empty metrics for old coin
             $scope.refreshHashRate();
           }
-
+          console.log("resource set:: " + resource);
+          console.log("coin name in: " + coinName );
           dynamineConfig.allocateResource(false, resource.name, coinName); // setting the coin name for the success handler to get
           daemon.startCoin(resource.name, coinName);
           $scope.resources = dynamineConfig.getResources();
