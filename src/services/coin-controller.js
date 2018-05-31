@@ -11,7 +11,7 @@
       resources: dynamineConfig.getResources(),
       allocateResource: function(coinName, resource, $scope) {
         if( document.getElementById(resource.name).checked) {
-          if(resource.coin && resource.coin != coinName) {
+          if(resource.coin && resource.coin != coinName && resource.allocated) {
             daemon.stopCoin(resource.name);
             coinMetrics.clearMetricsByName(resource.coin, "hashRate"); //empty metrics for old coin
             $scope.refreshHashRate();
@@ -31,7 +31,7 @@
       coinHasAllocatedResources: function(coinName) {
         let resources = dynamineConfig.getResources();
         for(let i = 0; i < resources.length; i++) {
-          if(resources[i].coin == coinName) {
+          if(resources[i].coin == coinName && resources[i].allocated) {
             return true;
           }
         }

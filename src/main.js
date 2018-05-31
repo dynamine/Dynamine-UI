@@ -107,7 +107,9 @@ app.on('browser-window-created', (e, window) => {
 });
 
 app.on('quit', () => {
-  mainWindow.close(); //make sure we run window shutdown code before quiting
+  if(mainWindow) { //preventing message shown for null mainWindow
+    mainWindow.close(); //make sure we run window shutdown code before quiting
+  }
 });
 
 app.on('window-all-closed', () => {

@@ -4,7 +4,7 @@
     let CMD_TIMEOUT = 45000;
 
     let handlers = {} //where we will put code that handles incoming data
-    let timeouts = []
+    let timeouts = {}
 
     let startCoinCmd = {
       "cmd": "startMiner",
@@ -119,7 +119,7 @@
             });
           }
         }, CMD_TIMEOUT);
-        timeouts.push(timeoutPromise);
+        timeouts.start = timeoutPromise;
       },
       stopCoin: function(resource) {
         stopCoinCmd.data.resource = fmtResource(resource);
@@ -138,7 +138,7 @@
           }
         }, CMD_TIMEOUT);
 
-        timeouts.push(timeoutPromise);
+        timeouts.stop = timeoutPromise;
       },
       getResources: function() {
         sendCmdTCP(angular.toJson(resourcesCmd));
@@ -164,10 +164,16 @@
       *  When we receive a success message from the daemon, cancel the pending failure message
       *  that is shown after the timeout
       */
-      clearTimeouts: function() {
-        for(let i = 0; i < timeouts.length; i++) {
-          $timeout.cancel(timeouts[i]);
-        }
+      clearStartTimeout: function() {
+        $timeout.cancel(timeouts.start);
+        delete timeouts.start;
+      },
+      clearStopTimeout : function() {
+        $timeout.cancel(timeouts.stop);
+        delete timeouts.stop;
+      },
+      noPendingTimeouts: function() {
+        return Object.keys(timeouts).length === 0 && timeouts.constructor === Object;
       }
     }
   }]);

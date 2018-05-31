@@ -257,10 +257,14 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
 
   daemon.registerCmdHandler('startMiner', (respData) => {
     let status = respData.data.result;
-    modal.hide();
 
     //cancel pending timeouts
-    daemon.clearTimeouts();
+    daemon.clearStartTimeout();
+
+    // hide modal if not being used by something else
+    if(daemon.noPendingTimeouts()) {
+      modal.hide();
+    }
 
     if(status == 'success') {
       let resource = config.getResource(respData.data.resource);
@@ -273,10 +277,14 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
 
   daemon.registerCmdHandler('stopMiner', (respData) => {
     let status = respData.data.result; //TODO: get resource back
-    modal.hide();
 
     //cancel pending timeouts
-    daemon.clearTimeouts();
+    daemon.clearStopTimeout();
+
+    // hide modal if not being used by something else
+    if(daemon.noPendingTimeouts()) {
+      modal.hide();
+    }
 
     if(status == 'success') {
       let resource = config.getResource(respData.data.resource);
