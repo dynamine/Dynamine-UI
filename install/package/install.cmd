@@ -18,15 +18,20 @@ echo Running as elevated user.
 echo Script file : %~f0
 echo Arguments   : %*
 echo Working dir : %cd%
-echo.
+echo before rem
 REM - Extract cab file. Make sure fresh directory
-IF EXIST "C:\Program Files\Dynamine" rmdir /S /Q "C:\Program Files\Dynamine"
-EXPAND dynamine.cab -F:* "C:\Program Files"
-move "C:\Program Files\Dynamine-win32-x64" "C:\Program Files\Dynamine"
-cmd /k
-
-exit
-
+echo after rem
+call IF EXIST "C:\Program Files\Dynamine" rmdir /S /Q "C:\Program Files\Dynamine"
+echo Expanding...
+call EXPAND dynamine.cab -F:* "C:\Program Files"
+echo Renaming...
+call move "C:\Program Files\Dynamine-win32-x64" "C:\Program Files\Dynamine"
+echo Making shortcut
+REM call mkshortcut /target:"C:\Program Files\Dynamine\Dynamine.exe"  /shortcut:"Dynamine"
+REM call move 
+echo Starting...
+call "C:\Program Files\Dynamine\Dynamine.exe"
+echo end
 REM - Move everything from the cab extracted folder into the Dynamine directory
 REM - Move the dynamine-daemon.exe into the Dynamine directory
 REM - Call install on dynamine-daemon.exe /install
