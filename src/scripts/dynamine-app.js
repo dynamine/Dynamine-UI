@@ -7,7 +7,7 @@ var net = require('net');
 /* global angular:true ngDependency:true */
 var app = angular.module('Dynamine', ['ngAnimate', 'base64'].concat(typeof ngDependency === 'undefined' ? [] : ngDependency));
 
-app.provider('ajax', ['$base64',  function ($base64) {
+app.provider('ajax', ['$base64', function ($base64) {
     let httpConfig = {};
 
     let httpRequest = function (config) {
@@ -215,7 +215,7 @@ app.filter('splice', function () {
 /**
 * Initializing app config here
 */
-app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$rootScope', 'bitcoinWallet', 'litecoinWallet', 'zcashWallet', function(config, daemon, toast, coinMetrics, $interval, $rootScope, bitcoinWallet, litecoinWallet, zcashWallet){
+app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$rootScope', 'bitcoinWallet', 'litecoinWallet', 'zcashWallet', 'modal', function(config, daemon, toast, coinMetrics, $interval, $rootScope, bitcoinWallet, litecoinWallet, zcashWallet, modal){
   /**
   * Config and daemon initialization here
   */
@@ -257,7 +257,14 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
 
   daemon.registerCmdHandler('startMiner', (respData) => {
     let status = respData.data.result;
+    modal.hide();
+
+    //cancel pending timeouts
+    daemon.clearTimeouts();
+
     if(status == 'success') {
+      let resource = config.getResource(respData.data.resource);
+      config.allocateResource(true, resource.name, resource.coin);
       toast.success('Successfully started miner');
     } else {
       toast.error('Failed to start miner');
@@ -266,7 +273,14 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
 
   daemon.registerCmdHandler('stopMiner', (respData) => {
     let status = respData.data.result; //TODO: get resource back
+    modal.hide();
+
+    //cancel pending timeouts
+    daemon.clearTimeouts();
+
     if(status == 'success') {
+      let resource = config.getResource(respData.data.resource);
+      config.allocateResource(false, resource.name, "");
       toast.success('Successfully stopped miner');
     } else {
       toast.error('Failed to stop miner');

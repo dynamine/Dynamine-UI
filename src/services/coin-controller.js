@@ -16,11 +16,12 @@
             coinMetrics.clearMetricsByName(resource.coin, "hashRate"); //empty metrics for old coin
             $scope.refreshHashRate();
           }
-          dynamineConfig.allocateResource(true, resource.name, coinName);
-          daemon.startCoin(resource.name, dynamineConfig.getInfoForCoin(coinName).algorithm,  dynamineConfig.getInfoForCoin(coinName).walletAddress, dynamineConfig.getInfoForCoin(coinName).poolServer, dynamineConfig.getInfoForCoin(coinName).poolPassword);
+
+          dynamineConfig.allocateResource(false, resource.name, coinName); // setting the coin name for the success handler to get
+          daemon.startCoin(resource.name, coinName);
           $scope.resources = dynamineConfig.getResources();
         } else {
-          dynamineConfig.allocateResource(false, resource.name, "");
+          //TODO: Move to fail callback for start
           daemon.stopCoin(resource.name);
           coinMetrics.clearMetricsByName(coinName, "hashRate"); //clear our metrics, update graph
           $scope.refreshHashRate();

@@ -1,8 +1,10 @@
 (function(angular, app, net) {
-  app.factory('daemon',[ 'toast', 'dynamineConfig', function(toast, dynamineConfig){
+  app.factory('daemon',[ 'toast', 'dynamineConfig', 'modal', '$timeout', function(toast, dynamineConfig, modal, $timeout){
     let BUFF_SIZE = 1024;
+    let CMD_TIMEOUT = 45000;
 
     let handlers = {} //where we will put code that handles incoming data
+    let timeouts = []
 
     let startCoinCmd = {
       "cmd": "startMiner",
@@ -89,6 +91,10 @@
       return resource.split('@')[0];
     }
 
+    let fmtCoinName = function(coin) {
+      return (coin) ? coin.charAt(0).toUpperCase() + coin.substr(1) : "";
+    }
+
     return {
       startCoin: function(resource, coin) {
         let coinInfo = dynamineConfig.getInfoForCoin(coin);
@@ -100,10 +106,39 @@
         startCoinCmd.data.miner_args['-u'] = coinInfo.poolUsername;
         startCoinCmd.data.miner_args['-p'] = coinInfo.poolPassword;
         sendCmdTCP(angular.toJson(startCoinCmd));
+
+        modal.show("Starting "+ fmtCoinName(coin) +" Miner");
+        //handling timeout
+        let timeoutPromise = $timeout(function(){
+          if(angular.isDefined(handlers[startCoinCmd.cmd])) {
+            handlers[startCoinCmd.cmd]({
+              "cmd": "startCoin",
+              "data": {
+                "result": "Failed to start miner: timeout"
+              }
+            });
+          }
+        }, CMD_TIMEOUT);
+        timeouts.push(timeoutPromise);
       },
       stopCoin: function(resource) {
-        stopCoinCmd.data.deviceID = fmtResource(resource);;
+        stopCoinCmd.data.resource = fmtResource(resource);
         sendCmdTCP(angular.toJson(stopCoinCmd));
+
+        modal.show("Stopping " + fmtCoinName(dynamineConfig.getResource(resource).coin) + " Miner");
+
+        let timeoutPromise = $timeout(function(){
+          if(angular.isDefined(handlers[startCoinCmd.cmd])) {
+            handlers[startCoinCmd.cmd]({
+              "cmd": "stopCoin",
+              "data": {
+                "result": "Failed to stop miner: timeout"
+              }
+            });
+          }
+        }, CMD_TIMEOUT);
+
+        timeouts.push(timeoutPromise);
       },
       getResources: function() {
         sendCmdTCP(angular.toJson(resourcesCmd));
@@ -124,6 +159,15 @@
       */
       registerCmdHandler: function(cmdName, callback) {
         handlers[cmdName] = callback;
+      },
+      /**
+      *  When we receive a success message from the daemon, cancel the pending failure message
+      *  that is shown after the timeout
+      */
+      clearTimeouts: function() {
+        for(let i = 0; i < timeouts.length; i++) {
+          $timeout.cancel(timeouts[i]);
+        }
       }
     }
   }]);
