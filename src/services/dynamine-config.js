@@ -146,6 +146,10 @@
           config.daemonHost = host;
           saveConfig();
         },
+        setDaemonPort: function(port) {
+          config.daemonPort = port;
+          saveConfig();
+        },
         setDaemonPassword: function(pass) {
           config.daemonPassword = pass;
           saveConfig();
