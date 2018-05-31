@@ -128,8 +128,8 @@
         modal.show("Stopping " + fmtCoinName(dynamineConfig.getResource(resource).coin) + " Miner");
 
         let timeoutPromise = $timeout(function(){
-          if(angular.isDefined(handlers[startCoinCmd.cmd])) {
-            handlers[startCoinCmd.cmd]({
+          if(angular.isDefined(handlers[stopCoinCmd.cmd])) {
+            handlers[stopCoinCmd.cmd]({
               "cmd": "stopCoin",
               "data": {
                 "result": "Failed to stop miner: timeout"
