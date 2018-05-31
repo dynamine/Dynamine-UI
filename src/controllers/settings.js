@@ -20,6 +20,7 @@
             dynamineConfig.setDaemonPort(daemonInfo.port);
             daemon.disconnect(); // clear any old connection
             daemon.connect();
+            daemon.getResources();
             toast.success('Daemon Connecting');
         }
         //Call login page if not running locally

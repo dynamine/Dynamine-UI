@@ -39,6 +39,11 @@
       }
     }
 
+    let disconnectCmd = {
+      "cmd": "terminate",
+      "data": {}
+    }
+
     let daemonConn = new net.Socket();
 
     let sendCmdTCP = function(cmd) {
@@ -148,7 +153,10 @@
         sendCmdTCP(angular.toJson(hashRateCmd));
       },
       disconnect: function() {
-        daemonConn.end();
+        sendCmdTCP(angular.toJson(disconnectCmd));
+        if(daemonConn.readyState === 1) {
+          daemonConn.end();
+        }
       },
       connect: function() {
         connectToDaemon();
