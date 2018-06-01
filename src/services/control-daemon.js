@@ -2,6 +2,7 @@
   app.factory('daemon',[ 'toast', 'dynamineConfig', 'modal', '$timeout', function(toast, dynamineConfig, modal, $timeout){
     let BUFF_SIZE = 1024;
     let CMD_TIMEOUT = 45000;
+    let connOpen = false;
 
     let handlers = {} //where we will put code that handles incoming data
     let timeouts = {}
@@ -63,6 +64,7 @@
 
         //TODO: Handle password validation
         toast.info("connected to daemon at " + config.daemonHost + ":" + config.daemonPort);
+        connOpen = true;
       });
 
       daemonConn.on('data', (respRaw) => {
@@ -84,11 +86,12 @@
 
       daemonConn.on('error', (errorMsg) => {
         toast.error("Encountered the following daemon connection issue: \"" + errorMsg + "\"");
+        connOpen = false;
       });
 
       daemonConn.on('end', () => {
         toast.warning("disconnected from daemon");
-        //TODO: Handle anything else dealing with disconnect
+        connOpen = false;
       });
     }
 
@@ -154,12 +157,15 @@
       },
       disconnect: function() {
         sendCmdTCP(angular.toJson(disconnectCmd));
-        if(daemonConn.readyState === 1) {
+        if(connOpen) {
           daemonConn.end();
         }
       },
       connect: function() {
         connectToDaemon();
+      },
+      halt: function() {
+        //TODO: send halt message
       },
       /**
       * Whenever a command is received it will pass the data on to a handler.
@@ -182,6 +188,9 @@
       },
       noPendingTimeouts: function() {
         return Object.keys(timeouts).length === 0 && timeouts.constructor === Object;
+      },
+      connectionIsOpen: function() {
+        return connOpen;
       }
     }
   }]);

@@ -160,3 +160,11 @@ ul.list li { background-color: #394C57 }
 .right { float:right !important; }
 
 .square { border-radius:0px; }
+
+/* status colors for daemon conn status in settings page*/
+.panel__heading.primary { color: #188AE2 !important; }
+.panel__heading.success { color: #10C469 !important; }
+.panel__heading.default { color: #545454 !important; }
+.panel__heading.danger { color: #FF5B5B !important; }
+.panel__heading.info { color: #35B8E0 !important; }
+.panel__heading.warning { color: #F9C851 !important; }
