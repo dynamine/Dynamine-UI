@@ -49,6 +49,12 @@
       },
       getWalletAddress: function(coinName) {
         return dynamineConfig.getInfoForCoin(coinName).walletAddress;
+      },
+      formatResourceName: function(resource) {
+        let resID = resource.split('@')[0];
+        let resName = resource.split('@')[1];
+        let explodedResName = resName.split(' ');
+        return explodedResName[2] + ' ' + explodedResName[3] + ' ' + explodedResName[4] + ' - ' +resID;
       }
     }
   }]);
