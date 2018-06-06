@@ -51,7 +51,7 @@
             <div  class="panel panel-border info">
               <div class="panel__heading">Current Hash Rates:</div>
               <div class="panel__body">
-                <dl data-ng-repeat="resource in coinController.resources" data-ng-show="coinController.resourceChecked(coinName, resource)" class="horizontal"><dt>{{ resource.name }}:</dt><dd>{{ resource.hashRate }}mh/s</dd></dl>
+                <dl data-ng-repeat="resource in coinController.resources" data-ng-show="coinController.resourceChecked(coinName, resource)" class="horizontal"><dt>{{ coinController.formatResourceName(resource.name) }}:</dt><dd>{{ resource.hashRate }}mh/s</dd></dl>
               </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
           <div class="panel panel-border info">
             <div class="panel__heading">[{{ coinController.getDaemonHost() }}] Allocate GPUs</div>
             <div class="panel__body align-left">
-              <div class="padding-10" data-ng-repeat="resource in coinController.resources"><label class="checkbox success"><input id="{{ resource.name }}" data-ng-checked="coinController.resourceChecked(coinName, resource)" data-ng-click="coinController.allocateResource(coinName, resource, this)" type="checkbox"><span class="pad-left-10">{{ resource.name }}</span><span data-ng-show="resource.allocated"> - allocated to {{ resource.coin }}</span></label></div>
+              <div class="padding-10" data-ng-repeat="resource in coinController.resources"><label class="checkbox success"><input id="{{ resource.name }}" data-ng-checked="coinController.resourceChecked(coinName, resource)" data-ng-click="coinController.allocateResource(coinName, resource, this)" type="checkbox"><span class="pad-left-10">{{ coinController.formatResourceName(resource.name) }}</span><span data-ng-show="resource.allocated"> - allocated to {{ resource.coin }}</span></label></div>
             </div>
           </div>
         </div>

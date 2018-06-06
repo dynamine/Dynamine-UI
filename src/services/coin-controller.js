@@ -11,16 +11,18 @@
       resources: dynamineConfig.getResources(),
       allocateResource: function(coinName, resource, $scope) {
         if( document.getElementById(resource.name).checked) {
-          if(resource.coin && resource.coin != coinName) {
+          if(resource.coin && resource.coin != coinName && resource.allocated) {
             daemon.stopCoin(resource.name);
             coinMetrics.clearMetricsByName(resource.coin, "hashRate"); //empty metrics for old coin
             $scope.refreshHashRate();
           }
-          dynamineConfig.allocateResource(true, resource.name, coinName);
-          daemon.startCoin(resource.name, dynamineConfig.getInfoForCoin(coinName).algorithm,  dynamineConfig.getInfoForCoin(coinName).walletAddress, dynamineConfig.getInfoForCoin(coinName).poolServer, dynamineConfig.getInfoForCoin(coinName).poolPassword);
+          console.log("resource set:: " + resource);
+          console.log("coin name in: " + coinName );
+          dynamineConfig.allocateResource(false, resource.name, coinName); // setting the coin name for the success handler to get
+          daemon.startCoin(resource.name, coinName);
           $scope.resources = dynamineConfig.getResources();
         } else {
-          dynamineConfig.allocateResource(false, resource.name, "");
+          //TODO: Move to fail callback for start
           daemon.stopCoin(resource.name);
           coinMetrics.clearMetricsByName(coinName, "hashRate"); //clear our metrics, update graph
           $scope.refreshHashRate();
@@ -30,7 +32,7 @@
       coinHasAllocatedResources: function(coinName) {
         let resources = dynamineConfig.getResources();
         for(let i = 0; i < resources.length; i++) {
-          if(resources[i].coin == coinName) {
+          if(resources[i].coin == coinName && resources[i].allocated) {
             return true;
           }
         }
@@ -47,6 +49,12 @@
       },
       getWalletAddress: function(coinName) {
         return dynamineConfig.getInfoForCoin(coinName).walletAddress;
+      },
+      formatResourceName: function(resource) {
+        let resID = resource.split('@')[0];
+        let resName = resource.split('@')[1];
+        let explodedResName = resName.split(' ');
+        return explodedResName[2] + ' ' + explodedResName[3] + ' ' + explodedResName[4] + ' - ' +resID;
       }
     }
   }]);

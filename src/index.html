@@ -9,6 +9,8 @@
 <link rel="stylesheet" type="text/css" href="css/layout.css" />
 <link rel="stylesheet" type="text/css" href="css/default-dark-theme.css" />
 <link rel="stylesheet" type="text/css" href="css/MoneroCoin.css" />
+<link rel="stylesheet" type="text/css" href="css/modal.css" />
+<link rel="stylesheet" type="text/css" href="css/spinner.css" />
 
 <!--Material Components-->
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
@@ -16,7 +18,7 @@
 </head>
 <body class="body">
 
-<div class="app-layout hidden">
+<div id="app-main" class="app-layout hidden">
 <aside class="drawer" data-ng-controller="EnabledCoinsController as coins">
     <div class="icon"><div>Dynamine</div></div>
     <nav class="navigation">
@@ -47,6 +49,15 @@
 </main>
 </div>
 
+<!--Modal For Start/Stop Daemon-->
+<div id="coinActionModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content panel panel-border info">
+   <h2 class="modal-center" id="coinActionModalText"></h2>
+   <div class="spinner modal-center"></div>
+  </div>
+</div>
+
 <script type="text/javascript">
 if (typeof module === 'object') {
     window.module = module;
@@ -74,9 +85,9 @@ var ngDependency  = ['ngRoute', 'ngMaterial'];
 <script type="text/javascript" src="js/Chart.bundle.min.js"></script>
 <script type="text/javascript" src="scripts/app-index.js"></script>
 
-
 <!--Loading our services-->
 <script type="text/javascript" src="services/dynamine-config.js"></script>
+<script type="text/javascript" src="services/modal.js"></script>
 <script type="text/javascript" src="services/coin-metrics.js"></script>
 <script type="text/javascript" src="services/control-daemon.js"></script>
 <script type="text/javascript" src="services/bitcoin-wallet.js"></script>
@@ -101,6 +112,14 @@ var ngDependency  = ['ngRoute', 'ngMaterial'];
 (function (angular) {
     angular.element('.app-layout').fadeIn({ duration: 1000 });
 })(window.angular);
+</script>
+
+<script>
+  window.onbeforeunload = function(event) {
+    // stopping miners and closing connection
+    let daemon = angular.element('html').injector().get('daemon');
+    daemon.disconnect();
+  }
 </script>
 </body>
 </html>

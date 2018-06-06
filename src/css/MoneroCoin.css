@@ -20,7 +20,7 @@
     opacity: 1; /* Fully shown on mouse-over */
 }
 
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
@@ -35,7 +35,7 @@
     height: 25px; /* Slider handle height */
     background: #4CAF50; /* Green background */
     cursor: pointer; /* Cursor on hover */
-} 
+}
 
 .switch {
     position: relative;
@@ -43,9 +43,9 @@
     width: 60px;
     height: 34px;
   }
-  
+
   .switch input {display:none;}
-  
+
   .choice {
     position: absolute;
     cursor: pointer;
@@ -57,7 +57,7 @@
     -webkit-transition: .4s;
     transition: .4s;
   }
-  
+
   .choice:before {
     position: absolute;
     content: "";
@@ -69,26 +69,26 @@
     -webkit-transition: .4s;
     transition: .4s;
   }
-  
+
   input:checked + .choice {
     background-color: #2196F3;
   }
-  
+
   input:focus + .choice {
     box-shadow: 0 0 1px #2196F3;
   }
-  
+
   input:checked + .choice:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
   }
-  
+
   /* Rounded sliders */
   .choice.round {
     border-radius: 34px;
   }
-  
+
   .choice.round:before {
     border-radius: 50%;
   }

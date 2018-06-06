@@ -7,7 +7,7 @@ var net = require('net');
 /* global angular:true ngDependency:true */
 var app = angular.module('Dynamine', ['ngAnimate', 'base64'].concat(typeof ngDependency === 'undefined' ? [] : ngDependency));
 
-app.provider('ajax', ['$base64',  function ($base64) {
+app.provider('ajax', ['$base64', function ($base64) {
     let httpConfig = {};
 
     let httpRequest = function (config) {
@@ -215,12 +215,13 @@ app.filter('splice', function () {
 /**
 * Initializing app config here
 */
-app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$rootScope', 'bitcoinWallet', 'litecoinWallet', 'zcashWallet', function(config, daemon, toast, coinMetrics, $interval, $rootScope, bitcoinWallet, litecoinWallet, zcashWallet){
+app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$rootScope', 'bitcoinWallet', 'litecoinWallet', 'zcashWallet', 'modal', function(config, daemon, toast, coinMetrics, $interval, $rootScope, bitcoinWallet, litecoinWallet, zcashWallet, modal){
   /**
   * Config and daemon initialization here
   */
   config.loadConfig();
   daemon.registerCmdHandler('resources', function(respData) {
+    daemon.setMinersStarted(false);
     let validResources = [];
     if(respData.data.resources) {
       for (let i = 0; i < respData.data.resources.length; i++) {
@@ -244,20 +245,38 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
     } else {
       toast.error('daemon returned zero resources');
     }
+    daemon.setMinersStarted(true);
   });
 
   daemon.registerCmdHandler('hashRate', function(respData) {
     let resource = config.getResource(respData.data.resource);
     if( angular.isDefined(respData.data.hashRate) ) {
-      coinMetrics.addMetric(resource.coin, 'hashRate', respData.data.hashRate); // updating hash rate history
-      config.allocateResource(true, resource.name, resource.coin, respData.data.hashRate); // updating the resource with the current hash rate
-      $rootScope.$broadcast(resource.coin + 'HashRate', {}); //let the controller know to refresh it's graph. ONLY updates if the controller view is loaded
+      if(respData.data.result != 'failure') {
+        coinMetrics.addMetric(resource.coin, 'hashRate', respData.data.hashRate); // updating hash rate history
+        config.allocateResource(true, resource.name, resource.coin, respData.data.hashRate); // updating the resource with the current hash rate
+        $rootScope.$broadcast(resource.coin + 'HashRate', {}); //let the controller know to refresh it's graph. ONLY updates if the controller view is loaded
+      } else {
+
+        toast.warning('No miner runnning for hash rate request');
+      }
     }
   });
 
   daemon.registerCmdHandler('startMiner', (respData) => {
     let status = respData.data.result;
+
+    //cancel pending timeouts
+    daemon.clearStartTimeout();
+
+    // hide modal if not being used by something else
+    if(daemon.noPendingTimeouts()) {
+      modal.hide();
+    }
+
     if(status == 'success') {
+      let resource = config.getResource(respData.data.resource);
+      console.log("coin name out: " + resource.coin);
+      config.allocateResource(true, resource.name, resource.coin);
       toast.success('Successfully started miner');
     } else {
       toast.error('Failed to start miner');
@@ -266,7 +285,18 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
 
   daemon.registerCmdHandler('stopMiner', (respData) => {
     let status = respData.data.result; //TODO: get resource back
+
+    //cancel pending timeouts
+    daemon.clearStopTimeout();
+
+    // hide modal if not being used by something else
+    if(daemon.noPendingTimeouts()) {
+      modal.hide();
+    }
+
     if(status == 'success') {
+      let resource = config.getResource(respData.data.resource);
+      config.allocateResource(false, resource.name, resource.coin);
       toast.success('Successfully stopped miner');
     } else {
       toast.error('Failed to stop miner');
@@ -274,7 +304,7 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
   });
 
   daemon.registerCmdHandler('init', () => {
-    //TODO: validate daemon password
+    daemon.getResources();
   });
 
   daemon.connect();
@@ -309,7 +339,7 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
   }
 
   $interval(getHashRates, 10000);
-  $interval(getCoinMetrics, 30000);
+  $interval(getCoinMetrics, 60000);
 
   // initializing coin metrics since they are saved in coinMetrics service
   getCoinMetrics();

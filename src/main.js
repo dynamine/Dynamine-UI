@@ -17,7 +17,7 @@ const jsonfile  = require('jsonfile');
 
 let absPath = path.dirname(__dirname), configFile = ospath.data() + '/' + APP_NAME + '/config.json';
 let {app, ipcMain, BrowserWindow, Menu} = electron;
-let mainWindow, appConfig = {dynamine: {}, app: {enableAnimation: true}};
+var mainWindow, appConfig = {dynamine: {}, app: {enableAnimation: true}};
 
 let startMainWindow = function () {
     mainWindow = new BrowserWindow({
@@ -104,6 +104,12 @@ app.on('browser-window-created', (e, window) => {
     } else {
         window.setMenu(menu);
     }
+});
+
+app.on('quit', () => {
+  if(mainWindow) { //preventing message shown for null mainWindow
+    mainWindow.close(); //make sure we run window shutdown code before quiting
+  }
 });
 
 app.on('window-all-closed', () => {
