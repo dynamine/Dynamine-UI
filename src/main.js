@@ -40,7 +40,7 @@ let startMainWindow = function () {
     mainWindow.loadURL('file://' + absPath + '/src/index.html');
 
     // Debugging
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 
     mainWindow.on('closed', () => {
         mainWindow = null;
