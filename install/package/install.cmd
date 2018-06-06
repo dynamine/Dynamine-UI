@@ -19,6 +19,7 @@ echo Script file : %~f0
 echo Arguments   : %*
 echo Working dir : %cd%
 REM - Extract cab file. Make sure fresh directory
+net stop DynamineDaemon
 IF EXIST "C:\Program Files\Dynamine" call rmdir /S /Q "C:\Program Files\Dynamine"
 echo Expanding...
 call EXPAND dynamine.cab -F:* "C:\Program Files"
@@ -31,7 +32,6 @@ call createshortcut.cmd
 REM call move
 REM Installing Windows Service
 echo Installing Daemon...
-net stop DynamineDaemon
 call "C:\Program Files\Dynamine\DynamineDaemon.exe" /uninstall
 call "C:\Program Files\Dynamine\DynamineDaemon.exe" /install
 
