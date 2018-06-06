@@ -3,6 +3,7 @@
     let BUFF_SIZE = 1024;
     let CMD_TIMEOUT = 45000;
     let connOpen = false;
+    let minersStarted = false;
 
     let handlers = {} //where we will put code that handles incoming data
     let timeouts = {}
@@ -40,31 +41,37 @@
       }
     }
 
-    let disconnectCmd = {
+    let terminateCmd = {
       "cmd": "terminate",
+      "data": {}
+    }
+
+    let disconnectCmd = {
+      "cmd": "disconnect",
       "data": {}
     }
 
     let daemonConn = new net.Socket();
 
     let sendCmdTCP = function(cmd) {
-      let buf = Buffer.alloc(BUFF_SIZE);
-      buf.write(cmd);
-      //let buf = Buffer.from(cmd); //use for local test
-      daemonConn.write(buf, "utf8");
-      console.log("sent: " + cmd );
+      if(connOpen) {
+        let buf = Buffer.alloc(BUFF_SIZE);
+        buf.write(cmd);
+        //let buf = Buffer.from(cmd); //use for local test
+        daemonConn.write(buf, "utf8");
+        console.log("sent: " + cmd );
+      }
     }
 
     let connectToDaemon = function() {
       let config = dynamineConfig.getConfig();
       daemonConn.connect(config.daemonPort, config.daemonHost, () => {
-        if(angular.isDefined(handlers.init)) {
-          handlers.init(); // this handler should start all previously enabled miners
-        }
-
         //TODO: Handle password validation
         toast.info("connected to daemon at " + config.daemonHost + ":" + config.daemonPort);
         connOpen = true;
+        if(angular.isDefined(handlers.init)) {
+          handlers.init(); // this handler should start all previously enabled miners
+        }
       });
 
       daemonConn.on('data', (respRaw) => {
@@ -152,10 +159,13 @@
         sendCmdTCP(angular.toJson(resourcesCmd));
       },
       getHashRate: function(resource) {
-        hashRateCmd.data.resource = fmtResource(resource);;
-        sendCmdTCP(angular.toJson(hashRateCmd));
+        if(minersStarted) {
+          hashRateCmd.data.resource = fmtResource(resource);;
+          sendCmdTCP(angular.toJson(hashRateCmd));
+        }
       },
       disconnect: function() {
+        minersStarted = false;
         sendCmdTCP(angular.toJson(disconnectCmd));
         if(connOpen) {
           daemonConn.end();
@@ -165,7 +175,10 @@
         connectToDaemon();
       },
       halt: function() {
-        //TODO: send halt message
+        sendCmdTCP(angular.toJson(terminateCmd));
+        if(connOpen) {
+          daemonConn.end();
+        }
       },
       /**
       * Whenever a command is received it will pass the data on to a handler.
@@ -191,6 +204,9 @@
       },
       connectionIsOpen: function() {
         return connOpen;
+      },
+      setMinersStarted: function(started) {
+        minersStarted = started;
       }
     }
   }]);

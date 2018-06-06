@@ -6,7 +6,7 @@
     if (typeof app === 'undefined') throw (controller + ': app is undefined');
 
     //console.log(window);
-    app.controller(controller, ['$scope','toast', 'viewFactory', 'dynamineConfig', 'daemon', function ($scope, toast, viewFactory, dynamineConfig, daemon) {
+    app.controller(controller, ['$scope', 'toast', 'viewFactory', 'dynamineConfig', 'daemon', function ($scope, toast, viewFactory, dynamineConfig, daemon) {
         viewFactory.title = 'Settings';
         viewFactory.prevUrl = null;
 
@@ -17,7 +17,6 @@
           dynamineConfig.setDaemonPort(daemonInfo.port);
           daemon.disconnect(); // clear any old connection
           daemon.connect();
-          daemon.getResources();
         }
 
         $scope.DaemonDisconnect = function() {

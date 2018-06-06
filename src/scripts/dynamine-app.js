@@ -221,6 +221,7 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
   */
   config.loadConfig();
   daemon.registerCmdHandler('resources', function(respData) {
+    daemon.setMinersStarted(false);
     let validResources = [];
     if(respData.data.resources) {
       for (let i = 0; i < respData.data.resources.length; i++) {
@@ -244,14 +245,20 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
     } else {
       toast.error('daemon returned zero resources');
     }
+    daemon.setMinersStarted(true);
   });
 
   daemon.registerCmdHandler('hashRate', function(respData) {
     let resource = config.getResource(respData.data.resource);
     if( angular.isDefined(respData.data.hashRate) ) {
-      coinMetrics.addMetric(resource.coin, 'hashRate', respData.data.hashRate); // updating hash rate history
-      config.allocateResource(true, resource.name, resource.coin, respData.data.hashRate); // updating the resource with the current hash rate
-      $rootScope.$broadcast(resource.coin + 'HashRate', {}); //let the controller know to refresh it's graph. ONLY updates if the controller view is loaded
+      if(respData.data.result != 'failure') {
+        coinMetrics.addMetric(resource.coin, 'hashRate', respData.data.hashRate); // updating hash rate history
+        config.allocateResource(true, resource.name, resource.coin, respData.data.hashRate); // updating the resource with the current hash rate
+        $rootScope.$broadcast(resource.coin + 'HashRate', {}); //let the controller know to refresh it's graph. ONLY updates if the controller view is loaded
+      } else {
+
+        toast.warning('No miner runnning for hash rate request');
+      }
     }
   });
 
@@ -297,7 +304,7 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
   });
 
   daemon.registerCmdHandler('init', () => {
-    //TODO: validate daemon password
+    daemon.getResources();
   });
 
   daemon.connect();
@@ -332,7 +339,7 @@ app.run(['dynamineConfig', 'daemon', 'toast', 'coinMetrics', '$interval', '$root
   }
 
   $interval(getHashRates, 10000);
-  $interval(getCoinMetrics, 30000);
+  $interval(getCoinMetrics, 60000);
 
   // initializing coin metrics since they are saved in coinMetrics service
   getCoinMetrics();
