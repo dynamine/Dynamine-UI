@@ -1,11 +1,15 @@
 #directories
 bower_components
 node_modules/
+release/
 dist
 
 #files
 *.tgz
 *.log
+*.cab
+*.7z
+*.exe
 
 .DS_Store
 

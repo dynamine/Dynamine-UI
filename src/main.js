@@ -8,7 +8,7 @@
   startMainWindow() is the main entry point for the angular code. It loads the inialize.html page which handles login
 */
 const APP_NAME = 'Dynamine';
-const VERSION = '0.1.0';
+const VERSION = '1.0.0';
 
 const electron  = require('electron');
 const path      = require('path');
@@ -40,7 +40,7 @@ let startMainWindow = function () {
     mainWindow.loadURL('file://' + absPath + '/src/index.html');
 
     // Debugging
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 
     mainWindow.on('closed', () => {
         mainWindow = null;

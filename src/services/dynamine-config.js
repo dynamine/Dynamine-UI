@@ -4,7 +4,7 @@
 
     let config = {
       "daemonHost": "localhost",
-      "daemonPort": "1337",
+      "daemonPort": "4001",
       "daemonPassword": "",
       "clusterId": "",
       "clusterPassword": "",
