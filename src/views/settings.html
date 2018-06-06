@@ -1,53 +1,41 @@
-<div class="container">
-    <div class="row">
-      <div class="col md-12">
-        <div class="panel panel-border info">
-          <div class="panel__body">
-            <form class="form padding-10">
+<div class="container" data-ng-controller="SettingsController as settings">
+  <div class="row">
+    <div class="col md-12">
+      <div class="panel panel-border info">
+        <div class="panel__heading right" data-ng-class="{'success' : daemonIsConnected(), 'danger' : !daemonIsConnected()}">{{(daemonIsConnected()) ? "Connected to Daemon" : "Disconnected from Daemon"}}</div>
+        <div class="panel__body container">
+          <form class="form padding-10">
+            <div class="row">
               <div class="form__field">
-                <h1>Cluster Management:</h1>
-                </div>
-                <div class="form__field">
-                    <label class="field-label">Cluster ID:</label>
-                    <div class="field-input"><input type="text"/></div>
-                </div>
-                <div class="form__field">
-                    <label class="field-label">Cluster Password:</label>
-                    <div class="field-input"><input type="text"/></div>
-                </div>
-                <div class="form__field">
-                    <button class="btn info" type="submit" data-ng-click="UserLoggingIn()">Connect Cluster</button>
-                </div>
+                <h1>Daemon Connection:</h1>
+              </div>
+              <div class="form__field">
+                <label class="field-label">Daemon Host:</label>
+                <div class="field-input"><input data-ng-model="daemonInfo.host" data-ng-init="daemonInfo.host=dynamineConfig.getConfig().daemonHost" type="text"/></div>
+              </div>
+              <div class="form__field">
+                <label class="field-label">Daemon Port:</label>
+                <div class="field-input"><input data-ng-model="daemonInfo.port" data-ng-init="daemonInfo.port=dynamineConfig.getConfig().daemonPort" type="text"/></div>
+              </div>
+              <div class="form__field">
+                <label class="field-label">Daemon Password:</label>
+                <div class="field-input"><input data-ng-model="daemonInfo.password" data-ng-init="daemonInfo.password=dynamineConfig.getConfig().daemonPassword" type="password"/></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form__field col">
+                <button class="btn info" type="submit" data-ng-click="DaemonConnect(daemonInfo)">Connect to Daemon</button>
+              </div>
+              <div class="form__field col">
+                <button class="btn info" data-ng-click="DaemonDisconnect()">Disconnect from Daemon</button>
+              </div>
+              <div class="form__field col">
+                <button class="btn warning" data-ng-click="DaemonHalt()">Halt Daemon</button>
+              </div>
+            </div>
             </form>
-            <form class="form padding-10">
-                <div class="form__field">
-                  <h1>Daemon Connection:</h1>
-                  </div>
-                  <div class="form__field">
-                      <label class="field-label">Daemon Host:</label>
-                      <div class="field-input"><input type="text"/></div>
-                  </div>
-                  <div class="form__field">
-                      <label class="field-label">Daemon Password:</label>
-                      <div class="field-input"><input type="text"/></div>
-                  </div>
-                  <div class="form__field">
-                      <button class="btn info" type="submit" data-ng-click="DaemonConnect()">Connect Daemon</button>
-                  </div>
-              </form>    
-              <form class="form padding-10">
-                <div class="form__field">
-                  <h1>Daemon Management:</h1>
-                  </div>
-                  <input type="radio"><span class="pad-left-10">Turn Daemon On</span><br>
-                  <input type="radio"><span class="pad-left-10">Turn Daemon Off</span><br><br>
-                  <button class="btn info" data-ng-click="DaemonToggle()">Submit Daemon Status</button>
-              </form>    
-
-
           </div>
         </div>
       </div>
     </div>
   </div>
-  
